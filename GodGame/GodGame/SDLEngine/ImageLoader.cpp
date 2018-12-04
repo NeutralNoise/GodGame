@@ -1,5 +1,6 @@
 #include "ImageLoader.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <iostream>
 #include "GameEngine.h"
 
@@ -17,35 +18,61 @@ bool ImageLoader::LoadTexture(const std::string &file) {
 	auto iter = m_textures.find(file);
 
 	if (iter == m_textures.end()) {
+		SDL_Texture * newTexture = NULL;
 		Texture * tmp = new Texture;
 
 		tmp->file = file;
-		SDL_Surface *loadedSurface = SDL_LoadBMP(file.c_str());
+		SDL_Surface *loadedSurface = IMG_Load(file.c_str());
 		if (loadedSurface == NULL) {
 			std::cout << "Failed to load image: " << file << "\n";
 			delete tmp;
 			return false;
 		}
-		tmp->surface = SDL_ConvertSurface(loadedSurface, GameEngine::GetWindowSurface()->format, NULL);
-		if (tmp->surface == NULL) {
-			std::cout << "Failed to Convert image: " << file << "\n";
+
+		//Create texture from pixel surface.
+		newTexture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->renderer, loadedSurface);
+
+		if (!newTexture) {
+			std::cout << "Failed to load image: " << file << "\n";
 			SDL_FreeSurface(loadedSurface);
 			delete tmp;
 			return false;
 		}
+
+		tmp->texture = newTexture;
 		
 		SDL_FreeSurface(loadedSurface);
 		m_textures[file] = tmp;
 		return true;
 	}
 	else {
-		SDL_FreeSurface(iter->second->surface);
-		iter->second->surface = SDL_LoadBMP(file.c_str());
+		//This reloading of the textures needs a smart point or something.
+		SDL_DestroyTexture(iter->second->texture);
+		SDL_Texture * newTexture = NULL;
+		Texture * tmp = new Texture;
 
-		if (iter->second->surface == NULL) {
+		tmp->file = file;
+		SDL_Surface *loadedSurface = IMG_Load(file.c_str());
+		if (loadedSurface == NULL) {
 			std::cout << "Failed to load image: " << file << "\n";
+			delete tmp;
 			return false;
 		}
+
+		//Create texture from pixel surface.
+		newTexture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->renderer, loadedSurface);
+
+		if (!newTexture) {
+			std::cout << "Failed to load image: " << file << "\n";
+			SDL_FreeSurface(loadedSurface);
+			delete tmp;
+			return false;
+		}
+
+		tmp->texture = newTexture;
+
+		SDL_FreeSurface(loadedSurface);
+		m_textures[file] = tmp;
 
 	}
 	return true;

@@ -3,11 +3,14 @@
 #include <map>
 
 struct SDL_Surface;
+struct SDL_Texture;
 
 struct Texture
 {
 	std::string file;
-	SDL_Surface * surface = NULL;
+	//This should be hiden really buts its kind of needed atm.
+	SDL_Texture * texture;
+	int RefCount;
 };
 
 class ImageLoader
