@@ -52,20 +52,11 @@ bool GameEngine::InitGameEngine() {
 		return false;
 	}
 
-
-	//p_windowSurface = SDL_GetWindowSurface(p_window);
-	//p_renderSurface = new SDL_Surface();
-	//p_thisRenderSurface = new SDL_Surface;
-	//*p_renderSurface = *p_windowSurface;
-	//*p_thisRenderSurface = *p_renderSurface;
-
 	m_isRunning = true;
 	return true;
 }
 
 void GameEngine::CloseGameEngine() {
-	//SDL_FreeSurface(p_renderSurface);
-	//SDL_FreeSurface(p_thisRenderSurface);
 	SDL_DestroyRenderer(p_renderer->renderer);
 	delete p_renderer->camera;
 	delete p_renderer;
@@ -89,11 +80,9 @@ void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect
 			sdlwinRect.y = winRect->y;
 			sdlwinRect.w = winRect->width;
 			sdlwinRect.h = winRect->height;
-			//SDL_BlitScaled(surface, &sdlrect, p_windowSurface, &sdlwinRect);
 			SDL_RenderCopy(p_renderer->renderer, tex->texture, &sdlrect, &sdlwinRect);
 		}
 		else {
-			//SDL_BlitScaled(surface, &sdlrect, p_windowSurface, NULL);
 			SDL_RenderCopy(p_renderer->renderer, tex->texture, &sdlrect, NULL);
 		}
 	}
@@ -104,11 +93,9 @@ void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect
 			sdlwinRect.y = winRect->y;
 			sdlwinRect.w = winRect->width;
 			sdlwinRect.h = winRect->height;
-			//SDL_BlitScaled(surface, NULL, p_windowSurface, &sdlwinRect);
 			SDL_RenderCopy(p_renderer->renderer, tex->texture, NULL, &sdlwinRect);
 		}
 		else {
-			//SDL_BlitScaled(surface, NULL, p_windowSurface, NULL);
 			SDL_RenderCopy(p_renderer->renderer, tex->texture, NULL, NULL);
 		}
 	}
@@ -120,9 +107,6 @@ void GameEngine::ClearScreen() {
 }
 
 void GameEngine::UpdateWindow() {
-	//BlitToScreen(p_renderSurface);
-	//SDL_UpdateWindowSurface(p_window);
-	//SDL_FillRect(p_windowSurface, NULL, 0x000000);
 	SDL_RenderPresent(p_renderer->renderer);
 }
 
