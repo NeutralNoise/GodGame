@@ -19,6 +19,12 @@
     <Filter Include="Source Files\SDLEngine">
       <UniqueIdentifier>{055cc4a1-6ae3-42bf-97e3-54bf71e931ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SDLEngine\RenderEngine">
+      <UniqueIdentifier>{76aaac31-44b0-4649-a300-7f56dcc5e913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDLEngine\RenderEngine">
+      <UniqueIdentifier>{a2d89a6f-53b1-4886-9dbe-db6400e0607d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GodGame.cpp">
@@ -32,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="SDLEngine\Input.cpp">
       <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\RenderEngine\RenderEngine.cpp">
+      <Filter>Source Files\SDLEngine\RenderEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +60,12 @@
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
     <ClInclude Include="SDLEngine\EngineEvents.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\RenderEngine\RenderEngine.h">
+      <Filter>Header Files\SDLEngine\RenderEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\EngineCamera.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
   </ItemGroup>
