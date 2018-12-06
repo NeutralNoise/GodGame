@@ -67,6 +67,7 @@ void GameEngine::CloseGameEngine() {
 	//SDL_FreeSurface(p_renderSurface);
 	//SDL_FreeSurface(p_thisRenderSurface);
 	SDL_DestroyRenderer(p_renderer->renderer);
+	delete p_renderer->camera;
 	delete p_renderer;
 	SDL_DestroyWindow(p_window);
 	IMG_Quit();
@@ -130,8 +131,5 @@ void GameEngine::EngineWait(const int &delay) {
 }
 
 bool GameEngine::m_isRunning = false;
-SDL_Surface * GameEngine::p_windowSurface = NULL;
 SDL_Window * GameEngine::p_window = NULL;
-SDL_Surface * GameEngine::p_renderSurface = NULL;
-SDL_Surface * GameEngine::p_thisRenderSurface = NULL;
 EngineRenderer * GameEngine::p_renderer = nullptr;
