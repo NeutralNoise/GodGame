@@ -1,7 +1,9 @@
 #include "GameEngine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
+
 
 GameEngine::GameEngine()
 {
@@ -42,13 +44,20 @@ bool GameEngine::InitGameEngine() {
 	}
 	p_renderer = new EngineRenderer(newRenderer, window_size_height, window_size_width);
 
-	SDL_SetRenderDrawColor(p_renderer->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	//SDL_SetRenderDrawColor(p_renderer->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_SetRenderDrawColor(p_renderer->renderer, 0, 0, 0, 255);
 	
 	//Start PNG loading.
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
 		std::cout << "Failed to start SDL2_Image\n";
 		std::cout << "Failed with error: " << IMG_GetError();
+		return false;
+	}
+	if (TTF_Init() == -1)
+	{
+		std::cout << "Failed to start SDL2_TTF\n";
+		std::cout << "Failed with error: " << TTF_GetError();
 		return false;
 	}
 

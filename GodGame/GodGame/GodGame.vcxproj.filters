@@ -42,6 +42,9 @@
     <ClCompile Include="SDLEngine\RenderEngine\RenderEngine.cpp">
       <Filter>Source Files\SDLEngine\RenderEngine</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\FontEngine.cpp">
+      <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files\SDLEngine\RenderEngine</Filter>
     </ClInclude>
     <ClInclude Include="SDLEngine\EngineCamera.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\FontEngine.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
   </ItemGroup>

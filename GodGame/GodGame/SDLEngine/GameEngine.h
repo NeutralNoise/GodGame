@@ -58,8 +58,10 @@ public:
 	static EngineRenderer *GetRenderer() { return p_renderer; };
 
 private:
+	//TODO Make these not static.
 	static SDL_Window * p_window;
 	static EngineRenderer * p_renderer;
+	//
 	static bool m_isRunning; //!< Used by the engine to make if it is not longer running. \note Read-ony
 };
 

@@ -5,12 +5,17 @@
 struct SDL_Surface;
 struct SDL_Texture;
 
+class ImageLoader;
+
 struct Texture
 {
+	friend ImageLoader;
 	std::string file;
 	//This should be hiden really buts its kind of needed atm.
-	SDL_Texture * texture;
-	int RefCount;
+	SDL_Texture * texture = NULL;
+	//Read Only
+private:
+	int RefCount = 0;
 };
 
 class ImageLoader
