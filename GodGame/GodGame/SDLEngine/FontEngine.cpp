@@ -5,15 +5,14 @@
 
 EngineFont * FontEngine::LoadFont(const std::string &file) {
 	p_font = new EngineFont;
-	p_font->font = TTF_OpenFont(file.c_str(), 28);
-	//p_font->font = TTF_OpenFont(file.c_str(), 32);
+	p_font->font = TTF_OpenFont(file.c_str(), p_font->textsize);
 	p_font->texture = new Texture;
 	//DO Some struff
 
 	return nullptr;
 }
 
-void FontEngine::CloseForEngine() {
+void FontEngine::CloseFontEngine() {
 	if (p_font != NULL) {
 		if (p_font->texture != NULL) {
 			if (p_font->texture->texture != NULL) {
@@ -74,8 +73,6 @@ void FontEngine::Draw(const Rect &pos/*, Texture * fontTex*/) {
 	Rect drect;
 	drect.x = pos.x;
 	drect.y = pos.y;
-	//drect.width = (p_font->width / 32) * 28;
-	//drect.height = (p_font->height / 32) * 28;
 	drect.width = p_font->width;
 	drect.height = p_font->height;
 
