@@ -12,13 +12,13 @@ struct EngineFont {
 	Texture * texture = NULL; //!< The last created texture for this font.
 	int width = 0; //!< Size of the last created texture.
 	int height = 0; //!< Size of the last created texture.
-	int textsize = 28;
+	int textsize = 32;
 };
 
 class FontEngine {
 
 public:
-	EngineFont * LoadFont(const std::string &file);
+	EngineFont * LoadFont(const std::string &file, const int &fontsize = 32);
 	void CloseFontEngine();
 	bool LoadFromRenderedText(const std::string &text /*,const Colour &textColour*/);
 	void Draw(const Rect &pos/*, Texture * fontTex*/);

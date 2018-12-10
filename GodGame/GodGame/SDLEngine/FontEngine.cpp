@@ -3,13 +3,14 @@
 #include <SDL2/SDL_ttf.h>
 #include "GameEngine.h"
 
-EngineFont * FontEngine::LoadFont(const std::string &file) {
+EngineFont * FontEngine::LoadFont(const std::string &file, const int &fontsize) {
 	p_font = new EngineFont;
 	if (!p_font) {
 		//TODO Error Message.
 		return nullptr;
 	}
-	p_font->font = TTF_OpenFont(file.c_str(), p_font->textsize);
+	p_font->textsize = fontsize;
+	p_font->font = TTF_OpenFont(file.c_str(), fontsize);
 	p_font->texture = new Texture;
 	if (!p_font->texture) {
 		//TODO Error Message.
