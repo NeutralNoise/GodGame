@@ -1,6 +1,7 @@
 #include "RenderEngine.h"
 #include <iostream>
 #include <algorithm>
+#include "../InfoEngine.h"
 
 RenderEngine::RenderEngine() {
 	
@@ -16,6 +17,8 @@ bool RenderEngine::InitRenderImage(GameEngine * ge) {
 		return false;
 	}
 	p_gameEngine = ge;
+	EngineInfo * newInfo = new EngineInfo("rendered_textures", Engine_Info_Types::EI_TYPE_INT);
+	InfoEngine::AddEngineInfo(newInfo);
 	return true;
 }
 
@@ -88,7 +91,8 @@ void RenderEngine::DrawLayers() {
 }
 
 void RenderEngine::DrawLayer(RenderLayer * layer) {
-
+	EngineInfo* tmpInfo = InfoEngine::GetEngineInfo("rendered_textures");
+	tmpInfo->idata = 0;
 	EngineCamera camera = *GameEngine::GetRenderer()->camera;
 	//static int drawCalls = 0;
 	for (size_t i = 0; i < m_layers.size(); i++) {
@@ -108,7 +112,7 @@ void RenderEngine::DrawLayer(RenderLayer * layer) {
 				srect.height = m_layers[i]->tiles[t]->height;
 				srect.width = m_layers[i]->tiles[t]->width;
 				p_gameEngine->RenderCopy(m_layers[i]->tiles[t]->texture, &srect, &drect);
-				//drawCalls++;
+				tmpInfo->idata++;
 			}
 			
 		}
