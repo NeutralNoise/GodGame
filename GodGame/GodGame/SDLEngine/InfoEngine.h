@@ -18,11 +18,19 @@ struct EngineInfo
 
 	union 
 	{
-		int idata;
+		int idata = 0;
 		unsigned int uidata;
 	};
 	std::string sdata;
-	EngineInfo * edata;
+	EngineInfo * edata = nullptr;
+
+	EngineInfo() {
+
+	}
+	EngineInfo(const std::string &name, const int &type) {
+		this->name = name;
+		this->type = type;
+	}
 
 };
 
