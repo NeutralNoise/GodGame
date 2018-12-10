@@ -5,11 +5,18 @@
 
 EngineFont * FontEngine::LoadFont(const std::string &file) {
 	p_font = new EngineFont;
+	if (!p_font) {
+		//TODO Error Message.
+		return nullptr;
+	}
 	p_font->font = TTF_OpenFont(file.c_str(), p_font->textsize);
 	p_font->texture = new Texture;
-	//DO Some struff
-
-	return nullptr;
+	if (!p_font->texture) {
+		//TODO Error Message.
+		TTF_CloseFont(p_font->font);
+		return nullptr;
+	}
+	return p_font;
 }
 
 void FontEngine::CloseFontEngine() {
@@ -42,6 +49,7 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 		}
 	}
 	else {
+		//TODO Error Message.
 		return false;
 	}
 
