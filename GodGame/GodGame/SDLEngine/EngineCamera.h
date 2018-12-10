@@ -49,8 +49,9 @@ struct EngineCamera
 
 		// AABB 2
 		int x2Min = pos.x;
-		int x2Max = pos.x + pos.width;
-		int y2Max = pos.y + pos.height;
+		//Not relly sure why i have to * 2 but i do :/
+		int x2Max = pos.x + (pos.width * 2);
+		int y2Max = pos.y + (pos.height * 2);
 		int y2Min = pos.y;
 
 		// Collision tests
