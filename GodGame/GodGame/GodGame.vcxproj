@@ -169,6 +169,7 @@
   <ItemGroup>
     <ClInclude Include="SDLEngine\EngineCamera.h" />
     <ClInclude Include="SDLEngine\EngineEvents.h" />
+    <ClInclude Include="SDLEngine\InfoEngine.h" />
     <ClInclude Include="SDLEngine\FontEngine.h" />
     <ClInclude Include="SDLEngine\GameEngine.h" />
     <ClInclude Include="SDLEngine\ImageLoader.h" />

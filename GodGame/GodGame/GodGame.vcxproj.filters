@@ -74,5 +74,8 @@
     <ClInclude Include="SDLEngine\FontEngine.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
+    <ClInclude Include="SDLEngine\InfoEngine.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
