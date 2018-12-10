@@ -6,6 +6,7 @@
 EngineFont * FontEngine::LoadFont(const std::string &file) {
 	p_font = new EngineFont;
 	p_font->font = TTF_OpenFont(file.c_str(), 28);
+	//p_font->font = TTF_OpenFont(file.c_str(), 32);
 	p_font->texture = new Texture;
 	//DO Some struff
 
@@ -29,6 +30,8 @@ void FontEngine::CloseForEngine() {
 bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &textColour*/) {
 	SDL_Color textColour;
 	textColour.r = 255;
+	textColour.g = 0;
+	textColour.b = 0;
 
 	//Free the last texture;
 	if (p_font != NULL) {
@@ -71,8 +74,10 @@ void FontEngine::Draw(const Rect &pos/*, Texture * fontTex*/) {
 	Rect drect;
 	drect.x = pos.x;
 	drect.y = pos.y;
-	drect.width = (p_font->width / 32) * 32;
-	drect.height = (p_font->height / 32) * 32;
+	//drect.width = (p_font->width / 32) * 28;
+	//drect.height = (p_font->height / 32) * 28;
+	drect.width = p_font->width;
+	drect.height = p_font->height;
 
 	ge.RenderCopy(p_font->texture, NULL, &drect);
 
