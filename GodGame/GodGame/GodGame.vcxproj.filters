@@ -45,6 +45,9 @@
     <ClCompile Include="SDLEngine\FontEngine.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\InfoEngine.cpp">
+      <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">

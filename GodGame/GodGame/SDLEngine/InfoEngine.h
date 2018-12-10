@@ -68,6 +68,3 @@ public:
 private:
 	static std::map<std::string, EngineInfo*> m_info;
 };
-
-
-std::map<std::string, EngineInfo*> InfoEngine::m_info;

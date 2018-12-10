@@ -163,6 +163,7 @@
     <ClCompile Include="SDLEngine\FontEngine.cpp" />
     <ClCompile Include="SDLEngine\GameEngine.cpp" />
     <ClCompile Include="SDLEngine\ImageLoader.cpp" />
+    <ClCompile Include="SDLEngine\InfoEngine.cpp" />
     <ClCompile Include="SDLEngine\Input.cpp" />
     <ClCompile Include="SDLEngine\RenderEngine\RenderEngine.cpp" />
   </ItemGroup>
