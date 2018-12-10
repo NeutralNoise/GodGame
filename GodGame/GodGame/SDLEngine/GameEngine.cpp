@@ -71,6 +71,7 @@ void GameEngine::CloseGameEngine() {
 	delete p_renderer;
 	SDL_DestroyWindow(p_window);
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 	m_isRunning = false;
 }
