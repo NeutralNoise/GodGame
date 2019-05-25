@@ -43,6 +43,8 @@ public:
 	~GameEngine();
 
 	bool InitGameEngine();
+	bool InitGameEngine(const char * appName, const int &winWidth, const int &winHeight, const unsigned int &flags);
+
 	void CloseGameEngine();
 
 	void RenderCopy(Texture * tex, const Rect *rect = nullptr, const Rect *winRect = nullptr);

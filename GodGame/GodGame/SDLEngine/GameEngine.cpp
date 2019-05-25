@@ -15,9 +15,12 @@ GameEngine::~GameEngine()
 }
 
 bool GameEngine::InitGameEngine() {
-
 	const int window_size_height = 600;
 	const int window_size_width = 600;
+	return InitGameEngine("SDL_BASE_GAME_ENGINE", window_size_width, window_size_height, SDL_WINDOW_SHOWN);
+}
+
+bool GameEngine::InitGameEngine(const char * appName, const int &winWidth, const int &winHeight, const unsigned int &flags) {
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		std::cout << "Failed to start SDL2\n";
@@ -28,7 +31,7 @@ bool GameEngine::InitGameEngine() {
 	SDL_VERSION(&version);
 	std::cout << "SDL Version: " << (int)version.major << "." << (int)version.minor << "." << (int)version.patch << "\n";
 
-	p_window = SDL_CreateWindow("GodGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_size_width, window_size_height, SDL_WINDOW_SHOWN);
+	p_window = SDL_CreateWindow("GodGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, winWidth, winHeight, flags);
 
 	if (p_window == NULL) {
 		std::cout << "Failed to create SDL2 Window\n";
@@ -42,11 +45,11 @@ bool GameEngine::InitGameEngine() {
 		std::cout << "Failed with error: " << SDL_GetError();
 		return false;
 	}
-	p_renderer = new EngineRenderer(newRenderer, window_size_height, window_size_width);
+	p_renderer = new EngineRenderer(newRenderer, winHeight, winWidth);
 
 	//SDL_SetRenderDrawColor(p_renderer->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_SetRenderDrawColor(p_renderer->renderer, 0, 0, 0, 255);
-	
+
 	//Start PNG loading.
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
