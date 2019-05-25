@@ -109,17 +109,22 @@ void RenderEngine::DrawLayer(RenderLayer * layer) {
 
 			//TODO Tile Mapping
 			//We need a cliping plane. We can do that with a camera. DONE!
-			if (camera.CollisionWithCamera(drect)) {
+			if (m_layers[i]->tiles[t]->checkCameraCollision) {
+				if (camera.CollisionWithCamera(drect)) {
+					srect.height = m_layers[i]->tiles[t]->height;
+					srect.width = m_layers[i]->tiles[t]->width;
+					p_gameEngine->RenderCopy(m_layers[i]->tiles[t]->texture, &srect, &drect);
+					tmpInfo->idata++;
+				}
+			}
+			else {
+				//Just draw this no matter where it is.
 				srect.height = m_layers[i]->tiles[t]->height;
 				srect.width = m_layers[i]->tiles[t]->width;
 				p_gameEngine->RenderCopy(m_layers[i]->tiles[t]->texture, &srect, &drect);
 				tmpInfo->idata++;
 			}
-			
 		}
-	}
-	if (tmpInfo->idata == 0) {
-		//_asm int 3;
 	}
 }
 

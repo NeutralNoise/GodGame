@@ -15,6 +15,7 @@ struct LayerTile
 	int frame = 0; //!< For tile mapping
 	Texture * texture = nullptr; //!< What texture does this tile use.
 	bool translateWithCamera = false; //!< Is the tile rendered in world space of tile space.
+	bool checkCameraCollision = true; //!< Does the engine have to check if this is within screen space. If if false it will always be drawn.
 };
 
 struct RenderLayer
