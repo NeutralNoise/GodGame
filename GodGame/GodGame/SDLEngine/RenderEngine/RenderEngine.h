@@ -5,15 +5,16 @@
 
 struct LayerTile
 {
-	int x;
-	int y;
+	int x = 0;
+	int y = 0;
 
-	int width;
-	int height;
+	int width = 32;
+	int height = 32;
 
 	//Texture
 	int frame = 0; //!< For tile mapping
-	Texture * texture;
+	Texture * texture = nullptr; //!< What texture does this tile use.
+	bool translateWithCamera = false; //!< Is the tile rendered in world space of tile space.
 };
 
 struct RenderLayer
