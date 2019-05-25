@@ -16,3 +16,5 @@ There is stuff here just not much of it.
 ## TODO
 1. Separate screen space from world space. Currently there is no separation between the two and this is causing issues with the camera.
 2. Physics engine. Just a basic physics engine.
+3. Add Frame limiting to engine.
+4. Make all movement not based on frame rate but on frame delta time.
