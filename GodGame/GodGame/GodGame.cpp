@@ -37,17 +37,23 @@ int main(int argc, char ** argv)
 		Texture *texture = ImageLoader::GetTexture("data/test.png");
 
 		LayerTile * tile = new LayerTile;
-		tile->x = 0;
-		tile->y = 0;
+		//tile->x = 0;
+		//tile->y = 0;
+		tile->x = 600 / 2;
+		tile->y = 600 / 2;
 		tile->height = 32;
 		tile->width = 32;
 		tile->texture = texture;
+		tile->translateWithCamera = false;
+		tile->checkCameraCollision = false;
+
 		LayerTile * tile2 = new LayerTile;
 		tile2->x = 0;
 		tile2->y = 0;
 		tile2->height = 32;
 		tile2->width = 32;
 		tile2->texture = texture;
+		tile2->translateWithCamera = true;
 
 		RenderLayer * layer = new RenderLayer;
 		layer->layer = 1;
@@ -56,7 +62,19 @@ int main(int argc, char ** argv)
 		layer->tiles.push_back(tile2);
 
 		renderEngine.AddLayer(layer);
-
+		/*
+		for (int y = 0; y <= (600 / 32); y++) {
+			for (int x = 0; x <= (600 / 32); x++) {
+				LayerTile * world = new LayerTile;
+				world->x = x * 32;
+				world->y = y * 32;
+				world->height = 32;
+				world->width = 32;
+				world->texture = texture;
+				layer->tiles.push_back(world);
+			}
+		}
+		*/
 		while (isRunning) {
 			
 			testRect.x = xpos;
@@ -116,16 +134,17 @@ int main(int argc, char ** argv)
 				xpos+=5;
 			}
 			EngineCamera *camera = GameEngine::GetRenderer()->camera;
-			Rect newPos(camera->pos);
+			Rect newPos(camera->pos); //so we dont have to copy the height
 			newPos.x = xpos;
 			newPos.y = ypos;
 			//newPos.x = 64;
 			//newPos.y = 64;
 
 			camera->MoveCamera(newPos);
-
-			tile->x = camera->centerPos.x - (tile->width / 2);
-			tile->y = camera->centerPos.y - (tile->width / 2);
+			EngineRenderer * er = GameEngine::GetRenderer();
+			tile->x = (er->window_width/2) - (int)(tile->width / 2);
+			tile->y = (er->window_height/2) - (int)(tile->width / 2);
+			
 		}
 
 		renderEngine.RemoveLayer(1);
