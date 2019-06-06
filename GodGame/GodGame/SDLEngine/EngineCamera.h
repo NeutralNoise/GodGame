@@ -1,6 +1,11 @@
 #pragma once
 #include "Rect.h"
 
+/** \struct EngineCamera
+ * \brief A structure representing a camera.
+ * 
+ */
+
 struct EngineCamera
 {	
 	/**

@@ -114,6 +114,11 @@ enum EngineEventType
 	EE_LASTEVENT = 0xFFFF
 };
 
+/** \struct InputEvent
+ * \brief Structure representing a key press.
+ * 
+ */
+
 struct InputEvent
 {
 	int type = -1; //!< The type of event this is.

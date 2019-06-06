@@ -7,14 +7,14 @@
 typedef struct _TTF_Font TTF_Font;
 
 /** \struct EngineFont
- * \brief Data structure decribing a font.
+ * \brief Data structure representing a font and text.
  * 
  */
 
 struct EngineFont {
 	
 	TTF_Font * font = NULL; //!< The font file to use when drawing this text.
-	Texture * texture = NULL; //!< The last created texture for this font.
+	Texture * texture = NULL; //!< The last created texture for this font. This is rendered to the screen.
 	int width = 0; //!< Size of the last created texture.
 	int height = 0; //!< Size of the last created texture.
 	int textsize = 32; //!< The size of the text
@@ -72,5 +72,5 @@ public:
 	EngineFont * GetFont(/*const std::string &file*/) { return p_font; };
 
 private:
-	EngineFont * p_font;
+	EngineFont * p_font; //!< Font used for generating text.
 };

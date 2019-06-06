@@ -3,6 +3,11 @@
 #include "../GameEngine.h"
 #include "../ImageLoader.h"
 
+/** \struct LayerTile
+ * \brief A structure representing a tile within a layer.
+ * 
+ */
+
 struct LayerTile
 {
 	int x = 0; //!< X position in the world.
@@ -18,6 +23,11 @@ struct LayerTile
 	bool checkCameraCollision = true; //!< Does the engine have to check if this is within screen space. If if false it will always be drawn.
 };
 
+/** \struct RenderLayer
+ * \brief A structure representing a layer of tiles.
+ * 
+ */
+
 struct RenderLayer
 {
 	int id; //!< ID of this layer
@@ -30,6 +40,11 @@ struct RenderLayer
 	int refCount = 0; // not used.
 
 };
+
+/** \class RenderEngine
+ * \brief Holds and draws all the layers within the engine.
+ * 
+ */
 
 class RenderEngine {
 public:
