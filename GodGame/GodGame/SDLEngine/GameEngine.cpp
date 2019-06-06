@@ -81,18 +81,34 @@ void GameEngine::CloseGameEngine() {
 
 void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect) {
 
+	//Convert a engine rect to an SDL2 Rect
+	auto RectToSDLRect = [](Rect r){
+		SDL_Rect rtn;
+		rtn.x = r.x;
+		rtn.y = r.y;
+		rtn.w = r.width;
+		rtn.h = r.height;
+		return rtn;
+	};
+
 	SDL_Rect sdlrect;
 	if (rect) {
+		/*
 		sdlrect.x = rect->x;
 		sdlrect.y = rect->y;
 		sdlrect.w = rect->width;
 		sdlrect.h = rect->height;
+		*/
+		sdlrect = RectToSDLRect(*rect);
 		if (winRect) {
 			SDL_Rect sdlwinRect;
+			/*
 			sdlwinRect.x = winRect->x;
 			sdlwinRect.y = winRect->y;
 			sdlwinRect.w = winRect->width;
 			sdlwinRect.h = winRect->height;
+			*/
+			sdlwinRect = RectToSDLRect(*winRect);
 			SDL_RenderCopy(p_renderer->renderer, tex->texture, &sdlrect, &sdlwinRect);
 		}
 		else {
@@ -102,10 +118,13 @@ void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect
 	else {
 		if (winRect) {
 			SDL_Rect sdlwinRect;
+			/*
 			sdlwinRect.x = winRect->x;
 			sdlwinRect.y = winRect->y;
 			sdlwinRect.w = winRect->width;
 			sdlwinRect.h = winRect->height;
+			*/
+			sdlwinRect = RectToSDLRect(*winRect);
 			SDL_RenderCopy(p_renderer->renderer, tex->texture, NULL, &sdlwinRect);
 		}
 		else {
