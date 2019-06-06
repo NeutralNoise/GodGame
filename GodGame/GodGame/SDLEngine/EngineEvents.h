@@ -1,7 +1,7 @@
 #pragma once
 
 //This is a strait copy from SDL2 SDL_events.h
-//This way i can use these or the sdl ones which ever i like and it makes it more mapable to other systems later.
+//This way i can use these or the sdl ones which ever I like and it makes it more mapable to other systems later.
 enum EngineEventType
 {
 	EE_FIRSTEEVNT = 0, /**< Unused (do not remove) */
@@ -116,13 +116,26 @@ enum EngineEventType
 
 struct InputEvent
 {
-	int type = -1;
-	unsigned int keyID = 0;
-	bool isHeld = false;
+	int type = -1; //!< The type of event this is.
+	unsigned int keyID = 0; //!< The ID of the input pressed.
+	bool isHeld = false; //!< Is the event ongoing.
+
+	/**
+	 * \brief Construct a new InputEvent object
+	 * 
+	 */
 
 	InputEvent() {
 
 	}
+
+	/**
+	 * \brief Construct a new InputEvent object
+	 * 
+	 * \param type The type of event.
+	 * \param keyID The ID of the key generating the event.
+	 * \param isHeld Is the event on going. \note default false
+	 */
 
 	InputEvent(const int &type, const UInt32 &keyID = 0, const bool &isHeld = false) {
 		this->type = type;

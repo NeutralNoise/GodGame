@@ -2,12 +2,26 @@
 #include "Rect.h"
 
 struct EngineCamera
-{
+{	
+	/**
+	 * \brief Construct a new EngineCamera object
+	 * 
+	 */
 	EngineCamera() {
 		pos = Rect();
 		scale = 0.0f;
 		centerPos = Rect();
 	}
+
+	/**
+	 * \brief Construct a new EngineCamera object
+	 * 
+	 * \param x The X position in world space.
+	 * \param y The Y position in world space.
+	 * \param width The width of the camera. \note Make sure its the same as the window size.
+	 * \param height The width of the camera. \note Make sure its the same as the window size.
+	 * \param scale the zoom of the camera. \warning not currently used.
+	 */
 
 	EngineCamera(const int &x, const int &y, const int &width, const int &height, float scale = 1.0f) {
 		pos = Rect(x,y,width, height);
@@ -16,15 +30,35 @@ struct EngineCamera
 		this->scale = scale;
 	}
 
+	/**
+	 * \brief Destroy the EngineCamera object
+	 * 
+	 */
+
 	~EngineCamera() {
 
 	}
+
+	/**
+	 * \brief Move the camera to a given position.
+	 * 
+	 * \param pos The position in world space to move the camera.
+	 */
 
 	void MoveCamera(const Rect &pos) {
 		this->pos = pos;
 		centerPos.x = pos.x + pos.width / 2;
 		centerPos.y = pos.y + pos.height / 2;
 	}
+
+	/**
+	 * \brief Translates the worldspace with camera space.
+	 * 
+	 * Not sure how to explain this. Basicly it just makes sure something in world space is displayed at the right spot in screen space.
+	 * 
+	 * \param p The position to translate.
+	 * \return The new position as a Rect. \see Rect
+	 */
 
 	Rect TranslateWithCamera(const Rect &p) {
 		Rect rtn;
@@ -36,6 +70,13 @@ struct EngineCamera
 
 		return rtn;
 	}
+
+	/**
+	 * \brief Checks if the given position is within the cameras bounds.
+	 * 
+	 * \param rect The position to check.
+	 * \return true if a collision is detected else false.
+	 */
 
 	bool CollisionWithCamera(const Rect &rect) {
 
@@ -63,8 +104,8 @@ struct EngineCamera
 	}
 
 
-	Rect pos;
-	Rect centerPos;
-	float scale;
+	Rect pos;	//!< The position of the camera in world space.
+	Rect centerPos; //!< The center of the camera in world space.
+	float scale; //!< Used for zoom. \warning not currently used.
 
 };
