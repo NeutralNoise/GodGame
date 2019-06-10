@@ -11,6 +11,7 @@
 #include <SDL2/SDL.h>
 #include "SDLEngine/FontEngine.h"
 #include "SDLEngine/InfoEngine.h"
+#include "SDLEngine/ErrorEngine.h"
 
 int main(int argc, char ** argv)
 {
@@ -18,6 +19,13 @@ int main(int argc, char ** argv)
 	bool isRunning = false;
 	GameEngine ge;
 	isRunning = ge.InitGameEngine();
+
+	if (!isRunning) {
+		DisplayErrors();
+		std::cin.get();
+		exit(5);
+	}
+
 	Rect testRect(32,0, 32, 32);
 	Rect testWinRect(16, 16, 128, 128);
 	Rect testWinRect2(0, 0, 32, 32);
