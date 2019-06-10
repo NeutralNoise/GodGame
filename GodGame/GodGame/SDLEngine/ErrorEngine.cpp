@@ -1,5 +1,5 @@
 #include "ErrorEngine.h"
-
+#include <iostream>
 
 
 ErrorEngine::ErrorEngine()
@@ -135,3 +135,11 @@ void * ErrorEngine::CallErrrorCodeDataFunc(const EngineErrorMessage & err)
 }
 
 ErrorEngine * ErrorEngine::p_instance = nullptr;
+
+void DisplayErrors() {
+	EngineErrorMessage err = GetLastEngineError();
+	while (err.type != -1) {
+		std::cout << ErrorEngine::GetInstance()->CallErrrorCodeStrFunc(err) << std::endl;
+		err = GetLastEngineError();
+	}
+}

@@ -262,3 +262,5 @@ inline EngineErrorMessage GetLastEngineError() {
 inline void AddEngineErrorMessage(const unsigned int &code, const int &type, const std::string &msg) {
 	ErrorEngine::GetInstance()->AddErrorMessage(code, type, msg);
 }
+
+extern void DisplayErrors();
