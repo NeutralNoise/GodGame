@@ -48,6 +48,9 @@
     <ClCompile Include="SDLEngine\InfoEngine.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\ErrorEngine.cpp">
+      <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
     <ClInclude Include="SDLEngine\InfoEngine.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\ErrorEngine.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
   </ItemGroup>
