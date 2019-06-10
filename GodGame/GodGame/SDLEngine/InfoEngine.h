@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <map>
+#include "ErrorEngine.h"
 
 /** \enum Engine_Info_Types
  * \brief The type of data stored in the EngineInfo structure.
@@ -77,12 +78,19 @@ public:
 	static bool AddEngineInfo(EngineInfo * info) {
 		auto iter = m_info.find(info->name);
 
+		//We could just over ride whats there. But I don't know.
+		//We would have to delete the one thats there and that could lead to some other issues
 		if (iter == m_info.end()) {
+			
 			m_info[info->name] = info;
 			return true;
 		}
-		//We could just over ride whats there. But I don't know.
-		//TODO error message
+		std::string infoName("nullptr");
+		if (info != nullptr) {
+			infoName = info->name;
+		}
+		AddEngineErrorMessage(300, EngineErrorTypes::ERR_TYPE_WARNING,
+			"Unable to add EngineInfo " + infoName + " because it has already been added.");
 		return false;
 	}
 
@@ -99,7 +107,8 @@ public:
 		if (iter != m_info.end()) {
 			return m_info[name];
 		}
-		//TODO error message
+		AddEngineErrorMessage(301, EngineErrorTypes::ERR_TYPE_WARNING,
+			"Unable to find InfoEngine with the name of " + name);
 		return nullptr;
 	}
 
