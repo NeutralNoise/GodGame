@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+#include "ErrorEngine.h"
 
 
 GameEngine::GameEngine()
@@ -22,8 +23,11 @@ bool GameEngine::InitGameEngine() {
 
 bool GameEngine::InitGameEngine(const char * appName, const int &winWidth, const int &winHeight, const unsigned int &flags) {
 
+	//First we have to start the ErrorEngine
+	ErrorEngine::InitErrorEngine();
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		std::cout << "Failed to start SDL2\n";
+		AddEngineErrorMessage(100, EngineErrorTypes::ERR_TYPE_FATEL, "Failed to start SDL2");
 		return false;
 	}
 
@@ -34,15 +38,15 @@ bool GameEngine::InitGameEngine(const char * appName, const int &winWidth, const
 	p_window = SDL_CreateWindow("GodGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, winWidth, winHeight, flags);
 
 	if (p_window == NULL) {
-		std::cout << "Failed to create SDL2 Window\n";
-		std::cout << "Failed with error: " << SDL_GetError();
+		AddEngineErrorMessage(101, EngineErrorTypes::ERR_TYPE_FATEL,
+			"Failed to create SDL2 Window\n" + std::string("Failed with error: " + std::string(SDL_GetError())));
 		return false;
 	}
 	SDL_Renderer * newRenderer = SDL_CreateRenderer(p_window, -1, SDL_RENDERER_ACCELERATED);
 
 	if (newRenderer == NULL) {
-		std::cout << "Failed to create SDL2 Renderer\n";
-		std::cout << "Failed with error: " << SDL_GetError();
+		AddEngineErrorMessage(102, EngineErrorTypes::ERR_TYPE_FATEL,
+			"Failed to create SDL2 Renderer\n" + std::string("Failed with error: " + std::string(SDL_GetError())));
 		return false;
 	}
 	p_renderer = new EngineRenderer(newRenderer, winHeight, winWidth);
@@ -54,13 +58,14 @@ bool GameEngine::InitGameEngine(const char * appName, const int &winWidth, const
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
 		std::cout << "Failed to start SDL2_Image\n";
-		std::cout << "Failed with error: " << IMG_GetError();
+		AddEngineErrorMessage(103, EngineErrorTypes::ERR_TYPE_FATEL,
+			"Failed to start SDL2_Image\n" + std::string("Failed with error: " + std::string(IMG_GetError())));
 		return false;
 	}
 	if (TTF_Init() == -1)
 	{
-		std::cout << "Failed to start SDL2_TTF\n";
-		std::cout << "Failed with error: " << TTF_GetError();
+		AddEngineErrorMessage(103, EngineErrorTypes::ERR_TYPE_FATEL,
+			"Failed to start SDL2_TTF\n" + std::string("Failed with error: " + std::string(TTF_GetError())));
 		return false;
 	}
 

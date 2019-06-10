@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include "../InfoEngine.h"
+#include "../ErrorEngine.h"
 
 RenderEngine::RenderEngine() {
 	
@@ -13,7 +14,7 @@ RenderEngine::~RenderEngine() {
 
 bool RenderEngine::InitRenderImage(GameEngine * ge) {
 	if (!ge) {
-		//TODO Error message
+		AddEngineErrorMessage(200, EngineErrorTypes::ERR_TYPE_FATEL, "RenderEngine can not be passed nullptr");
 		return false;
 	}
 	p_gameEngine = ge;
