@@ -18,8 +18,9 @@
 * Add debug information access with key press.
   - There should be configuration file that lets to pick what information is displayed.
   - The file should be reloadable.
-* Error message system.
+* ~~Error message system.~~
 * UI framework.
+* Multi-Threading
 
 ## Game
 * ???
