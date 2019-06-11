@@ -153,6 +153,8 @@ int main(int argc, char ** argv)
 			tile->x = (er->window_width/2) - (int)(tile->width / 2);
 			tile->y = (er->window_height/2) - (int)(tile->width / 2);
 			
+			ErrorEngine::GetInstance()->OnFatel();
+
 		}
 
 		renderEngine.RemoveLayer(1);
