@@ -19,7 +19,7 @@ EngineFont * FontEngine::LoadFont(const std::string &file, const int &fontsize) 
 	p_font->font = TTF_OpenFont(file.c_str(), fontsize);
 	if (!p_font->font) {
 		//Should this error be in the 100s? Yes i think it should be because its an SDL2_TTF error.
-		AddEngineErrorMessage(150, EngineErrorTypes::ERR_TYPE_FATEL, std::string(TTF_GetError()));
+		AddEngineErrorMessage(150, std::string(TTF_GetError()));
 		delete p_font;
 		return nullptr;
 	}
@@ -79,8 +79,7 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 	SDL_Surface * textSurface = TTF_RenderText_Solid(p_font->font, text.c_str(), textColour);
 
 	if (textSurface == NULL) {
-		AddEngineErrorMessage(151, EngineErrorTypes::ERR_TYPE_FATEL,
-			"TTF failed to render text: " + std::string(TTF_GetError()));
+		AddEngineErrorMessage(151, std::string(TTF_GetError()));
 		return false;
 	}
 	else {
