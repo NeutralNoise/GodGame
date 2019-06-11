@@ -1,5 +1,7 @@
 # TODO
 
+If something has a strike though it is complete. If something was striked but its not now just means more work needs to be done.
+
 ## Engine
 
 * Improve font rendering.
@@ -21,6 +23,10 @@
 * ~~Error message system.~~
 * UI framework.
 * Multi-Threading
+
+## Experiment
+* Set up engine to use a callback when running game logic.
+  - The user can do what ever they whatever they want here.
 
 ## Game
 * ???
