@@ -349,6 +349,17 @@ inline void AddEngineErrorMessage(const unsigned int &code, const int &type, con
 }
 
 /**
+ * \brief A helper to add a new error message.
+ * 
+ * \param code The code of the error.
+ * \param msg The string message of this error.
+*/
+
+inline void AddEngineErrorMessage(const unsigned int &code, const std::string &msg) {
+	ErrorEngine::GetInstance()->AddErrorMessage(code, msg);
+}
+
+/**
  * \brief Displays the EngineErrorMessage string to the terminal.
  * 
 */
