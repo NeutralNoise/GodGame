@@ -1,6 +1,6 @@
 #include "ErrorEngine.h"
 #include <iostream>
-
+#include "ErrorCodeFunctions.h"
 
 ErrorEngine::ErrorEngine()
 {
@@ -11,18 +11,42 @@ ErrorEngine::~ErrorEngine()
 {
 }
 
+void ErrorEngine::InitErrorEngine() { 
+	p_instance = new ErrorEngine; 
+	//Some of the standard error codes that.
+	p_instance->RegCodeFunc(150, Err_150_FontFail);
+	p_instance->RegCodeFunc(151, Err_151_FontRenderFail);
+
+}
+
 void ErrorEngine::RegCodeFunc(const unsigned int & code, ErrorMessageFunctions funcs)
 {
 	m_errorFunction[code] = funcs;
 }
 
+void ErrorEngine::RegCodeFunc(const unsigned int & code, std::string(*strFunc)(const EngineErrorMessage &))
+{
+	m_errorFunction[code] = ErrorMessageFunctions(strFunc);
+}
+
+void ErrorEngine::RegCodeFunc(const unsigned int & code, void *(*dataFunc)(const EngineErrorMessage &))
+{
+	m_errorFunction[code] = ErrorMessageFunctions(dataFunc);
+}
+
 void ErrorEngine::AddErrorMessage(const unsigned int & code, const int & type)
 {
+	if (type == EngineErrorTypes::ERR_TYPE_FATEL) {
+		m_hasFatel = true;
+	}
 	m_messages.push_back(EngineErrorMessage(code, type));
 }
 
 void ErrorEngine::AddErrorMessage(const unsigned int & code, const int & type, const std::string & msg)
 {
+	if (type == EngineErrorTypes::ERR_TYPE_FATEL) {
+		m_hasFatel = true;
+	}
 	m_messages.push_back(EngineErrorMessage(code, type, msg));
 }
 
@@ -132,6 +156,15 @@ void * ErrorEngine::CallErrrorCodeDataFunc(const EngineErrorMessage & err)
 		}
 	}
 	return nullptr;
+}
+
+void ErrorEngine::OnFatel()
+{
+	if (m_hasFatel) {
+		DisplayErrors();
+		std::cin.get();
+		exit(2);
+	}
 }
 
 ErrorEngine * ErrorEngine::p_instance = nullptr;

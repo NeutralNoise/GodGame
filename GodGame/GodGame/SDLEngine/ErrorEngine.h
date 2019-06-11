@@ -80,6 +80,48 @@ struct ErrorMessageFunctions
 {
 	std::string (*strFunc)(const EngineErrorMessage&) = nullptr;
 	void * (*dataFunc)(const EngineErrorMessage&) = nullptr;
+
+	/**
+	 * \brief Construct a new ErrorMessageFunctions object
+	 * 
+	*/
+
+	ErrorMessageFunctions() {
+
+	}
+
+	/**
+	 * \brief Construct a new ErrorMessageFunctions object with a pointer to a string function.
+	 * 
+	 * \param strFunc The string function to call.
+	*/
+
+	ErrorMessageFunctions(std::string(*strFunc)(const EngineErrorMessage&)) {
+		this->strFunc = strFunc;
+	}
+
+	/**
+	 * \brief Construct a new ErrorMessageFunctions object with a pointer to a data function.
+	 * 
+	 * \param dataFunc The data function that will be called.
+	*/
+
+	ErrorMessageFunctions(void * (*dataFunc)(const EngineErrorMessage&)) {
+		this->dataFunc = dataFunc;
+	}
+
+	/**
+	 * \brief Construct a new ErrorMessageFunctions object with both a string function and a data function.
+	 * 
+	 * \param strFunc The string function to call.
+	 * \param dataFunc The data function to call.
+	*/
+
+	ErrorMessageFunctions(std::string(*strFunc)(const EngineErrorMessage&), void * (*dataFunc)(const EngineErrorMessage&)) {
+		this->strFunc = strFunc;
+		this->dataFunc = dataFunc;
+	}
+
 };
 
 class ErrorEngine
@@ -102,19 +144,38 @@ public:
 
 	/**
 	 * \brief Create a new instance of the error engine.
+	 * * \warn This should only be called once and it should be called before the ErrorEngine is used.
 	 * 
 	*/
 
-	static void InitErrorEngine() { p_instance = new ErrorEngine; }
+	static void InitErrorEngine();
 
 	/**
 	 * \brief Sets the functions for a given error code.
-	 * \warn This should only be called once and it should be called before the ErrorEngine is used.
+	 * 
 	 * \param code The error code to set the functions of.
 	 * \param funcs The functions to set. \see ErrorMessageFunctions
 	*/
 
 	void RegCodeFunc(const unsigned int &code, ErrorMessageFunctions funcs);
+
+	/**
+	 * \brief Sets the string functions for a given error code.
+	 * \warn This will override anything that is already there.
+	 * \param code The error code the function belongs too.
+	 * \param strFunc The function to add.
+	*/
+
+	void RegCodeFunc(const unsigned int &code, std::string (*strFunc)(const EngineErrorMessage&));
+
+	/**
+	 * \brief 
+	 * 
+	 * \param code 
+	 * \param dataFunc 
+	*/
+
+	void RegCodeFunc(const unsigned int &code, void *(*dataFunc)(const EngineErrorMessage&));
 
 	/**
 	 * \brief Add a new error message.
@@ -234,10 +295,18 @@ public:
 
 	static ErrorEngine * GetInstance() { return p_instance; }
 
+	/**
+	 * \brief Called when a fatel error has happened.
+	 * 
+	*/
+
+	void OnFatel();
+
 private:
 	std::map<unsigned int, ErrorMessageFunctions> m_errorFunction; //!< Functions that are ran on a given error code. Mainly used for generating the error message.
 	std::deque<EngineErrorMessage> m_messages; //!< Storeage for errors that have been generated.
 	static ErrorEngine * p_instance; //!< Instance of this class to handle system wid errors.
+	bool m_hasFatel = false;
 };
 
 /**
