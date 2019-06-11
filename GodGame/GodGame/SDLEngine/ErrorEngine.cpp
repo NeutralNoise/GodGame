@@ -42,6 +42,30 @@ void ErrorEngine::AddErrorMessage(const unsigned int & code, const int & type)
 	m_messages.push_back(EngineErrorMessage(code, type));
 }
 
+void ErrorEngine::AddErrorMessage(const unsigned int & code, const std::string & msg)
+{
+	//Check if we have a onAdd callback.
+	auto iter = m_errorFunction.find(code);
+	EngineErrorMessage addErr;
+	if (iter != m_errorFunction.end()) {
+		if (iter->second.onAdd != nullptr) {
+			addErr = iter->second.onAdd(msg);
+			if (addErr.type == EngineErrorTypes::ERR_TYPE_FATEL) {
+				m_hasFatel = true;
+			}
+			m_messages.push_back(addErr);
+		}
+		else {
+			//If we don't know the error type make it always fatel.
+			AddErrorMessage(code, EngineErrorTypes::ERR_TYPE_FATEL, msg);
+		}
+	}
+	else {
+		//If we don't know the error type make it always fatel.
+		AddErrorMessage(code, EngineErrorTypes::ERR_TYPE_FATEL, msg);
+	}
+}
+
 void ErrorEngine::AddErrorMessage(const unsigned int & code, const int & type, const std::string & msg)
 {
 	if (type == EngineErrorTypes::ERR_TYPE_FATEL) {

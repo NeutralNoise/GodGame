@@ -80,7 +80,7 @@ struct ErrorMessageFunctions
 {
 	std::string (*strFunc)(const EngineErrorMessage&) = nullptr;
 	void * (*dataFunc)(const EngineErrorMessage&) = nullptr;
-
+	EngineErrorMessage (*onAdd)(const std::string&) = nullptr;
 	/**
 	 * \brief Construct a new ErrorMessageFunctions object
 	 * 
@@ -110,16 +110,22 @@ struct ErrorMessageFunctions
 		this->dataFunc = dataFunc;
 	}
 
+	ErrorMessageFunctions(EngineErrorMessage(*onAdd)(const std::string&)) {
+		this->onAdd = onAdd;
+	}
+
 	/**
 	 * \brief Construct a new ErrorMessageFunctions object with both a string function and a data function.
 	 * 
 	 * \param strFunc The string function to call.
 	 * \param dataFunc The data function to call.
+	 * \param onAdd A function called when the given error code is added.
 	*/
 
-	ErrorMessageFunctions(std::string(*strFunc)(const EngineErrorMessage&), void * (*dataFunc)(const EngineErrorMessage&)) {
+	ErrorMessageFunctions(std::string(*strFunc)(const EngineErrorMessage&), void * (*dataFunc)(const EngineErrorMessage&), EngineErrorMessage(*onAdd)(const std::string&)) {
 		this->strFunc = strFunc;
 		this->dataFunc = dataFunc;
+		this->onAdd = onAdd;
 	}
 
 };
@@ -185,6 +191,8 @@ public:
 	*/
 
 	void AddErrorMessage(const unsigned int &code, const int &type);
+
+	void AddErrorMessage(const unsigned int &code, const std::string &msg);
 
 	/**
 	 * \brief Add a new error message.
