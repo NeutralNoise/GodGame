@@ -86,7 +86,6 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 		//Create texture from the surface.
 		p_font->texture->texture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->renderer, textSurface);
 		if (p_font->texture->texture == NULL) {
-			//TODO ErrorMessage.
 			AddEngineErrorMessage(111, EngineErrorTypes::ERR_TYPE_FATEL,
 				"SDL2 Unable to create surface from texture. " + std::string(SDL_GetError()));
 		}
