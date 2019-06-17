@@ -322,7 +322,7 @@ private:
 	std::map<unsigned int, ErrorMessageFunctions> m_errorFunction; //!< Functions that are ran on a given error code. Mainly used for generating the error message.
 	std::deque<EngineErrorMessage> m_messages; //!< Storeage for errors that have been generated.
 	static ErrorEngine * p_instance; //!< Instance of this class to handle system wid errors.
-	bool m_hasFatel = false;
+	bool m_hasFatel = false; //!< Has a fatel error happened. Trtue if there has been one.
 };
 
 /**
