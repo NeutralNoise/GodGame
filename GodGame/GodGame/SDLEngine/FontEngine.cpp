@@ -13,7 +13,7 @@ EngineFont * FontEngine::LoadFont(const std::string &file, const int &fontsize) 
 	catch (const std::exception &e) {
 		AddEngineErrorMessage(900, EngineErrorTypes::ERR_TYPE_FATEL,
 			"Failed to create new font: " + std::string(e.what()));
-		return nullptr;
+			ErrorEngine::GetInstance()->OnFatel();
 	}
 	p_font->textsize = fontsize;
 	p_font->font = TTF_OpenFont(file.c_str(), fontsize);
@@ -34,7 +34,7 @@ EngineFont * FontEngine::LoadFont(const std::string &file, const int &fontsize) 
 			"Failed to create new texture: " + std::string(e.what()));
 		TTF_CloseFont(p_font->font);
 		delete p_font;
-		return nullptr;
+		ErrorEngine::GetInstance()->OnFatel();
 	}
 
 	return p_font;
