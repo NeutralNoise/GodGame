@@ -12,6 +12,7 @@ enum Engine_Info_Types {
 	EI_TYPE_NONE, //!< Unknown data type.
 	EI_TYPE_INT, //!< Data type of int.
 	EI_TYPE_UINT, //!< Data type of unsigned int.
+	EI_TYPE_FLOAT, //!< Data type of float.
 	EI_TYPE_STRING, //!< Data type of std::string.
 	EI_TYPE_ENGINE_INFO //!< Data type of EngineInfo structure. \see EngineInfo
 };
@@ -32,6 +33,7 @@ struct EngineInfo
 	{
 		int idata = 0; //!< This is where the int data is stored.
 		unsigned int uidata; //!< This is where the unsigned int data is stored.
+		float fdata;
 	};
 	std::string sdata; //!< This is where the string data is stored.
 	EngineInfo * edata = nullptr; //!< A pointer to an EngineInfo object.
