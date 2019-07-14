@@ -31,6 +31,9 @@ This will be added to as the project continues.
 - [ ] UI framework.
 - [ ] Multi-Threading.
 - [ ] Timers.
+  - [x] Layer render time.
+  - [x] Avg layer render time.
+  - [ ] Layer Update time.
 - [ ] Operating sytem (Windows is a given here.).
   - [ ] System information.
     - [ ] Windows.
