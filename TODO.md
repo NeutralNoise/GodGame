@@ -30,6 +30,7 @@ This will be added to as the project continues.
 - [x] Error message system.
 - [ ] UI framework.
 - [ ] Multi-Threading.
+- [ ] Timers.
 - [ ] Operating sytem (Windows is a given here.).
   - [ ] System information.
     - [ ] Windows.
