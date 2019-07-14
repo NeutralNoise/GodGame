@@ -3,6 +3,28 @@
 #include "../GameEngine.h"
 #include "../ImageLoader.h"
 
+/** \struct RenderTile
+ * \brief The tile within the texture that is rendered to the LayerTile.
+ * \warning this will be replaced by a sprite sheet later.
+*/
+
+struct RenderTile {
+	int x = 0; //!< The x offset within the image.
+	int y = 0; //!< The y offset within the image.
+	int width = 32; //!< The width of the image tile.
+	int height = 32; //!< The height of the image tile.
+
+	RenderTile() {}
+
+	RenderTile(const int &x, const int &y, const int &w, const int &h) {
+		this->x = x;
+		this->y = y;
+		this->width = w;
+		this->height = h;
+	}
+};
+
+
 /** \struct LayerTile
  * \brief A structure representing a tile within a layer.
  * 
@@ -13,11 +35,15 @@ struct LayerTile
 	int x = 0; //!< X position in the world.
 	int y = 0; //!< Y position in the world.
 
-	int width = 32; //!< The width of the tile
-	int height = 32; //!< The height of the tile
+	int width = 32; //!< The width of the tile.
+	int height = 32; //!< The height of the tile.
+
+	// This should be in clockwise direction
+	double angle; //!< Angle of rotation in degrees.
 
 	//Texture
 	int frame = 0; //!< For tile mapping
+	RenderTile renderTile;
 	Texture * texture = nullptr; //!< What texture does this tile use.
 	bool translateWithCamera = false; //!< Is the tile rendered in world space of tile space.
 	bool checkCameraCollision = true; //!< Does the engine have to check if this is within screen space. If if false it will always be drawn.

@@ -95,6 +95,14 @@ void RenderEngine::DrawLayer(RenderLayer * layer) {
 	EngineInfo* tmpInfo = InfoEngine::GetEngineInfo("rendered_textures");
 	tmpInfo->idata = 0;
 	EngineCamera camera = *GameEngine::GetRenderer()->camera;
+
+	//Convert a engine rect to an SDL2 Rect
+	auto RenTileToRect = [](RenderTile r) {
+		//Some type punning
+		Rect rtn = *(Rect*)&r;
+		return rtn;
+	};
+
 	for (size_t i = 0; i < m_layers.size(); i++) {
 		for (size_t t = 0; t < m_layers[i]->tiles.size(); t++) {
 			Rect srect;
@@ -112,16 +120,32 @@ void RenderEngine::DrawLayer(RenderLayer * layer) {
 			//We need a cliping plane. We can do that with a camera. DONE!
 			if (m_layers[i]->tiles[t]->checkCameraCollision) {
 				if (camera.CollisionWithCamera(drect)) {
+					/*
 					srect.height = m_layers[i]->tiles[t]->height;
 					srect.width = m_layers[i]->tiles[t]->width;
+					*/
+
+					srect = RenTileToRect(m_layers[i]->tiles[t]->renderTile);
+					/*
+					srect.x = m_layers[i]->tiles[t]->renderTile.x;
+					srect.y = m_layers[i]->tiles[t]->renderTile.y;
+					srect.width = m_layers[i]->tiles[t]->renderTile.width;
+					srect.height = m_layers[i]->tiles[t]->renderTile.height;
+					*/
 					p_gameEngine->RenderCopy(m_layers[i]->tiles[t]->texture, &srect, &drect);
 					tmpInfo->idata++;
 				}
 			}
 			else {
 				//Just draw this no matter where it is.
+
+				srect = RenTileToRect(m_layers[i]->tiles[t]->renderTile);
+				/*
 				srect.height = m_layers[i]->tiles[t]->height;
 				srect.width = m_layers[i]->tiles[t]->width;
+				srect.width = m_layers[i]->tiles[t]->renderTile.width;
+				srect.height = m_layers[i]->tiles[t]->renderTile.height;
+				*/
 				p_gameEngine->RenderCopy(m_layers[i]->tiles[t]->texture, &srect, &drect);
 				tmpInfo->idata++;
 			}

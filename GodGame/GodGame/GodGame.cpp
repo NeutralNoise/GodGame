@@ -42,15 +42,22 @@ int main(int argc, char ** argv)
 		
 		Input input;
 		ImageLoader::LoadTexture("data/test.png");
-		Texture *texture = ImageLoader::GetTexture("data/test.png");
+		Texture *texture = ImageLoader::GetTexture("data/test.png");		
 
 		LayerTile * tile = new LayerTile;
 		//tile->x = 0;
 		//tile->y = 0;
 		tile->x = 600 / 2;
 		tile->y = 600 / 2;
-		tile->height = 32;
-		tile->width = 32;
+		//tile->height = 32;
+		//tile->width = 32;
+
+		tile->height = 64;
+		tile->width = 64;
+
+		tile->renderTile.width = 32;
+		tile->renderTile.height = 32;
+
 		tile->texture = texture;
 		tile->translateWithCamera = false;
 		tile->checkCameraCollision = false;
@@ -58,8 +65,11 @@ int main(int argc, char ** argv)
 		LayerTile * tile2 = new LayerTile;
 		tile2->x = 0;
 		tile2->y = 0;
-		tile2->height = 32;
-		tile2->width = 32;
+		//NOTE this size causes a bug with the camera.
+		tile2->height = 128;
+		tile2->width = 128;
+		tile2->renderTile.width = 32;
+		tile2->renderTile.height = 32;
 		tile2->texture = texture;
 		tile2->translateWithCamera = true;
 
