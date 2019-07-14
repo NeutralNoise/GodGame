@@ -1,14 +1,26 @@
 # TODO
 
-If something was checked off but its not now just means more work needs to be done.
-This will be added to as the project continues.
+1. If something was checked off but its not now just means more work needs to be done.
+2. This will be added to as the project continues.
+3. ?? means either I'm thinking about this or nothing has came up that requires action.
 ## Engine
 - [ ] Rendering
   - [ ] Sprite Sheets.
   - [ ] Sprite rotation.
   - [ ] OpenGL render.
     - [ ] SDL2 OpenGL context
+    - [ ] Shader loading.
+      - [ ] Basic image display shader.
+      - [ ] Custom shaders.
+      - [ ] Shader compiling.
+        - [ ] Uniforms.
   - [ ] Custom DLL loading.
+- [ ] File system.
+  - [ ] Open files.
+  - [ ] Save files.
+  - [ ] Virtual File System (VFS).
+  - [ ] Json files.
+    - [ ] Jsoncpp wrapper.
 - [ ] Improve font rendering.
   - [ ] Not sure what I need for this just yet.
 - [ ] Add frame rate limiting.
@@ -30,11 +42,11 @@ This will be added to as the project continues.
   - [ ] The file should be reloadable.
 - [x] Error message system.
 - [ ] UI framework.
-- [ ] Multi-Threading.
 - [ ] Timers.
   - [x] Layer render time.
   - [x] Avg layer render time.
   - [ ] Layer Update time.
+  - [ ] ??
 - [ ] Operating sytem (Windows is a given here.).
   - [ ] System information.
     - [ ] Windows.
@@ -42,10 +54,17 @@ This will be added to as the project continues.
   - [ ] Linux.
     - [ ] Make file.
     - [ ] Shared object (SO) loading.
+  - [ ] Optimisation.
+    - These will be on going and maybe check and unchecked whenever.
+    - [ ] Rendering.
+      - [ ] Only check the layer where the camera is looking.
+      - [ ] ??
+    - [ ] ??
 
 ## Experiment
 - [ ] Set up engine to use a callback when running game logic.
   - [ ] The user can do what ever they whatever they want here.
+- [ ] Multi-Threading.
 
 ## Game
 * ???
