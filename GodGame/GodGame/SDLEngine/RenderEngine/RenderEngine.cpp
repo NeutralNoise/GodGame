@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "../InfoEngine.h"
 #include "../ErrorEngine.h"
+#include "../InfoEngine.h"
 
 RenderEngine::RenderEngine() {
 	
@@ -19,7 +20,11 @@ bool RenderEngine::InitRenderImage(GameEngine * ge) {
 	}
 	p_gameEngine = ge;
 	EngineInfo * newInfo = new EngineInfo("rendered_textures", Engine_Info_Types::EI_TYPE_INT);
+	p_layerRenderTime = new EngineInfo("layer_render_time", Engine_Info_Types::EI_TYPE_FLOAT);
+	p_layerRenderTimeAvg = new EngineInfo("layer_render_time_avg", Engine_Info_Types::EI_TYPE_FLOAT);
 	InfoEngine::AddEngineInfo(newInfo);
+	InfoEngine::AddEngineInfo(p_layerRenderTime);
+	InfoEngine::AddEngineInfo(p_layerRenderTimeAvg);
 	return true;
 }
 
@@ -78,16 +83,25 @@ void RenderEngine::Update() {
 }
 
 void RenderEngine::DrawLayers() {
-	Update();
 
+	m_layerTimer.StartTimer();
+
+	Update();
+	p_layerRenderTimeAvg->fdata = 0;
+	int numLayers = 0;
 	for (size_t i = 0; i < m_layers.size(); i++) {
+		m_layerAvgTimer.StartTimer();
 		if (m_layers[i]->Draw != nullptr) {
 			m_layers[i]->Draw();
 		}
 		else {
 			DrawLayer(m_layers[i]);
 		}
+		p_layerRenderTimeAvg->fdata += m_layerAvgTimer.GetTime();
+		numLayers++;
 	}
+	p_layerRenderTimeAvg->fdata = p_layerRenderTimeAvg->fdata / numLayers;
+	p_layerRenderTime->fdata = m_layerTimer.GetTime();
 
 }
 
@@ -154,3 +168,5 @@ void RenderEngine::DrawLayer(RenderLayer * layer) {
 }
 
 GameEngine * RenderEngine::p_gameEngine = nullptr;
+EngineInfo * RenderEngine::p_layerRenderTime = nullptr;
+EngineInfo * RenderEngine::p_layerRenderTimeAvg = nullptr;

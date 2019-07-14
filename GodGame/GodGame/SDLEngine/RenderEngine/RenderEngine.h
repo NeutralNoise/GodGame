@@ -2,6 +2,8 @@
 #include <vector>
 #include "../GameEngine.h"
 #include "../ImageLoader.h"
+#include "../Timer.h"
+struct EngineInfo;
 
 /** \struct RenderTile
  * \brief The tile within the texture that is rendered to the LayerTile.
@@ -144,5 +146,8 @@ private:
 
 	std::vector<RenderLayer*> m_layers; //!< Layers to be drawn.
 	static GameEngine * p_gameEngine; //!< Pointer to the GameEngine that is used.
-
+	static EngineInfo * p_layerRenderTime; //!< Used to store the time taken to render the layers.
+	static EngineInfo * p_layerRenderTimeAvg; //!< Used to store the average time taken to render the layers.
+	SimpleTimer m_layerAvgTimer; //!< Timer used to time the time taken to render the layer.
+	SimpleTimer m_layerTimer; //!< Timer used to time the time taken to render the layer.
 };
