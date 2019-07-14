@@ -21,6 +21,7 @@ This will be added to as the project continues.
 - [ ] Finished rendering engine.
   - [ ] The current one doesn't use the RenderLayer fully.
     - [ ] Each tile layer can only have one layer at the moment. Each layer should be able to have more then one layer.
+    - [ ] Check if layer update is needed.
   - [ ] Add more statistics to InfoEngine about the rendering engine.
     - [ ] Frame count.
     - [ ] Frame time.
