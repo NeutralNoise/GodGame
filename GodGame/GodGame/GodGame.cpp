@@ -13,6 +13,10 @@
 #include "SDLEngine/InfoEngine.h"
 #include "SDLEngine/ErrorEngine.h"
 
+//Uncomment this to spawn a shit load of tiles.
+//#define BULK_FAKE_TILE_TEST
+#define BULK_FAKE_TILE_NUM 2500
+
 int main(int argc, char ** argv)
 {
     std::cout << "Hello World!\n"; 
@@ -31,9 +35,17 @@ int main(int argc, char ** argv)
 	Rect testWinRect2(0, 0, 32, 32);
 	RenderEngine renderEngine;
 	FontEngine fe;
+	FontEngine renderTime;
+	FontEngine renderTimeAvg;
+	FontEngine currentFps;
+	renderTime.LoadFont("data/OpenSans-Regular.ttf");
+	renderTimeAvg.LoadFont("data/OpenSans-Regular.ttf");
+	currentFps.LoadFont("data/OpenSans-Regular.ttf");
 	fe.LoadFont("data/OpenSans-Regular.ttf");
 	fe.LoadFromRenderedText("Hello World");
 	EngineInfo * testInfo = nullptr;
+	EngineInfo * RenderInfo = nullptr;
+	EngineInfo * RenderAvgInfo = nullptr;
 	int xpos = 0;
 	int ypos = 0;
 	if (isRunning) {
@@ -79,6 +91,25 @@ int main(int argc, char ** argv)
 		layer->tiles.push_back(tile);
 		layer->tiles.push_back(tile2);
 
+#ifdef BULK_FAKE_TILE_TEST
+		//Simple test to test rendering speeds.
+		for (int i = 0; i < (int)BULK_FAKE_TILE_NUM; i++) {
+			LayerTile * tileTest = new LayerTile;
+			tileTest->x = 64;
+			tileTest->y = 64;
+
+			tileTest->height = 64;
+			tileTest->width = 64;
+
+			tileTest->renderTile.width = 32;
+			tileTest->renderTile.height = 32;
+
+			tileTest->texture = texture;
+			tileTest->translateWithCamera = true;
+			layer->tiles.push_back(tileTest);
+		}
+#endif // BULK_FAKE_TILE_TEST
+
 		renderEngine.AddLayer(layer);
 		/*
 		for (int y = 0; y <= (600 / 32); y++) {
@@ -103,8 +134,17 @@ int main(int argc, char ** argv)
 			renderEngine.DrawLayers();
 			//Draw some stats on the screen.
 			testInfo = InfoEngine::GetEngineInfo("rendered_textures");
-			fe.LoadFromRenderedText(std::to_string(testInfo->idata));
+			RenderInfo = InfoEngine::GetEngineInfo("layer_render_time");
+			RenderAvgInfo = InfoEngine::GetEngineInfo("layer_render_time_avg");
+			fe.LoadFromRenderedText("On Screen Tiles:" + std::to_string(testInfo->idata));
+			renderTime.LoadFromRenderedText("Layer Draw Time:" + std::to_string(RenderInfo->fdata / 1000));
+			renderTimeAvg.LoadFromRenderedText("Average Layer Draw Time:" + std::to_string(RenderAvgInfo->fdata / 1000));
+			currentFps.LoadFromRenderedText("Engine FPS:" + std::to_string(1000 / RenderInfo->fdata));
 			fe.Draw(Rect(5,0,0,0));
+			renderTime.Draw(Rect(5, 45, 0, 0));
+			renderTime.Draw(Rect(5, 45, 0, 0));
+			renderTimeAvg.Draw(Rect(5, 90, 0, 0));
+			currentFps.Draw(Rect(5, 135, 0, 0));
 
 			ge.UpdateWindow();
 			//This really shouldn't be here. set the number of fps to 60 the engine will track the fps and it can be reported to the user.
