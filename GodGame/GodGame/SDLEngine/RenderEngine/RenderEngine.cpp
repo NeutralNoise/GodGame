@@ -118,49 +118,36 @@ void RenderEngine::DrawLayer(RenderLayer * layer) {
 	};
 
 	for (size_t i = 0; i < m_layers.size(); i++) {
-		for (size_t t = 0; t < m_layers[i]->tiles.size(); t++) {
+		size_t lsize = m_layers[i]->tiles.size();
+		LayerTile * cTile;
+		for (size_t t = 0; t < lsize; t++) {
 			Rect srect;
 			Rect drect;
+			cTile = m_layers[i]->tiles[t];
 
-			drect.x = m_layers[i]->tiles[t]->x;
-			drect.y = m_layers[i]->tiles[t]->y;
-			drect.height = m_layers[i]->tiles[t]->height;
-			drect.width = m_layers[i]->tiles[t]->width;
-			if (m_layers[i]->tiles[t]->translateWithCamera) {
+			drect.x = cTile->x;
+			drect.y = cTile->y;
+			drect.height = cTile->height;
+			drect.width = cTile->width;
+
+			if (cTile->translateWithCamera) {
 				drect = camera.TranslateWithCamera(drect);
 			}
 
 			//TODO Tile Mapping
 			//We need a cliping plane. We can do that with a camera. DONE!
-			if (m_layers[i]->tiles[t]->checkCameraCollision) {
+			if (cTile->checkCameraCollision) {
 				if (camera.CollisionWithCamera(drect)) {
-					/*
-					srect.height = m_layers[i]->tiles[t]->height;
-					srect.width = m_layers[i]->tiles[t]->width;
-					*/
-
-					srect = RenTileToRect(m_layers[i]->tiles[t]->renderTile);
-					/*
-					srect.x = m_layers[i]->tiles[t]->renderTile.x;
-					srect.y = m_layers[i]->tiles[t]->renderTile.y;
-					srect.width = m_layers[i]->tiles[t]->renderTile.width;
-					srect.height = m_layers[i]->tiles[t]->renderTile.height;
-					*/
-					p_gameEngine->RenderCopy(m_layers[i]->tiles[t]->texture, &srect, &drect);
+					srect = RenTileToRect(cTile->renderTile);
+					p_gameEngine->RenderCopy(cTile->texture, &srect, &drect);
 					tmpInfo->idata++;
 				}
 			}
 			else {
 				//Just draw this no matter where it is.
 
-				srect = RenTileToRect(m_layers[i]->tiles[t]->renderTile);
-				/*
-				srect.height = m_layers[i]->tiles[t]->height;
-				srect.width = m_layers[i]->tiles[t]->width;
-				srect.width = m_layers[i]->tiles[t]->renderTile.width;
-				srect.height = m_layers[i]->tiles[t]->renderTile.height;
-				*/
-				p_gameEngine->RenderCopy(m_layers[i]->tiles[t]->texture, &srect, &drect);
+				srect = RenTileToRect(cTile->renderTile);
+				p_gameEngine->RenderCopy(cTile->texture, &srect, &drect);
 				tmpInfo->idata++;
 			}
 		}
