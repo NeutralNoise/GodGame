@@ -167,6 +167,7 @@
     <ClCompile Include="SDLEngine\InfoEngine.cpp" />
     <ClCompile Include="SDLEngine\Input.cpp" />
     <ClCompile Include="SDLEngine\RenderEngine\RenderEngine.cpp" />
+    <ClCompile Include="SDLEngine\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\EngineCamera.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="SDLEngine\Input.h" />
     <ClInclude Include="SDLEngine\Rect.h" />
     <ClInclude Include="SDLEngine\RenderEngine\RenderEngine.h" />
+    <ClInclude Include="SDLEngine\Timer.h" />
     <ClInclude Include="SDLEngine\typedefs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

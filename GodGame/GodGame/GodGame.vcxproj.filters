@@ -51,6 +51,9 @@
     <ClCompile Include="SDLEngine\ErrorEngine.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Timer.cpp">
+      <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
     <ClInclude Include="SDLEngine\ErrorCodeFunctions.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Timer.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
   </ItemGroup>
