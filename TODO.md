@@ -5,8 +5,10 @@
 3. ?? means either I'm thinking about this or nothing has came up that requires action.
 ## Engine
 - [ ] Rendering
+  - [ ] Inherited renderer class.
   - [ ] Sprite Sheets.
   - [ ] Sprite rotation.
+  - [ ] Sprite batching.
   - [ ] OpenGL render.
     - [ ] SDL2 OpenGL context
     - [ ] Shader loading.
@@ -22,8 +24,17 @@
   - [ ] Json files.
     - [ ] Jsoncpp wrapper.
 - [ ] Improve font rendering.
-  - [ ] Not sure what I need for this just yet.
-- [ ] Add frame rate limiting.
+  - [ ] Font manager.
+    - [ ] Load fonts.
+    - [ ] Generate text texute from the fonts.
+    - [ ] Geterate sprite glyth from font. (Mainly for OpenGL).
+    - [ ] Store FontText.
+  - [ ] FontText
+    - [ ] Store last used text.
+    - [ ] Store last generated text texture.
+- [ ] Frame rate limiting.
+  - [ ] VSYNC.
+  - [ ] Configurable option.
 - [ ] Physics Engine.
   - [ ] Basic physics engine Separating Axis Theorem collision check.
     - [ ] This will serve as a wrapper for adding better physics engines later.
@@ -38,26 +49,59 @@
     - [ ] Frame count.
     - [ ] Frame time.
 - [ ] Add debug information access with key press.
-  - [ ] There should be configuration file that lets to pick what information is displayed.
-  - [ ] The file should be reloadable.
+- [ ] Config File.
+  - [ ] Loads JSON file.
+  - [ ] Command line arguments override JSON file.
+  - [ ] Options.
+    - [ ] Frame rate.
+    - [ ] Physics frame rate.
+    - [ ] Profiling on or off.
+    - [ ] Debug information.
+      - [ ] Choose what to display.
+    - [ ] Networking options?
+    - [ ] Max memory useage.
+      - [ ] All loaders will need to check this.
+      - [ ] Default is use all memory.
+  - [ ] Reloadable while running.
+    - [ ] Auto detected changes.
+    - [ ] With key press.
 - [x] Error message system.
 - [ ] UI framework.
-- [ ] Timers.
-  - [x] Layer render time.
-  - [x] Avg layer render time.
-  - [ ] Layer Update time.
-  - [ ] ??
+- [ ] Statistics
+  - [ ] Timers.
+    - [x] Layer render time.
+    - [x] Avg layer render time.
+    - [ ] Layer Update time.
+    - [ ] Physis update time
+      - [ ] Total time.
+      - [ ] Avg object update time.
+    - [ ] ??
+  - [ ] Counters.
+    - [ ] Drawn sprites.
+    - [ ] Draw calls.
+    - [ ] Avg drawn sprites.
+    - [ ] Avg draw calls.
+    - [ ] Loaded textures.
+    - [ ] Physis objects.
+  - [ ] System.
+    - [ ] Memory useage.
+    - [ ] CPU useage.
+    - [ ] GPU useage.
 - [ ] Operating sytem (Windows is a given here.).
   - [ ] System information.
     - [ ] Windows.
-    - [ ] Linux
+    - [ ] Linux.
+    - [ ] Hardware.
+      - [ ] CPUID
+      - [ ] GPUID
+      - [ ] Total memory avaiable.
   - [ ] Linux.
     - [ ] Make file.
     - [ ] Shared object (SO) loading.
   - [ ] Optimisation.
     - These will be on going and maybe check and unchecked whenever.
     - [ ] Rendering.
-      - [ ] Only check the layer where the camera is looking.
+      - [ ] ~~Only check the layer where the camera is looking.~~ (This should be done by the user and not the engine when creating the sprite batch)
       - [ ] ??
     - [ ] ??
 
