@@ -9,13 +9,24 @@
   - [ ] Sprite Sheets.
   - [ ] Sprite rotation.
   - [ ] Sprite batching.
+  - [ ] Post processing.
+    - [ ] Gaussian Blur.
+    - [ ] Bloom.
+    - [ ] Motion blur.
+  - [ ] Lighting.
   - [ ] OpenGL render.
     - [ ] SDL2 OpenGL context
-    - [ ] Shader loading.
-      - [ ] Basic image display shader.
-      - [ ] Custom shaders.
+    - [ ] Shaders.
+      - [ ] Shader loading.
       - [ ] Shader compiling.
-        - [ ] Uniforms.
+      - [ ] Basic image display shader.
+        - [ ] Rander to FBO for post processing.
+      - [ ] Post processing.
+        - [ ] Gaussian Blur.
+        - [ ] Bloom.
+        - [ ] Motion blur.
+      - [ ] Uniforms.
+      - [ ] Custom shaders.
   - [ ] Custom DLL loading.
 - [ ] File system.
   - [ ] Open files.
@@ -38,7 +49,7 @@
 - [ ] Physics Engine.
   - [ ] Basic physics engine Separating Axis Theorem collision check.
     - [ ] This will serve as a wrapper for adding better physics engines later.
-  - [ ] Box2D.
+  - [ ] Box2D Wrapper.
   - [ ] Make all movement not based on frame rate but on frame delta time.
     - [ ] This should be able to be turned off.
 - [ ] Finished rendering engine.
@@ -103,6 +114,11 @@
     - [ ] Rendering.
       - [ ] ~~Only check the layer where the camera is looking.~~ (This should be done by the user and not the engine when creating the sprite batch)
       - [ ] ??
+    - [ ] Networking
+    - [ ] Audio
+      - [ ] OpenAL soft wrapper.
+      - [ ] Load sound.
+      - [ ] Play sound.
     - [ ] ??
 
 ## Experiment
