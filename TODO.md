@@ -4,16 +4,24 @@
 2. This will be added to as the project continues.
 3. ?? means either I'm thinking about this or nothing has came up that requires action.
 ## Engine
+
+### Rendering.
+
 - [ ] Rendering
   - [ ] Inherited renderer class.
   - [ ] Sprite Sheets.
   - [ ] Sprite rotation.
   - [ ] Sprite batching.
-  - [ ] Post processing.
-    - [ ] Gaussian Blur.
-    - [ ] Bloom.
-    - [ ] Motion blur.
-  - [ ] Lighting.
+  - [ ] RenderLayers
+    - [ ] Each layer should be able to have more then one layer.
+    - [ ] Check if layer update is needed.
+  - [ ] SDL2
+    - [ ] Render to texture/surface (for post processing.)
+    - [ ] Lighting.
+    - [ ] Post processing. (Done on the CPU)
+      - [ ] Gaussian Blur.
+      - [ ] Bloom.
+      - [ ] Motion blur.
   - [ ] OpenGL render.
     - [ ] SDL2 OpenGL context
     - [ ] Shaders.
@@ -21,19 +29,26 @@
       - [ ] Shader compiling.
       - [ ] Basic image display shader.
         - [ ] Rander to FBO for post processing.
+      - [ ] Lighting.
       - [ ] Post processing.
         - [ ] Gaussian Blur.
         - [ ] Bloom.
         - [ ] Motion blur.
       - [ ] Uniforms.
       - [ ] Custom shaders.
-  - [ ] Custom DLL loading.
+  - [ ] VSYNC.
+
+### File system.
+
 - [ ] File system.
   - [ ] Open files.
   - [ ] Save files.
   - [ ] Virtual File System (VFS).
   - [ ] Json files.
     - [ ] Jsoncpp wrapper.
+
+### Fonts.
+
 - [ ] Improve font rendering.
   - [ ] Font manager.
     - [ ] Load fonts.
@@ -43,23 +58,41 @@
   - [ ] FontText
     - [ ] Store last used text.
     - [ ] Store last generated text texture.
-- [ ] Frame rate limiting.
-  - [ ] VSYNC.
-  - [ ] Configurable option.
+
+### Physics.
+
 - [ ] Physics Engine.
-  - [ ] Basic physics engine Separating Axis Theorem collision check.
-    - [ ] This will serve as a wrapper for adding better physics engines later.
-  - [ ] Box2D Wrapper.
+  - [ ] Inherited physics class.
+  - [ ] Physics body.
+    - [ ] Rotation.
+  - [ ] Basic physics engine.
+    - [ ] Menifold generation.
+    - [ ] Separating Axis Theorem collision check.
+      - [ ] Box.
+      - [ ] Circle.
+      - [ ] Edge.
+      - [ ] Chain.
+      - [ ] Polygon (custom shape.)
+    - [ ] Friction.
+    - [ ] Velocity.
+    - [ ] Gravity.
+    - [ ] Mass.
+    - [ ] World (Where all the collisions happen.)
+      - [ ] Add shape.
+      - [ ] Remove shape.
+      - [ ] Update bodys.
+        - [ ] Only check whats near the body.
+    - [ ] Wish list (Things that might get added.)
+      - [ ] Joints.
+      - [ ] Springs.
+      - [ ] Ray cast.
+  - [ ] Box2D.
   - [ ] Make all movement not based on frame rate but on frame delta time.
-    - [ ] This should be able to be turned off.
-- [ ] Finished rendering engine.
-  - [ ] The current one doesn't use the RenderLayer fully.
-    - [ ] Each tile layer can only have one layer at the moment. Each layer should be able to have more then one layer.
-    - [ ] Check if layer update is needed.
-  - [ ] Add more statistics to InfoEngine about the rendering engine.
-    - [ ] Frame count.
-    - [ ] Frame time.
+    - [ ] Interpolation.
 - [ ] Add debug information access with key press.
+
+### Config.
+
 - [ ] Config File.
   - [ ] Loads JSON file.
   - [ ] Command line arguments override JSON file.
@@ -76,12 +109,14 @@
   - [ ] Reloadable while running.
     - [ ] Auto detected changes.
     - [ ] With key press.
-- [x] Error message system.
-- [ ] UI framework.
+
+### Statistics.
+
 - [ ] Statistics
   - [ ] Timers.
     - [x] Layer render time.
     - [x] Avg layer render time.
+    - [ ] Frame time.
     - [ ] Layer Update time.
     - [ ] Physis update time
       - [ ] Total time.
@@ -90,6 +125,7 @@
   - [ ] Counters.
     - [ ] Drawn sprites.
     - [ ] Draw calls.
+    - [ ] Frame rate.
     - [ ] Avg drawn sprites.
     - [ ] Avg draw calls.
     - [ ] Loaded textures.
@@ -98,6 +134,9 @@
     - [ ] Memory useage.
     - [ ] CPU useage.
     - [ ] GPU useage.
+
+### Operating system.
+
 - [ ] Operating sytem (Windows is a given here.).
   - [ ] System information.
     - [ ] Windows.
@@ -107,19 +146,47 @@
       - [ ] GPUID
       - [ ] Total memory avaiable.
   - [ ] Linux.
-    - [ ] Make file.
+    - [ ] Make file (for compiling)
     - [ ] Shared object (SO) loading.
-  - [ ] Optimisation.
-    - These will be on going and maybe check and unchecked whenever.
-    - [ ] Rendering.
-      - [ ] ~~Only check the layer where the camera is looking.~~ (This should be done by the user and not the engine when creating the sprite batch)
-      - [ ] ??
-    - [ ] Networking
-    - [ ] Audio
-      - [ ] OpenAL soft wrapper.
-      - [ ] Load sound.
-      - [ ] Play sound.
+
+### Optimisation.
+
+- [ ] Optimisation.
+  - These will be on going and maybe check and unchecked whenever.
+  - [ ] Rendering.
+    - [ ] ~~Only check the layer where the camera is looking.~~ (This should be done by the user and not the engine when creating the sprite batch)
     - [ ] ??
+
+### Networking
+
+- [ ] Networking.
+
+### Audio.
+
+- [ ] Audio.
+  - [ ] OpenAL soft wrapper.
+    - [ ] Load sound.
+    - [ ] Play sound.
+    - [ ] Pause sound.
+- [ ] ??
+
+### User interface.
+
+- [ ] UI framework.
+  - [ ] Options (These will need a wrapper to work with SDL2 rendering.)
+    - [ ] [Nuklear](https://github.com/vurtun/nuklear)
+    - [ ] [Imgui](https://github.com/ocornut/imgui)
+  - [ ] Triggers.
+  - [ ] Text box.
+    - [ ] Scrolling
+  - [ ] Load bar.
+  - [ ] Buttons.
+  - [ ] Image display.
+
+### Misc
+
+- [x] Error message system.
+
 
 ## Experiment
 - [ ] Set up engine to use a callback when running game logic.
