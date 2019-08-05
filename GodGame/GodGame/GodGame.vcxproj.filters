@@ -19,10 +19,10 @@
     <Filter Include="Source Files\SDLEngine">
       <UniqueIdentifier>{055cc4a1-6ae3-42bf-97e3-54bf71e931ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SDLEngine\RenderEngine">
+    <Filter Include="Header Files\SDLEngine\Renderers">
       <UniqueIdentifier>{76aaac31-44b0-4649-a300-7f56dcc5e913}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\SDLEngine\RenderEngine">
+    <Filter Include="Source Files\SDLEngine\Renderers">
       <UniqueIdentifier>{a2d89a6f-53b1-4886-9dbe-db6400e0607d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -39,9 +39,6 @@
     <ClCompile Include="SDLEngine\Input.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\RenderEngine\RenderEngine.cpp">
-      <Filter>Source Files\SDLEngine\RenderEngine</Filter>
-    </ClCompile>
     <ClCompile Include="SDLEngine\FontEngine.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
@@ -53,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="SDLEngine\Timer.cpp">
       <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\Renderer.cpp">
+      <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\RendererSDL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +77,6 @@
     <ClInclude Include="SDLEngine\EngineEvents.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\RenderEngine\RenderEngine.h">
-      <Filter>Header Files\SDLEngine\RenderEngine</Filter>
-    </ClInclude>
     <ClInclude Include="SDLEngine\EngineCamera.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
@@ -94,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="SDLEngine\Timer.h">
       <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderer.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\EngineConfig.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\RendererSDL.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

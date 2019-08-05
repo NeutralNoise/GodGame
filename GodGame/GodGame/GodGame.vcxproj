@@ -166,11 +166,13 @@
     <ClCompile Include="SDLEngine\ImageLoader.cpp" />
     <ClCompile Include="SDLEngine\InfoEngine.cpp" />
     <ClCompile Include="SDLEngine\Input.cpp" />
-    <ClCompile Include="SDLEngine\RenderEngine\RenderEngine.cpp" />
+    <ClCompile Include="SDLEngine\Renderer.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\RendererSDL.cpp" />
     <ClCompile Include="SDLEngine\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\EngineCamera.h" />
+    <ClInclude Include="SDLEngine\EngineConfig.h" />
     <ClInclude Include="SDLEngine\EngineEvents.h" />
     <ClInclude Include="SDLEngine\ErrorCodeFunctions.h" />
     <ClInclude Include="SDLEngine\ErrorEngine.h" />
@@ -180,7 +182,8 @@
     <ClInclude Include="SDLEngine\ImageLoader.h" />
     <ClInclude Include="SDLEngine\Input.h" />
     <ClInclude Include="SDLEngine\Rect.h" />
-    <ClInclude Include="SDLEngine\RenderEngine\RenderEngine.h" />
+    <ClInclude Include="SDLEngine\Renderer.h" />
+    <ClInclude Include="SDLEngine\Renderers\RendererSDL.h" />
     <ClInclude Include="SDLEngine\Timer.h" />
     <ClInclude Include="SDLEngine\typedefs.h" />
   </ItemGroup>
