@@ -295,7 +295,7 @@ public:
 	/**
 	 * \brief Calls the dataFunc on a given ErrorMessage.
 	 * 
-	 * \param err The error message to call the strFunc on.
+	 * \param err The error message to call the dataFunc on.
 	 * \return What error dataFunc returns. If no function it returns nulptr.
 	 * \see ErrorMessage
 	 * \see ErrorMessageFunctions

@@ -16,6 +16,9 @@ void ErrorEngine::InitErrorEngine() {
 	//Some of the standard error codes that.
 	p_instance->RegCodeFunc(150, ErrorMessageFunctions(Err_150_FontFail_strFunc, nullptr, Err_150_FontFail_onAdd));
 	p_instance->RegCodeFunc(151, ErrorMessageFunctions(Err_151_FontRenderFail_strFunc, nullptr, Err_151_FontRenderFail_onAdd));
+	p_instance->RegCodeFunc(200, ErrorMessageFunctions(Err_200_RendererNoInit_strFunc, nullptr, nullptr));
+	p_instance->RegCodeFunc(201, ErrorMessageFunctions(Err_201_RendererNoUpdate_strFunc, nullptr, nullptr));
+	p_instance->RegCodeFunc(202, ErrorMessageFunctions(Err_202_RendererNoDraw_strFunc, nullptr, nullptr));
 
 }
 
