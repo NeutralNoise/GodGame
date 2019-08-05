@@ -8,22 +8,23 @@
 ### Rendering.
 
 - [ ] Rendering
-  - [ ] Inherited renderer class.
+  - [x] Inherited renderer class.
   - [ ] Sprite Sheets.
-  - [ ] Sprite rotation.
-  - [ ] Sprite batching.
-  - [ ] RenderLayers
-    - [ ] Each layer should be able to have more then one layer.
-    - [ ] Check if layer update is needed.
+  - [ ] Sprite batching. (More for openGL)
+  - [x] RenderLayers
+    - [x] Each layer should be able to have more then one layer.
+    - [x] Check if layer update is needed.
   - [ ] SDL2
-    - [ ] Render to texture/surface (for post processing.)
+    - [ ] Render to texture/surface (for post processing and lighting.)
+    - [x] Sprite rotation.
     - [ ] Lighting.
-    - [ ] Post processing. (Done on the CPU)
+    - [ ] Post processing. (Done on the CPU. Will be SLOW!)
       - [ ] Gaussian Blur.
       - [ ] Bloom.
       - [ ] Motion blur.
   - [ ] OpenGL render.
     - [ ] SDL2 OpenGL context
+    - [ ] Sprite rotation.
     - [ ] Shaders.
       - [ ] Shader loading.
       - [ ] Shader compiling.
@@ -186,6 +187,7 @@
 ### Misc
 
 - [x] Error message system.
+  - [ ] Add Error codes.
 
 
 ## Experiment
