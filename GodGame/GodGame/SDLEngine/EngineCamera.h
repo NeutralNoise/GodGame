@@ -88,19 +88,26 @@ struct EngineCamera
 		//code taken from
 		//https://stackoverflow.com/questions/6083626/box-collision-code
 		// AABB 1
-		int x1Min = rect.x;
+		int x1Min = rect.x - rect.width;
 		int x1Max = rect.x + rect.width;
 		int y1Max = rect.y + rect.height;
-		int y1Min = rect.y;
+		int y1Min = rect.y - rect.height;
 
 		// AABB 2
+		/*
 		//Whats with this.
 		int x2Min = pos.x - 32;
 		//Not relly sure why i have to * 2 but i do :/
 		int x2Max = pos.x + (pos.width * 2);
 		int y2Max = pos.y + (pos.height * 2);
 		int y2Min = pos.y - 32;
-
+		*/
+		//Whats with this.
+		int x2Min = pos.x - rect.width;
+		//Not relly sure why i have to * 2 but i do :/
+		int x2Max = pos.x + (pos.width);
+		int y2Max = pos.y + (pos.height);
+		int y2Min = pos.y - rect.height;
 		// Collision tests
 		if (x1Max < x2Min || x1Min > x2Max) return false;
 		if (y1Max < y2Min || y1Min > y2Max) return false;
