@@ -4,6 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include "ErrorEngine.h"
+#include "EngineConfig.h"
 
 
 GameEngine::GameEngine()
@@ -16,13 +17,13 @@ GameEngine::~GameEngine()
 }
 
 bool GameEngine::InitGameEngine() {
-	const int window_size_height = 600;
-	const int window_size_width = 600;
-	return InitGameEngine("SDL_BASE_GAME_ENGINE", window_size_width, window_size_height, SDL_WINDOW_SHOWN);
+	EngineRenderer * newRenderer = new EngineRenderer(new Renderer(), WINDOW_WIDTH, WINDOW_HEIGHT,0);
+	m_createdRenderer = true;
+	return InitGameEngine("SDL_BASE_GAME_ENGINE", newRenderer, SDL_WINDOW_SHOWN);
 }
 
-bool GameEngine::InitGameEngine(const char * appName, const int &winWidth, const int &winHeight, const unsigned int &flags) {
-
+bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer, const UInt32 & flags)
+{
 	//First we have to start the ErrorEngine
 	ErrorEngine::InitErrorEngine();
 
@@ -35,24 +36,29 @@ bool GameEngine::InitGameEngine(const char * appName, const int &winWidth, const
 	SDL_VERSION(&version);
 	std::cout << "SDL Version: " << (int)version.major << "." << (int)version.minor << "." << (int)version.patch << "\n";
 
-	p_window = SDL_CreateWindow("GodGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, winWidth, winHeight, flags);
+	p_window = SDL_CreateWindow("GodGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, renderer->window_width,
+		renderer->window_height, flags);
 
 	if (p_window == NULL) {
 		AddEngineErrorMessage(101, EngineErrorTypes::ERR_TYPE_FATEL,
 			"Failed to create SDL2 Window\n" + std::string("Failed with error: " + std::string(SDL_GetError())));
 		return false;
 	}
-	SDL_Renderer * newRenderer = SDL_CreateRenderer(p_window, -1, SDL_RENDERER_ACCELERATED);
 
-	if (newRenderer == NULL) {
+	bool rendererInit = renderer->InitRenderer(p_window);
+
+	if (!rendererInit) {
+		//Add a better error message.
 		AddEngineErrorMessage(102, EngineErrorTypes::ERR_TYPE_FATEL,
 			"Failed to create SDL2 Renderer\n" + std::string("Failed with error: " + std::string(SDL_GetError())));
 		return false;
 	}
-	p_renderer = new EngineRenderer(newRenderer, winHeight, winWidth);
 
-	//SDL_SetRenderDrawColor(p_renderer->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_SetRenderDrawColor(p_renderer->renderer, 0, 0, 0, 255);
+	p_renderer = renderer;
+
+	//TODO this is jenky and needs to be replaced for when loading textures
+	p_renderer->sdl_renderer = SDL_GetRenderer(p_window);
+
 
 	//Start PNG loading.
 	int imgFlags = IMG_INIT_PNG;
@@ -74,7 +80,7 @@ bool GameEngine::InitGameEngine(const char * appName, const int &winWidth, const
 }
 
 void GameEngine::CloseGameEngine() {
-	SDL_DestroyRenderer(p_renderer->renderer);
+	SDL_DestroyRenderer(p_renderer->sdl_renderer);
 	delete p_renderer->camera;
 	delete p_renderer;
 	SDL_DestroyWindow(p_window);
@@ -82,6 +88,11 @@ void GameEngine::CloseGameEngine() {
 	TTF_Quit();
 	SDL_Quit();
 	m_isRunning = false;
+}
+
+void GameEngine::Draw()
+{
+	p_renderer->renderer->OnDraw();
 }
 
 void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect) {
@@ -99,37 +110,53 @@ void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect
 		if (winRect) {
 			SDL_Rect sdlwinRect;
 			sdlwinRect = RectToSDLRect(*winRect);
-			SDL_RenderCopy(p_renderer->renderer, tex->texture, &sdlrect, &sdlwinRect);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, &sdlrect, &sdlwinRect);
 		}
 		else {
-			SDL_RenderCopy(p_renderer->renderer, tex->texture, &sdlrect, NULL);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, &sdlrect, NULL);
 		}
 	}
 	else {
 		if (winRect) {
 			SDL_Rect sdlwinRect;
 			sdlwinRect = RectToSDLRect(*winRect);
-			SDL_RenderCopy(p_renderer->renderer, tex->texture, NULL, &sdlwinRect);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, NULL, &sdlwinRect);
 		}
 		else {
-			SDL_RenderCopy(p_renderer->renderer, tex->texture, NULL, NULL);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, NULL, NULL);
 		}
 	}
 
 }
 
 void GameEngine::ClearScreen() {
-	SDL_RenderClear(p_renderer->renderer);
+	SDL_RenderClear(p_renderer->sdl_renderer);
 }
 
 void GameEngine::UpdateWindow() {
-	SDL_RenderPresent(p_renderer->renderer);
+	SDL_RenderPresent(p_renderer->sdl_renderer);
 }
 
 void GameEngine::EngineWait(const int &delay) {
 	SDL_Delay(delay);
 }
 
+void GameEngine::SetRenderer(Renderer * renderer)
+{
+	if (p_renderer) {
+		if (m_createdRenderer) {
+			delete p_renderer->renderer;
+		}
+		p_renderer->renderer = renderer;
+	}
+	else {
+		p_renderer = new EngineRenderer(new Renderer(), WINDOW_HEIGHT, WINDOW_WIDTH,0);
+		p_renderer->renderer = renderer;
+		m_createdRenderer = true;
+	}
+}
+
 bool GameEngine::m_isRunning = false;
 SDL_Window * GameEngine::p_window = NULL;
 EngineRenderer * GameEngine::p_renderer = nullptr;
+bool GameEngine::m_createdRenderer = false;

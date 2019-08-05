@@ -3,6 +3,7 @@
 #include "Rect.h"
 #include "ImageLoader.h"
 #include "EngineCamera.h"
+#include "Renderer.h"
 
 struct SDL_Window;
 struct SDL_Surface;
@@ -14,10 +15,12 @@ struct SDL_Renderer;
  */
 
 struct EngineRenderer {
-	SDL_Renderer * renderer; //!< A structure representing rendering state. From SDL2
+	Renderer * renderer; //!< The new renderer.
+	SDL_Renderer * sdl_renderer; //!< A structure representing rendering state. From SDL2
 	int window_height; //!< The height of the window
 	int window_width;  //!< The width of the window
 	EngineCamera * camera;	//!< Camera used to draw too.
+	UInt32 flags;
 	//Stats
 	float fps; //!< Number of frames per second
 	//We can add some more information here later.
@@ -28,7 +31,7 @@ struct EngineRenderer {
 	 */
 
 	EngineRenderer() {
-		renderer = nullptr;
+		sdl_renderer = nullptr;
 		camera = nullptr;
 		window_height = 0;
 		window_width = 0;
@@ -38,17 +41,23 @@ struct EngineRenderer {
 	/**
 	 * \brief Construct a new EngineRenderer object
 	 * 
-	 * \param renderer Pointer to a SDL_Renderer to use.
+	 * \param renderer Pointer to a Renderer to use. \see Renderer
 	 * \param wh Height of the window.
 	 * \param ww Width of the window.
+	 * \param flags What flags does this renderer have active.
 	 */
 
-	EngineRenderer(SDL_Renderer * renderer, const int &wh, const int &ww) {
+	EngineRenderer(Renderer * renderer, const int &wh, const int &ww, const UInt32 &flags) {
 		this->renderer = renderer;
 		window_height = wh;
 		window_width = ww;
 		camera = new EngineCamera(0, 0, ww, wh);
 		fps = 0.0f;
+		this->flags = flags;
+	}
+
+	bool InitRenderer(SDL_Window * win) {
+		return renderer->OnInit(win, flags);
 	}
 
 };
@@ -98,7 +107,7 @@ public:
 	 * \return true if engine is started else false.
 	 */
 
-	bool InitGameEngine(const char * appName, const int &winWidth, const int &winHeight, const unsigned int &flags);
+	bool InitGameEngine(const char * appName, EngineRenderer * renderer, const UInt32 &flags);
 
 	/**
 	 * \brief Cleans up the engine for closeing.
@@ -106,6 +115,10 @@ public:
 	 */
 
 	void CloseGameEngine();
+
+
+	void Draw();
+
 
 	/**
 	 * \brief Renders the given texture to the screen.
@@ -155,11 +168,14 @@ public:
 
 	static EngineRenderer *GetRenderer() { return p_renderer; };
 
+	static void SetRenderer(Renderer * renderer);
+
 private:
 	//TODO Make these not static.
 	static SDL_Window * p_window; //!< SDL2 window.
 	static EngineRenderer * p_renderer; //!< Used to render the current state of the engine.
 	//
 	static bool m_isRunning; //!< Used by the engine to make if it is not longer running. \note Read-only
+	static bool m_createdRenderer; //!< If the game engine created the renderer true.
 };
 
