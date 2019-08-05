@@ -2,6 +2,7 @@
 #include <string>
 #include "ImageLoader.h"
 #include "Rect.h"
+#include "Renderer.h"
 //#include <SDL2/SDL_ttf.h>
 
 typedef struct _TTF_Font TTF_Font;
@@ -14,7 +15,8 @@ typedef struct _TTF_Font TTF_Font;
 struct EngineFont {
 	
 	TTF_Font * font = NULL; //!< The font file to use when drawing this text.
-	Texture * texture = NULL; //!< The last created texture for this font. This is rendered to the screen.
+	Texture * texture = nullptr; //!< The last created texture for this font. This is rendered to the screen.
+	RenderObject * ro = nullptr;
 	int width = 0; //!< Size of the last created texture.
 	int height = 0; //!< Size of the last created texture.
 	int textsize = 32; //!< The size of the text
@@ -62,6 +64,8 @@ public:
 	 */
 
 	void Draw(const Rect &pos/*, Texture * fontTex*/);
+
+	void Draw(Renderer * ren, const Rect &pos, const int &layer);
 
 	/**
 	 * \brief Get the EngineFont object

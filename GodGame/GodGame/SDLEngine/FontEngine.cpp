@@ -37,19 +37,22 @@ EngineFont * FontEngine::LoadFont(const std::string &file, const int &fontsize) 
 		ErrorEngine::GetInstance()->OnFatel();
 	}
 
+	//Create a RenderObject to be drawn.
+	p_font->ro = new RenderObject();
 	return p_font;
 }
 
 void FontEngine::CloseFontEngine() {
 	if (p_font != NULL) {
-		if (p_font->texture != NULL) {
+		if (p_font->texture != nullptr) {
 			if (p_font->texture->texture != NULL) {
 				SDL_DestroyTexture(p_font->texture->texture);
 				p_font->texture->texture = NULL;
 				delete p_font->texture;
-				p_font->texture = NULL;
+				p_font->texture = nullptr;
 			}
 		}
+		delete p_font->ro;
 		delete p_font;
 	}
 }
@@ -62,7 +65,7 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 
 	//Free the last texture;
 	if (p_font != NULL) {
-		if (p_font->texture != NULL) {
+		if (p_font->texture != nullptr) {
 			if (p_font->texture->texture != NULL) {
 				SDL_DestroyTexture(p_font->texture->texture);
 				p_font->texture->texture = NULL;
@@ -84,7 +87,7 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 	}
 	else {
 		//Create texture from the surface.
-		p_font->texture->texture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->renderer, textSurface);
+		p_font->texture->texture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->sdl_renderer, textSurface);
 		if (p_font->texture->texture == NULL) {
 			AddEngineErrorMessage(111, EngineErrorTypes::ERR_TYPE_FATEL,
 				"SDL2 Unable to create surface from texture. " + std::string(SDL_GetError()));
@@ -96,7 +99,14 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 		}
 		SDL_FreeSurface(textSurface);
 	}
-	return p_font->texture != NULL;
+
+	p_font->ro->width = p_font->width;
+	p_font->ro->height = p_font->height;
+	p_font->ro->renderTile.width = p_font->width;
+	p_font->ro->renderTile.height = p_font->height;
+	p_font->ro->texture = p_font->texture;
+
+	return p_font->texture != nullptr;
 }
 
 void FontEngine::Draw(const Rect &pos/*, Texture * fontTex*/) {
@@ -110,4 +120,12 @@ void FontEngine::Draw(const Rect &pos/*, Texture * fontTex*/) {
 
 	ge.RenderCopy(p_font->texture, NULL, &drect);
 
+}
+
+void FontEngine::Draw(Renderer * ren, const Rect &pos, const int &layer)
+{
+	p_font->ro->x = pos.x;
+	p_font->ro->y = pos.y;
+	p_font->ro->layer = layer;
+	ren->AddRenderObject(p_font->ro);
 }

@@ -30,7 +30,7 @@ bool ImageLoader::LoadTexture(const std::string &file) {
 		}
 
 		//Create texture from pixel surface.
-		newTexture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->renderer, loadedSurface);
+		newTexture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->sdl_renderer, loadedSurface);
 
 		if (!newTexture) {
 			std::cout << "Failed to load image: " << file << "\n";
@@ -60,7 +60,7 @@ bool ImageLoader::LoadTexture(const std::string &file) {
 		}
 
 		//Create texture from pixel surface.
-		newTexture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->renderer, loadedSurface);
+		newTexture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->sdl_renderer, loadedSurface);
 
 		if (!newTexture) {
 			std::cout << "Failed to load image: " << file << "\n";
