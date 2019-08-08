@@ -33,7 +33,6 @@ void Renderer::OnCleanUp()
 
 void Renderer::AddRenderObject(RenderObject * renderObject)
 {
-	//TODO Sub render layer
 	
 	if (renderObject) {
 		size_t main_layerSize = m_layers.size();
@@ -94,6 +93,47 @@ void Renderer::AddRenderObject(RenderObject * renderObject)
 		else {
 			objectLayer->renderObjects.push_back(renderObject);
 		}
+	}
+
+}
+
+void Renderer::AddLightRenderObject(RenderObject * renderObject)
+{
+
+	if (renderObject) {
+		size_t main_layerSize = m_layers.size();
+		if (main_layerSize == 0) {
+			m_layers.push_back(new RenderObjectLayer());
+		}
+		//Add layers that till we get to the right one.
+		if ((size_t)renderObject->layer >= main_layerSize) {
+			int layerSize = m_layers.size();
+			for (int i = layerSize; m_layers.size() < (size_t)renderObject->layer + 1; i++) {
+				AddEmptyLayer();
+			}
+		}
+
+		RenderObjectLayer * objectLayer = m_layers[renderObject->layer];
+		//Create the layer if there isn't one.
+		if (objectLayer == nullptr) {
+			m_layers[renderObject->layer] = new RenderObjectLayer();
+			objectLayer = m_layers[renderObject->layer];
+		}
+
+		if (objectLayer->lights.size() == 0) {
+			objectLayer->lights.push_back(renderObject);
+		}
+
+		//Check if there is a free light spot.
+		for (size_t i = 0; i < objectLayer->lights.size(); i++) {
+			if (objectLayer->lights[i] == nullptr) {
+				objectLayer->lights[i] = renderObject;
+				return;
+			}
+		}
+
+		objectLayer->lights.push_back(renderObject);
+
 	}
 
 }

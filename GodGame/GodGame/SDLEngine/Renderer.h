@@ -77,6 +77,7 @@ struct RenderObjectLayer
 {
 	int id; //!< ID of this layer
 	int layer; //!< The layer number. Think of this as render order. The higher the number the later it is rendered.
+	std::vector<RenderObject*> lights; //!< Lights on this layer.
 	std::vector<RenderObject*> renderObjects; //!< What tiles are in this layer
 	std::vector<RenderObjectLayer*> objectLayer; //!< Additional layers withing this layer. \warning Not used at the moment.
 	void(*Draw)() = nullptr; //!< Function pointer to a externaly defined draw function. (Lets you do things that I didn't think of)
@@ -122,6 +123,11 @@ struct RenderObjectLayer
 				objectLayer[i]->Clear();
 			}
 		}
+
+		for (size_t i = 0; i < lights.size(); i++) {
+			lights[i] = nullptr;
+		}
+
 	}
 };
 
@@ -138,6 +144,8 @@ public:
 	virtual void OnCleanUp();
 
 	void AddRenderObject(RenderObject * renderObject);
+
+	void AddLightRenderObject(RenderObject * renderObject);
 
 	void ClearRenderObjects();
 

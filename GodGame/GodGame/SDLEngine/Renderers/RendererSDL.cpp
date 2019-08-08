@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include "../EngineCamera.h"
 #include "../GameEngine.h"
+#include <memory>
 
 RendererSDL::RendererSDL()
 {
@@ -24,6 +25,21 @@ bool RendererSDL::OnInit(SDL_Window * win, const UInt32 &flags)
 
 	InitRendererInfo();
 
+	//Create Blank Texture for rendering.
+	p_renderTexture = new Texture;
+	int w = GameEngine::GetRenderer()->window_width;
+	int h = GameEngine::GetRenderer()->window_height;
+	if (p_renderTexture->CreateBlankTexture(SDL_TEXTUREACCESS_TARGET, w, h, p_renderer) == false) {
+		AddEngineErrorMessage(102, EngineErrorTypes::ERR_TYPE_FATEL,
+			"Failed to create SDL2 Renderer\n" + std::string("Failed with error: " + std::string(SDL_GetError())));
+	}
+
+	p_lightTexture = new Texture;
+	if (p_lightTexture->CreateBlankTexture(SDL_TEXTUREACCESS_TARGET, w, h, p_renderer) == false) {
+		AddEngineErrorMessage(102, EngineErrorTypes::ERR_TYPE_FATEL,
+			"Failed to create SDL2 Renderer\n" + std::string("Failed with error: " + std::string(SDL_GetError())));
+	}
+
 	return true;
 }
 
@@ -37,6 +53,9 @@ void RendererSDL::OnDraw()
 	p_drawCalls->uidata = 0;
 	m_layerTimer.StartTimer(); //Times everything
 	p_layerRenderTimeAvg->fdata = 0;
+
+	SDL_SetRenderTarget(p_renderer, p_renderTexture->texture);
+	SDL_RenderClear(p_renderer);
 	int numLayers = 0;
 	for (size_t i = 0; i < m_layers.size(); i++) {
 		if (m_layers[i] != nullptr) {
@@ -46,12 +65,80 @@ void RendererSDL::OnDraw()
 			numLayers++;
 		}
 	}
+
+	DrawLighting();
 	//DO post processing.
 	//TODO post processing
 	//Time post processing.
+
+	SDL_SetRenderTarget(p_renderer, NULL);
+	SDL_RenderCopy(p_renderer, p_renderTexture->texture, NULL, NULL);
+	//SDL_RenderCopy(p_renderer, p_lightTexture->texture, NULL, NULL);
+
 	p_layerRenderTimeAvg->fdata = p_layerRenderTimeAvg->fdata / numLayers;
 	p_layerRenderTime->fdata = m_layerTimer.GetTime();
+}
 
+
+void RendererSDL::OnCleanUp()
+{
+	p_renderTexture->CleanTexture();
+	p_lightTexture->CleanTexture();
+	SDL_DestroyRenderer(p_renderer);
+}
+
+void RendererSDL::DrawLighting()
+{
+
+	//Convert a engine rect to an SDL2 Rect
+	auto RectToSDLRect = [](Rect r) {
+		//Some type punning
+		SDL_Rect rtn = *(SDL_Rect*)&r;
+		return rtn;
+	};
+
+	//Convert a engine rect to an SDL2 Rect
+	auto RenToSDLRect = [](RenderTile r) {
+		//Some type punning
+		SDL_Rect rtn = *(SDL_Rect*)&r;
+		return rtn;
+	};
+
+	SDL_SetRenderTarget(p_renderer, p_lightTexture->texture);
+	SDL_RenderClear(p_renderer);
+	EngineCamera camera = *GameEngine::GetRenderer()->camera;
+	//Draw the lights to the light texture.
+	for (size_t i = 0; i < m_layers.size(); i++) {
+		if (m_layers[i] != nullptr) {
+			
+			if (m_layers[i]->lights.size() != 0) {
+				std::vector<RenderObject*> lights = m_layers[i]->lights;
+				for (size_t l = 0; l < lights.size(); l++) {
+					if (lights[l] != nullptr) {
+						Rect destRect;
+						destRect.x = lights[l]->x;
+						destRect.y = lights[l]->y;
+						destRect.height = lights[l]->height;
+						destRect.width = lights[l]->width;
+						if (lights[l]->translateWithCamera) {
+							destRect = camera.TranslateWithCamera(destRect);
+						}
+						SDL_Rect sRect = RenToSDLRect(lights[l]->renderTile);
+						SDL_Rect dRect = RectToSDLRect(destRect);
+						SDL_RenderCopy(p_renderer, lights[l]->texture->texture, &sRect, &dRect);
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	SDL_SetTextureBlendMode(p_lightTexture->texture, SDL_BLENDMODE_MOD);
+	SDL_SetRenderTarget(p_renderer, p_renderTexture->texture);
+	SDL_RenderCopy(p_renderer, p_lightTexture->texture, NULL, NULL);
+	SDL_SetTextureBlendMode(p_lightTexture->texture, SDL_BLENDMODE_NONE);
 
 }
 

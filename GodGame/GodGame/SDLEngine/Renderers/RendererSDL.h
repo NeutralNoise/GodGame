@@ -3,6 +3,7 @@
 #include "../Renderer.h"
 
 struct SDL_Renderer;
+struct Texture;
 
 class RendererSDL : public Renderer
 {
@@ -16,10 +17,14 @@ public:
 
 	void OnDraw() override;
 
+	void OnCleanUp() override;
 
 private:
 
-	void DrawLayer(RenderObjectLayer * layer);
+	void DrawLighting();
 
+	void DrawLayer(RenderObjectLayer * layer);
+	Texture * p_renderTexture;
+	Texture * p_lightTexture;
 	SDL_Renderer * p_renderer;
 };

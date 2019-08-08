@@ -45,6 +45,8 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 		return false;
 	}
 
+
+	p_renderer = renderer;
 	bool rendererInit = renderer->InitRenderer(p_window);
 
 	if (!rendererInit) {
@@ -53,8 +55,6 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 			"Failed to create SDL2 Renderer\n" + std::string("Failed with error: " + std::string(SDL_GetError())));
 		return false;
 	}
-
-	p_renderer = renderer;
 
 	//TODO this is jenky and needs to be replaced for when loading textures
 	p_renderer->sdl_renderer = SDL_GetRenderer(p_window);
@@ -80,9 +80,9 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 }
 
 void GameEngine::CloseGameEngine() {
-	SDL_DestroyRenderer(p_renderer->sdl_renderer);
+	//SDL_DestroyRenderer(p_renderer->sdl_renderer); Done else where now
 	delete p_renderer->camera;
-	delete p_renderer;
+	//delete p_renderer; This should be done by the user
 	SDL_DestroyWindow(p_window);
 	IMG_Quit();
 	TTF_Quit();
