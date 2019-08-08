@@ -15,10 +15,11 @@
     - [x] Each layer should be able to have more then one layer.
     - [x] Check if layer update is needed.
   - [ ] SDL2
-    - [ ] Render to texture/surface (for post processing and lighting.)
+    - [x] Render to texture/surface (for post processing and lighting.)
     - [x] Sprite rotation.
-    - [ ] Lighting.
-    - [ ] Post processing. (Done on the CPU. Will be SLOW!)
+    - [x] Lighting.
+      - [ ] Make fonts not effected and is visable.
+    - [ ] Post processing. (Done on the CPU. Will be SLOW!)( Your dreaming!)
       - [ ] Gaussian Blur.
       - [ ] Bloom.
       - [ ] Motion blur.
