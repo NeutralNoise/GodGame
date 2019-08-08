@@ -38,7 +38,7 @@ bool ImageLoader::LoadTexture(const std::string &file) {
 			delete tmp;
 			return false;
 		}
-
+		SDL_QueryTexture(newTexture, &tmp->format, &tmp->access, &tmp->width, &tmp->height);
 		tmp->texture = newTexture;
 		
 		SDL_FreeSurface(loadedSurface);
@@ -69,6 +69,8 @@ bool ImageLoader::LoadTexture(const std::string &file) {
 			return false;
 		}
 
+		SDL_QueryTexture(newTexture, &tmp->format, &tmp->access, &tmp->width, &tmp->height);
+		SDL_SetTextureBlendMode(newTexture, SDL_BLENDMODE_BLEND);
 		tmp->texture = newTexture;
 
 		SDL_FreeSurface(loadedSurface);
@@ -84,10 +86,15 @@ Texture* ImageLoader::GetTexture(const std::string &file) {
 
 	 if (iter == m_textures.end()) {
 		 std::cout << "Failed to find loaded image: " << file << "\n";
-		 return nullptr;
+		 std::cout << "Trying to load image " << file << "\n";
+		 if (LoadTexture(file)) {
+			 return GetTexture(file);
+		 }
+		 else {
+			 return nullptr;
+		 }
 	 }
 	 return iter->second;
-
 }
 
 std::map<std::string, Texture*> ImageLoader::m_textures;

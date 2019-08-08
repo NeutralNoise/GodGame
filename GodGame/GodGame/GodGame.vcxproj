@@ -168,6 +168,7 @@
     <ClCompile Include="SDLEngine\Input.cpp" />
     <ClCompile Include="SDLEngine\Renderer.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererSDL.cpp" />
+    <ClCompile Include="SDLEngine\Texture.cpp" />
     <ClCompile Include="SDLEngine\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="SDLEngine\Rect.h" />
     <ClInclude Include="SDLEngine\Renderer.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererSDL.h" />
+    <ClInclude Include="SDLEngine\Texture.h" />
     <ClInclude Include="SDLEngine\Timer.h" />
     <ClInclude Include="SDLEngine\typedefs.h" />
   </ItemGroup>

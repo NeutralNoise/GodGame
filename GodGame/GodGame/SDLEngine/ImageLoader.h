@@ -1,27 +1,7 @@
 #pragma once
 #include <string>
 #include <map>
-
-struct SDL_Surface;
-struct SDL_Texture;
-
-class ImageLoader;
-
-/** \struct Texture
- * \brief A structure representing a texture.
- * 
- */
-
-struct Texture
-{
-	friend ImageLoader;
-	std::string file; //!< Path to the texture.
-	//This should be hiden really buts its kind of needed atm.
-	SDL_Texture * texture = NULL; //!< SDL2 Texture
-	//Read Only
-private:
-	int RefCount = 0; //!< Not used ATM
-};
+#include "Texture.h"
 
 /** \class ImageLoader
  * \brief Loads and manages textures. \see Texture

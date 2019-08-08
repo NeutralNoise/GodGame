@@ -57,6 +57,9 @@
     <ClCompile Include="SDLEngine\Renderers\RendererSDL.cpp">
       <Filter>Source Files\SDLEngine\Renderers</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Texture.cpp">
+      <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="SDLEngine\Renderers\RendererSDL.h">
       <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Texture.h">
+      <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
