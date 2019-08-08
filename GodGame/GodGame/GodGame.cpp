@@ -31,7 +31,6 @@ int main(int argc, char ** argv)
 	RendererSDL testRender;
 	//TODO Load window size from file.
 	EngineRenderer EngineR(&testRender, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_RENDERER_ACCELERATED);
-	//EngineRenderer EngineR(&testRender, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_RENDERER_SOFTWARE);
 
 	isRunning = ge.InitGameEngine("SDL_BASE_GAME_ENGINE", &EngineR, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
@@ -68,22 +67,35 @@ int main(int argc, char ** argv)
 	int xpos = 0;
 	int ypos = 0;
 
-	float lastTime = 33.0f;
+	float lastTime = 0.0f;
+	float thisTime = 0.0f;
 	SimpleTimer fpsTimer;
 	if (isRunning) {
 		Input input;
 		ImageLoader::LoadTexture("data/test.png");
 		Texture *texture = ImageLoader::GetTexture("data/test.png");
+		Texture * lightTex = ImageLoader::GetTexture("data/light.png");
 
 		RenderObject testObject;
 		testObject.texture = texture;
 		testObject.angle = 45;
 		testObject.translateWithCamera = true;
 		RenderObject testObject2;
-		testObject2.x = 32;
-		testObject2.y = 32;
-		testObject2.sublayer = 1;
+		testObject2.layer = 3;
+		testObject2.x = 0;
+		testObject2.y = 0;
+		//testObject2.height = 600;
+		//testObject2.width = 600;
+		testObject2.renderTile.height = texture->height;
+		testObject2.renderTile.width = texture->width;
 		testObject2.texture = texture;
+		RenderObject light;
+		light.texture = lightTex;
+		light.renderTile.height = 64;
+		light.renderTile.width = 64;
+		light.layer = 2;
+		light.height = 600;
+		light.width = 600;
 
 #ifdef BULK_FAKE_TILE_TEST
 
@@ -108,7 +120,7 @@ int main(int argc, char ** argv)
 		int Fake_layer = 1;
 		int Fake_X = 0;
 		int Fake_Y = 0;
-		int MAX_X = 64 * 128;
+		int MAX_X = (64 * 128);
 		for (int i = 0; i < (int)BULK_FAKE_TILE_NUM; i++) {
 			RenderObject * tileTest = new RenderObject;
 			tileTest->x = Fake_X;
@@ -147,12 +159,11 @@ int main(int argc, char ** argv)
 		RenderInfo = InfoEngine::GetEngineInfo("layer_render_time");
 		RenderAvgInfo = InfoEngine::GetEngineInfo("layer_render_time_avg");
 		DrawCalls = InfoEngine::GetEngineInfo("ren_draw_calls");
-
 		while (isRunning) {
 			fpsTimer.StartTimer();
 			testRender.AddRenderObject(&testObject);
 			testRender.AddRenderObject(&testObject2);
-
+			testRender.AddLightRenderObject(&light);
 #ifdef BULK_FAKE_TILE_TEST_LOOP
 			FAKE_TILE_TEST_LAMDA(&testRender, fakeTiles, false);
 #endif //BULK_FAKE_TILE_TEST_LOOP
@@ -161,7 +172,7 @@ int main(int argc, char ** argv)
 			drawCallsFont.LoadFromRenderedText(std::to_string(DrawCalls->uidata));
 			renderTime.LoadFromRenderedText("Layer Draw Time:" + std::to_string(RenderInfo->fdata / 1000));
 			engineFPS.LoadFromRenderedText("Engine FPS:" + std::to_string(1000 / RenderInfo->fdata));
-			currentFPS.LoadFromRenderedText("Current FPS:" + std::to_string(1000 /lastTime));
+			currentFPS.LoadFromRenderedText("Current FPS:" + std::to_string(1000 /thisTime));
 			drawCallsFont.Draw(&testRender, Rect(5, 0, 0, 0), 5);
 			renderTime.Draw(&testRender, Rect(5, 45, 0, 0), 5);
 			engineFPS.Draw(&testRender, Rect(5, 90, 0, 0), 5);
@@ -219,108 +230,19 @@ int main(int argc, char ** argv)
 			//newPos.y = 64;
 
 			camera->MoveCamera(newPos);
-			ge.EngineWait(33);
-			lastTime = fpsTimer.GetTime();
-		}
-
-		//renderEngine.AddLayer(layer);
-		/*
-		for (int y = 0; y <= (600 / 32); y++) {
-			for (int x = 0; x <= (600 / 32); x++) {
-				LayerTile * world = new LayerTile;
-				world->x = x * 32;
-				world->y = y * 32;
-				world->height = 32;
-				world->width = 32;
-				world->texture = texture;
-				layer->tiles.push_back(world);
-			}
-		}
-		*/
-		while (isRunning) {
-			
-			testRect.x = xpos;
-			testRect.y = ypos;
-			
-			ge.ClearScreen();
-
-			//renderEngine.DrawLayers();
-
-			/*
-			fe.LoadFromRenderedText("On Screen Tiles:" + std::to_string(testInfo->idata));
-			renderTime.LoadFromRenderedText("Layer Draw Time:" + std::to_string(RenderInfo->fdata / 1000));
-			renderTimeAvg.LoadFromRenderedText("Average Layer Draw Time:" + std::to_string(RenderAvgInfo->fdata / 1000));
-			currentFps.LoadFromRenderedText("Engine FPS:" + std::to_string(1000 / RenderInfo->fdata));
-			fe.Draw(Rect(5,0,0,0));
-			renderTime.Draw(Rect(5, 45, 0, 0));
-			renderTime.Draw(Rect(5, 45, 0, 0));
-			renderTimeAvg.Draw(Rect(5, 90, 0, 0));
-			currentFps.Draw(Rect(5, 135, 0, 0));
-			*/
-			ge.UpdateWindow();
-			//This really shouldn't be here. set the number of fps to 60 the engine will track the fps and it can be reported to the user.
-			ge.EngineWait(33);
-
-			input.Update();
-			input.ProcessEvents();
-			InputEvent ie = input.GetNextEvent();
-
-			while (ie.type != -1) {
-
-				if (ie.type == EE_QUIT) {
-					isRunning = false;
-				}
-				if (ie.type == EE_KEYDOWN) {
-					//Shit Will Happen here maybe
-				}
-				ie = input.GetNextEvent();
+			//Work out FPS
+			thisTime = fpsTimer.GetTime();
+			if (MAX_FRAME_TIME > thisTime) {
+				ge.EngineWait(MAX_FRAME_TIME - (int)thisTime);
+				thisTime += MAX_FRAME_TIME - thisTime;
 			}
 
-
-			if (input.IsInputDown(SDLK_w)) {
-				ypos -= 5;
-				/*
-				if (tile->y == (0 - testRect.height)) {
-					tile->y = 599;
-				}
-				*/
-			}
-
-			if (input.IsInputDown(SDLK_s)) {
-				ypos += 5;
-				/*
-				if (ypos == 600) {
-					ypos = 0 - testRect.height;
-				}
-				*/
-			}
-
-			if (input.IsInputDown(SDLK_a)) {
-				xpos-=5;
-			}
-
-			if (input.IsInputDown(SDLK_d)) {
-				xpos+=5;
-			}
-			EngineCamera *camera = GameEngine::GetRenderer()->camera;
-			Rect newPos(camera->pos); //so we dont have to copy the height
-			newPos.x = xpos;
-			newPos.y = ypos;
-			//newPos.x = 64;
-			//newPos.y = 64;
-
-			camera->MoveCamera(newPos);
-			EngineRenderer * er = GameEngine::GetRenderer();
-			//tile->x = (er->window_width/2) - (int)(tile->width / 2);
-			//tile->y = (er->window_height/2) - (int)(tile->width / 2);
-			
 			ErrorEngine::GetInstance()->OnFatel();
 
 		}
-
-		//renderEngine.RemoveLayer(1);
+		//We still need clean up our objects.
 		//fe.CloseFontEngine();
-		//ge.CloseGameEngine();
+		ge.CloseGameEngine();
 	}
 	return 0;
 }
