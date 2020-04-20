@@ -14,9 +14,11 @@
   - [x] RenderLayers
     - [x] Each layer should be able to have more then one layer.
     - [x] Check if layer update is needed.
+    - [ ] Allow for Y level sorting.
   - [ ] SDL2
     - [x] Render to texture/surface (for post processing and lighting.)
     - [x] Sprite rotation.
+    - [ ] Draw line.
     - [x] Lighting.
       - [ ] Make fonts not effected and is visable.
     - [ ] Post processing. (Done on the CPU. Will be SLOW!)( Your dreaming!)
@@ -26,6 +28,7 @@
   - [ ] OpenGL render.
     - [ ] SDL2 OpenGL context
     - [ ] Sprite rotation.
+    - [ ] Draw line.
     - [ ] Shaders.
       - [ ] Shader loading.
       - [ ] Shader compiling.
@@ -44,6 +47,8 @@
 
 - [ ] File system.
   - [ ] Open files.
+    - [ ] Cache loaded files.
+    - [ ] Multi Threaded.
   - [ ] Save files.
   - [ ] Virtual File System (VFS).
   - [ ] Json files.
@@ -54,7 +59,7 @@
 - [ ] Improve font rendering.
   - [ ] Font manager.
     - [ ] Load fonts.
-    - [ ] Generate text texute from the fonts.
+    - [ ] Generate text texture from the fonts.
     - [ ] Geterate sprite glyth from font. (Mainly for OpenGL).
     - [ ] Store FontText.
   - [ ] FontText
@@ -92,6 +97,7 @@
   - [ ] Make all movement not based on frame rate but on frame delta time.
     - [ ] Interpolation.
 - [ ] Add debug information access with key press.
+- [ ] Multi Threaded.
 
 ### Config.
 
@@ -100,7 +106,7 @@
   - [ ] Command line arguments override JSON file.
   - [ ] Options.
     - [ ] Frame rate.
-    - [ ] Physics frame rate.
+    - [ ] Physics tick rate.
     - [ ] Profiling on or off.
     - [ ] Debug information.
       - [ ] Choose what to display.
@@ -162,6 +168,10 @@
 ### Networking
 
 - [ ] Networking.
+  - [ ] TCP
+  - [ ] Unreliable UDP
+  - [ ] Reliable UDP
+  - [ ] Different protocols
 
 ### Audio.
 
@@ -184,6 +194,7 @@
   - [ ] Load bar.
   - [ ] Buttons.
   - [ ] Image display.
+  - [ ] Label
 
 ### Misc
 
@@ -194,7 +205,6 @@
 ## Experiment
 - [ ] Set up engine to use a callback when running game logic.
   - [ ] The user can do what ever they whatever they want here.
-- [ ] Multi-Threading.
 
 ## Game
 * ???
