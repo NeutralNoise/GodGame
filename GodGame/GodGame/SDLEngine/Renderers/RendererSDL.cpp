@@ -53,8 +53,9 @@ void RendererSDL::OnDraw()
 	p_drawCalls->uidata = 0;
 	m_layerTimer.StartTimer(); //Times everything
 	p_layerRenderTimeAvg->fdata = 0;
-
+	//Draw everything to an offscreen texture.
 	SDL_SetRenderTarget(p_renderer, p_renderTexture->texture);
+	//Clear the offscreen texture.
 	SDL_RenderClear(p_renderer);
 	int numLayers = 0;
 	for (size_t i = 0; i < m_layers.size(); i++) {
@@ -70,8 +71,9 @@ void RendererSDL::OnDraw()
 	//DO post processing.
 	//TODO post processing
 	//Time post processing.
-
+	//Switch to the the defualt render target.
 	SDL_SetRenderTarget(p_renderer, NULL);
+	//Render the offsreen texture to the window.
 	SDL_RenderCopy(p_renderer, p_renderTexture->texture, NULL, NULL);
 	//SDL_RenderCopy(p_renderer, p_lightTexture->texture, NULL, NULL);
 
@@ -190,6 +192,7 @@ void RendererSDL::DrawLayer(RenderObjectLayer * layer) {
 			SDL_Rect sRect = RenToSDLRect(renObject->renderTile);
 			SDL_Rect dRect = RectToSDLRect(destRect);
 			SDL_Point center;
+			//Make the center of the render object the center.
 			center.x = renObject->x + (int)(renObject->width / 2);
 			center.y = renObject->y + (int)(renObject->height / 2);
 
@@ -197,6 +200,7 @@ void RendererSDL::DrawLayer(RenderObjectLayer * layer) {
 			p_drawCalls->uidata++;
 		}
 	}
+	//Render each sub lay of this layer.
 	size_t subLayerSize = layer->objectLayer.size();
 	for (size_t i = 0; i < layer->objectLayer.size(); i++) {
 		DrawLayer(layer->objectLayer[i]);
