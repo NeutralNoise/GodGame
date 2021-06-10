@@ -179,7 +179,7 @@ int Renderer::FindEmptyTile(const int &layer)
 	RenderObjectLayer * tmpLayer = m_layers[layer];
 	if (tmpLayer->freeTile != 0) {
 		if (tmpLayer->renderObjects.size() > 0) {
-			for (size_t i = 0; i < tmpLayer->renderObjects.size(); i) {
+			for (size_t i = 0; i < tmpLayer->renderObjects.size(); i++) {
 				if (tmpLayer->renderObjects[i] == nullptr) {
 					return i;
 				}
