@@ -15,11 +15,12 @@
 #include "SDLEngine/EngineConfig.h"
 
 #include "SDLEngine/Renderers/RendererSDL.h"
+#include "SDLEngine/Renderers/RendererOpenGL.h"
 
 
 //Uncomment this to spawn a shit load of tiles.
-#define BULK_FAKE_TILE_TEST
-#define BULK_FAKE_TILE_TEST_LOOP
+//#define BULK_FAKE_TILE_TEST
+//#define BULK_FAKE_TILE_TEST_LOOP
 //#define BULK_FAKE_TILE_TEST_LOOP_NO_CLEAR
 #define BULK_FAKE_TILE_NUM 16000
 
@@ -29,11 +30,12 @@ int main(int argc, char ** argv)
 	bool isRunning = false;
 	GameEngine ge;
 	RendererSDL testRender;
+	RendererOpenGL testOpenGL;
 	//TODO Load window size from file.
-	EngineRenderer EngineR(&testRender, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_RENDERER_ACCELERATED);
+	//EngineRenderer EngineR(&testRender, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_RENDERER_ACCELERATED);
+	EngineRenderer EngineR(&testOpenGL, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
 	isRunning = ge.InitGameEngine("SDL_BASE_GAME_ENGINE", &EngineR, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
-
 	if (!isRunning) {
 		DisplayErrors();
 		std::cin.get();
@@ -72,6 +74,7 @@ int main(int argc, char ** argv)
 	SimpleTimer fpsTimer;
 	if (isRunning) {
 		Input input;
+		/*
 		ImageLoader::LoadTexture("data/test.png");
 		Texture *texture = ImageLoader::GetTexture("data/test.png");
 		Texture * lightTex = ImageLoader::GetTexture("data/light.png");
@@ -95,8 +98,8 @@ int main(int argc, char ** argv)
 		light.renderTile.width = 64;
 		light.layer = 2;
 		light.height = 600;
-		light.width = 600;
-
+		light.width = 600;*/
+		
 #ifdef BULK_FAKE_TILE_TEST
 
 		std::vector<RenderObject*> fakeTiles;
@@ -161,14 +164,15 @@ int main(int argc, char ** argv)
 		DrawCalls = InfoEngine::GetEngineInfo("ren_draw_calls");
 		while (isRunning) {
 			fpsTimer.StartTimer();
-			testRender.AddRenderObject(&testObject);
-			testRender.AddRenderObject(&testObject2);
-			testRender.AddLightRenderObject(&light);
+			//testRender.AddRenderObject(&testObject);
+			//testRender.AddRenderObject(&testObject2);
+			//testRender.AddLightRenderObject(&light);
 #ifdef BULK_FAKE_TILE_TEST_LOOP
 			FAKE_TILE_TEST_LAMDA(&testRender, fakeTiles, false);
 #endif //BULK_FAKE_TILE_TEST_LOOP
 
 			ge.ClearScreen();
+			/*
 			drawCallsFont.LoadFromRenderedText(std::to_string(DrawCalls->uidata));
 			renderTime.LoadFromRenderedText("Layer Draw Time:" + std::to_string(RenderInfo->fdata / 1000));
 			engineFPS.LoadFromRenderedText("Engine FPS:" + std::to_string(1000 / RenderInfo->fdata));
@@ -177,10 +181,11 @@ int main(int argc, char ** argv)
 			renderTime.Draw(&testRender, Rect(5, 45, 0, 0), 5);
 			engineFPS.Draw(&testRender, Rect(5, 90, 0, 0), 5);
 			currentFPS.Draw(&testRender, Rect(5, 135, 0, 0), 5);
+			*/
 			ge.Draw();
 			ge.UpdateWindow();
 			input.Update();
-			testRender.ClearRenderObjects();
+			//testRender.ClearRenderObjects();
 
 			input.ProcessEvents();
 			InputEvent ie = input.GetNextEvent();

@@ -9,6 +9,13 @@ struct SDL_Window;
 struct SDL_Surface;
 struct SDL_Renderer;
 
+struct EngineRendererVersion {
+	int major;
+	int minor;
+	int patch;
+	//NOTE May put a string here too but its not needed now.
+};
+
 /** \struct EngineRenderer
  * \brief A structure representing rendering state.
  * 
@@ -21,6 +28,8 @@ struct EngineRenderer {
 	int window_width;  //!< The width of the window
 	EngineCamera * camera;	//!< Camera used to draw too.
 	UInt32 flags;
+	std::string renderName; //!< The name of the renderer. e.g OpenGL, SDL_Renderer
+	EngineRendererVersion version; //!< The version of this renderer.
 	//Stats
 	float fps; //!< Number of frames per second
 	//We can add some more information here later.

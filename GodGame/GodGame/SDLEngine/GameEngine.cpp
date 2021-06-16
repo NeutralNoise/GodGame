@@ -36,6 +36,11 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 	SDL_VERSION(&version);
 	std::cout << "SDL Version: " << (int)version.major << "." << (int)version.minor << "." << (int)version.patch << "\n";
 
+	//TODO These will need to be wraped in a check to see if we are using OpenGL if not there not needed.
+	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 0 );
+    SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+
 	p_window = SDL_CreateWindow("GodGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, renderer->window_width,
 		renderer->window_height, flags);
 
@@ -57,7 +62,7 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 	}
 
 	//TODO this is jenky and needs to be replaced for when loading textures
-	p_renderer->sdl_renderer = SDL_GetRenderer(p_window);
+	//p_renderer->sdl_renderer = SDL_GetRenderer(p_window);
 
 
 	//Start PNG loading.
@@ -130,11 +135,13 @@ void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect
 }
 
 void GameEngine::ClearScreen() {
-	SDL_RenderClear(p_renderer->sdl_renderer);
+	//SDL_RenderClear(p_renderer->sdl_renderer);
 }
 
 void GameEngine::UpdateWindow() {
-	SDL_RenderPresent(p_renderer->sdl_renderer);
+	//TODO this needs to be moved.
+	//SDL_RenderPresent(p_renderer->sdl_renderer);
+	p_renderer->renderer->OnUpdate();
 }
 
 void GameEngine::EngineWait(const int &delay) {

@@ -268,7 +268,9 @@ public:
 	*/
 
 	void ToggleLayerClear(const UInt32 &layer);
-
+	
+	virtual bool CompileShader(UInt32 *id, const std::string &frag, const std::string &vert);
+	
 protected:
 
 	/**
@@ -283,6 +285,7 @@ protected:
 	static EngineInfo * p_drawCalls; //!< Counts the number of draw calls each frame.
 	SimpleTimer m_layerAvgTimer; //!< Timer used to time the time taken to render the layer.
 	SimpleTimer m_layerTimer; //!< Timer used to time the time taken to render the layer.
+	SDL_Window * p_SDLwin; //!< Copy of the SDL2 window that is being used.
 
 private:
 
