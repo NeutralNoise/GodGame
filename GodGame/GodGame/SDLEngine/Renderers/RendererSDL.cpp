@@ -14,6 +14,7 @@ RendererSDL::~RendererSDL()
 
 bool RendererSDL::OnInit(SDL_Window * win, const UInt32 &flags)
 {
+	p_SDLwin = win;
 	p_renderer = SDL_CreateRenderer(win, -1, flags);
 	if (!p_renderer) {
 		AddEngineErrorMessage(102, EngineErrorTypes::ERR_TYPE_FATEL,
