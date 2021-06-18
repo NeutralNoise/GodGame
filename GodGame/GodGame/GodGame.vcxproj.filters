@@ -60,6 +60,9 @@
     <ClCompile Include="SDLEngine\Texture.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -109,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="SDLEngine\Texture.h">
       <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\Shader.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
