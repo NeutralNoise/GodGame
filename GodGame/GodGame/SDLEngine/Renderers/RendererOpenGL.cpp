@@ -141,14 +141,16 @@ void RendererOpenGL::OnCleanUp() {
 }
 
 bool RendererOpenGL::CompileShader(UInt32 *id, const std::string &frag, const std::string &vert) {
-	
+
+	bool success = false;
+
 	auto LoadSource = [](std::string path) {
 		std::string source;
 		std::string line;
-		std::ifstream myfile (path.c_str());
+		std::ifstream myfile(path.c_str());
 		if (myfile.is_open())
 		{
-			while ( getline (myfile,line) )
+			while (getline(myfile, line))
 			{
 				source += line + "\n";
 			}
@@ -159,101 +161,116 @@ bool RendererOpenGL::CompileShader(UInt32 *id, const std::string &frag, const st
 		}
 		return source;
 	};
-	
+
 	//Create a new program.
 	*id = glCreateProgram();
-	std::cout << "Compiling vertex shader: " << vert << "\n";
-	//Create vertex shader
-    GLint vertexShader = glCreateShader( GL_VERTEX_SHADER );
-	//Load the source code
-	std::string vertFile = LoadSource(vert);
-	const GLchar* vertexShaderSource[] =
-    {
-        vertFile.c_str()
-    };
-	//Set vertex source
-    glShaderSource( vertexShader, 1, vertexShaderSource, NULL );
+	//Check if we have created a program.
+	if (!*id) {
+		std::cout << "Failed to create openGL program\n";
+		//TODO better error message.
+	}
+	else {
+		std::cout << "Compiling vertex shader: " << vert << "\n";
+		//Create vertex shader
+		GLint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		//Load the source code
+		std::string vertFile = LoadSource(vert);
+		const GLchar* vertexShaderSource[] =
+		{
+			vertFile.c_str()
+		};
+		//Set vertex source
+		glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
 
-    //Compile vertex source
-    glCompileShader( vertexShader );
+		//Compile vertex source
+		glCompileShader(vertexShader);
 
-    //Check vertex shader for errors
-    GLint vShaderCompiled = GL_FALSE;
-    glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &vShaderCompiled );
-    if( vShaderCompiled != GL_TRUE )
-    {
-		//TODO Better error message
-        //printf( "Unable to compile vertex shader %d!\n", vertexShader );
-        std::cout << "Unable to compile vertex shader " << vertexShader << "\n";
-        printShaderLog( vertexShader );
-        //success = false;
-        return false;
-    }
-    else {
-		std::cout << "Vertex shader compiled: " << vert << "\n";
-		//Attach vertex shader to program
-        glAttachShader( *id, vertexShader );
-		std::cout << "Compiling fragment shader: " << frag << "\n";
-		
-        //Create fragment shader
-        GLuint fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
-		std::string fragFile = LoadSource(frag);
-        //Get fragment source
-        const GLchar* fragmentShaderSource[] =
-        {
-            fragFile.c_str()
-        };
-        
-        //Set fragment source
-        glShaderSource( fragmentShader, 1, fragmentShaderSource, NULL );
-
-        //Compile fragment source
-        glCompileShader( fragmentShader );
-
-        //Check fragment shader for errors
-        GLint fShaderCompiled = GL_FALSE;
-        glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled );
-        if( fShaderCompiled != GL_TRUE )
-        {
+		//Check vertex shader for errors
+		GLint vShaderCompiled = GL_FALSE;
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
+		if (vShaderCompiled != GL_TRUE)
+		{
 			//TODO Better error message
-			//printf( "Unable to compile fragment shader %d!\n", fragmentShader );
-			std::cout << "Unable to compile fragment shader " << vertexShader << "\n";
-			printShaderLog( fragmentShader );
-			// success = false;
-        }
-        else {
-			std::cout << "Fragment shader compiled: " << frag << "\n";
-			
-			//Attach fragment shader to program
-            glAttachShader( *id, fragmentShader );
+			//printf( "Unable to compile vertex shader %d!\n", vertexShader );
+			std::cout << "Unable to compile vertex shader " << vertexShader << "\n";
+			printShaderLog(vertexShader);
+			success = false;
+		}
+		else {
+			std::cout << "Vertex shader compiled: " << vert << "\n";
+			//Attach vertex shader to program
+			glAttachShader(*id, vertexShader);
+			std::cout << "Compiling fragment shader: " << frag << "\n";
 
-            //Link program
-            glLinkProgram( *id );
+			//Create fragment shader
+			GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+			std::string fragFile = LoadSource(frag);
+			//Get fragment source
+			const GLchar* fragmentShaderSource[] =
+			{
+				fragFile.c_str()
+			};
 
-            //Check for errors
-            GLint programSuccess = GL_TRUE;
-            glGetProgramiv( *id, GL_LINK_STATUS, &programSuccess );
-            if( programSuccess != GL_TRUE )
-            {
-				//TODO Better error message.
-                //printf( "Error linking program %d!\n", gProgramID );
-                std::cout << "Error linking program:" << *id << "\n";
-                //printProgramLog( gProgramID );
-                //success = false;
-            }
-            else {
-				//TODO this needs to be done another way.
-				//Get vertex attribute location
-				gVertexPos2DLocation = glGetAttribLocation( programID, "LVertexPos2D" );
-				if( gVertexPos2DLocation == -1 )
+			//Set fragment source
+			glShaderSource(fragmentShader, 1, fragmentShaderSource, NULL);
+
+			//Compile fragment source
+			glCompileShader(fragmentShader);
+
+			//Check fragment shader for errors
+			GLint fShaderCompiled = GL_FALSE;
+			glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled);
+			if (fShaderCompiled != GL_TRUE)
+			{
+				//TODO Better error message
+				//printf( "Unable to compile fragment shader %d!\n", fragmentShader );
+				std::cout << "Unable to compile fragment shader " << vertexShader << "\n";
+				printShaderLog(fragmentShader);
+				success = false;
+			}
+			else {
+				std::cout << "Fragment shader compiled: " << frag << "\n";
+
+				//Attach fragment shader to program
+				glAttachShader(*id, fragmentShader);
+
+				//Link program
+				glLinkProgram(*id);
+
+				//Check for errors
+				GLint programSuccess = GL_TRUE;
+				glGetProgramiv(*id, GL_LINK_STATUS, &programSuccess);
+				if (programSuccess != GL_TRUE)
 				{
-					printf( "LVertexPos2D is not a valid glsl program variable!\n" );
-					return false;
+					//TODO Better error message.
+					//printf( "Error linking program %d!\n", gProgramID );
+					std::cout << "Error linking program:" << *id << "\n";
+					//printProgramLog( gProgramID );
+					//success = false;
+				}
+				else {
+					//TODO this needs to be done another way.
+					//Get vertex attribute location
+					gVertexPos2DLocation = glGetAttribLocation(programID, "LVertexPos2D");
+					if (gVertexPos2DLocation == -1)
+					{
+						printf("LVertexPos2D is not a valid glsl program variable!\n");
+						success = false;
+					}
 				}
 			}
+
 		}
-        
 	}
-	std::cout << "Compiled Shader!\n";
-	return true;
+	//Double check if we have compiled the shader and set the id to 0 if we haven't.
+	if (!success) {
+		if (*id) {
+			glDeleteProgram(*id); //Is this needed?
+			*id = 0;
+		}
+	}
+	else {
+		std::cout << "Compiled Shader: " << *id << "\n";
+	}
+	return success;
 }
