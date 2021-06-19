@@ -26,7 +26,7 @@
       - [ ] Bloom.
       - [ ] Motion blur.
   - [ ] OpenGL render.
-    - [ ] SDL2 OpenGL context
+    - [x] SDL2 OpenGL context
     - [ ] Sprite rotation.
     - [ ] Draw line.
     - [ ] Shaders.
