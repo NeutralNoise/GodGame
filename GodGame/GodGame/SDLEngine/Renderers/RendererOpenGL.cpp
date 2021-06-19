@@ -142,7 +142,7 @@ void RendererOpenGL::OnCleanUp() {
 
 bool RendererOpenGL::CompileShader(UInt32 *id, const std::string &frag, const std::string &vert) {
 
-	bool success = false;
+	bool success = true;
 
 	auto LoadSource = [](std::string path) {
 		std::string source;
