@@ -1,6 +1,7 @@
 #include "Shader.h"
 #include <iostream>
 #include <fstream>
+#include <GL/glew.h>
 
 void printShaderLog( GLuint shader )
 {
@@ -35,7 +36,7 @@ void printShaderLog( GLuint shader )
 }
 
 bool Shader::CompileShader(const std::string &fragFile, const std::string &vertFile) {
-	
+	return false;
 }
 
 void Shader::Bind() const {

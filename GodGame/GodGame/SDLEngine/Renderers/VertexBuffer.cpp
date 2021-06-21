@@ -11,7 +11,6 @@ VertexBuffer::VertexBuffer(const void *data, const UInt32 &size) {
 }
 
 VertexBuffer::~VertexBuffer() {
-	glDeleteBuffers(1, &m_bufferID);
 }
 
 void VertexBuffer::Bind() const {
@@ -20,4 +19,9 @@ void VertexBuffer::Bind() const {
 
 void VertexBuffer::Unbind() const {
 	glBindBuffer( GL_ARRAY_BUFFER, 0);
+}
+
+void VertexBuffer::DeleteBuffer()
+{
+	glDeleteBuffers(1, &m_bufferID);
 }

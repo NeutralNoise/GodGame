@@ -15,6 +15,9 @@ public:
 	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
 	void Bind() const;
 	void Unbind() const;
+
+	void DeleteArray();
+
 private:
 	UInt32 m_atribArrayID;
 };

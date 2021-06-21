@@ -37,14 +37,15 @@ public:
 	void Push(const UInt32 &count) {
 		assert(false);
 	}
-	/*
+
+#if !defined(__linux__)
 	template<>
 	void Push<float>(const UInt32 &count) {
 		m_elements.push_back({GL_FLOAT, count, 0});
 		m_stride += count * sizeof(float);
 	}
-	
-	
+#endif //__linux__
+	/*
 	template<>
 	void Push<UInt32>(const UInt32 &count) {
 		m_elements.push_back({GL_UNSIGNED_INT, count, 0});

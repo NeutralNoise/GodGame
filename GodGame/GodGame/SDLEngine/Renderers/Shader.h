@@ -8,7 +8,7 @@ struct ShaderProgam {
 	std::string fragmentFile; //!< File where the fragment shader is stored.
 	std::string vertexFile; //!< File where the vertex shader is stored
 	
-	ShaderProgam(const Uint32 &id, const std::string &fragStr, const std::string &vertStr) {
+	ShaderProgam(const UInt32 &id, const std::string &fragStr, const std::string &vertStr) {
 		programID = id;
 		fragmentFile = fragStr;
 		vertexFile = vertStr;

@@ -12,6 +12,8 @@ class VertexBuffer
         void Bind() const;
         void Unbind() const;
 
+		void DeleteBuffer();
+
     private:
         UInt32 m_bufferID;
 };

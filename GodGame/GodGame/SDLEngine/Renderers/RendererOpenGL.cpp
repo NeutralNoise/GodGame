@@ -86,34 +86,35 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 		//VBO data
 		GLfloat vertexData[] =
 		{
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.5f,  0.5f,
-			-0.5f,  0.5f
+			-0.5f, -0.5f, 1.0, 0.0, 0.0,
+			 0.5f, -0.5f, 0.0, 1.0, 0.0,
+			 0.5f,  0.5f, 0.0, 0.0, 1.0,
+			-0.5f,  0.5f, 1.0, 1.0, 1.0
 		};
 
 		//IBO data
 		GLuint indexData[] = { 0, 1, 2, 3 };
 		
-		//m_VAA = VertexArray(1, true);
-		//m_VBO = VertexBuffer(vertexData, 2 * 4 * sizeof(float));
-		//m_IBO = IndexBuffer(indexData, 4);
-		//VertexBufferLayout layout;
+		m_VAA = VertexArray(1);
+		m_VBO = VertexBuffer(vertexData, 6 * 4 * sizeof(float));
+		m_IBO = IndexBuffer(indexData, 4);
+		VertexBufferLayout layout;
 		
-		//layout.Push<float>(2);
-		//m_VAA.AddBuffer(m_VBO, layout);
+		layout.Push<float>(2);
+		layout.Push<float>(3);
+		m_VAA.AddBuffer(m_VBO, layout);
 		
 		
 		//Create VBO
-		glGenBuffers( 1, &gVBO );
-		glBindBuffer( GL_ARRAY_BUFFER, gVBO );
-		glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
+		//glGenBuffers( 1, &gVBO );
+		//glBindBuffer( GL_ARRAY_BUFFER, gVBO );
+		//glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
 		
 		
 		//Create IBO
-		glGenBuffers( 1, &gIBO );
-		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
-		glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_STATIC_DRAW );
+		//glGenBuffers( 1, &gIBO );
+		//glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
+		//glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_STATIC_DRAW );
 		
 	}	
 	else {
@@ -137,21 +138,21 @@ void RendererOpenGL::OnDraw() {
 	glUseProgram( programID );
 
 	//Enable vertex position
-	glEnableVertexAttribArray( gVertexPos2DLocation );
-	//m_VAA.Bind();
+	//glEnableVertexAttribArray( gVertexPos2DLocation );
+	m_VAA.Bind();
 
 	//Set vertex data
-	//m_VBO.Bind();
-	glBindBuffer( GL_ARRAY_BUFFER, gVBO );
-	glVertexAttribPointer( gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL );
+	m_VBO.Bind();
+	//glBindBuffer( GL_ARRAY_BUFFER, gVBO );
+	//glVertexAttribPointer( gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL );
 
 	//Set index data and render
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
-	//m_IBO.Bind();
+	//glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
+	m_IBO.Bind();
 	glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL );
 	//Disable vertex position
-	glDisableVertexAttribArray( gVertexPos2DLocation );
-	//m_VAA.Unbind();
+	//glDisableVertexAttribArray( gVertexPos2DLocation );
+	m_VAA.Unbind();
 
 	//Unbind program
 	glUseProgram(0);   
@@ -275,12 +276,14 @@ bool RendererOpenGL::CompileShader(UInt32 *id, const std::string &frag, const st
 					
 					//TODO this needs to be done another way.
 					//Get vertex attribute location
+					/*
 					gVertexPos2DLocation = glGetAttribLocation(programID, "LVertexPos2D");
 					if (gVertexPos2DLocation == -1)
 					{
 						printf("LVertexPos2D is not a valid glsl program variable!\n");
 						success = false;
 					}
+					*/
 				}
 			}
 

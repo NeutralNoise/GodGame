@@ -7,14 +7,13 @@ VertexArray::VertexArray(const Int32 &count) {
 }
 
 VertexArray::~VertexArray() {
-	glDeleteVertexArrays(1, &m_atribArrayID);
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout) {
 	Bind();
 	vb.Bind();
 	const std::vector<VertexBufferLayoutElement>& elements = layout.GetElements();
-	UInt32 offset;
+	UInt32 offset = 0;
 	for(UInt32 i = 0; i < elements.size(); i++) {
 		const VertexBufferLayoutElement& element = elements[i];
 		glEnableVertexAttribArray(i);
@@ -30,4 +29,9 @@ void VertexArray::Bind() const {
 
 void VertexArray::Unbind() const {
 	glBindVertexArray(0);
+}
+
+void VertexArray::DeleteArray()
+{
+	glDeleteVertexArrays(1, &m_atribArrayID);
 }

@@ -12,6 +12,8 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
+	void DeleteBuffer();
+
 	inline UInt32 GetCount() const { return m_Count; }
 
 private:
