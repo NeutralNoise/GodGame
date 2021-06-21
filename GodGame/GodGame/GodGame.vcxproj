@@ -167,8 +167,12 @@
     <ClCompile Include="SDLEngine\InfoEngine.cpp" />
     <ClCompile Include="SDLEngine\Input.cpp" />
     <ClCompile Include="SDLEngine\Renderer.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\IndexBuffer.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererSDL.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\VertexAtribArray.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\VertexBuffer.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\VertexBufferLayout.cpp" />
     <ClCompile Include="SDLEngine\Texture.cpp" />
     <ClCompile Include="SDLEngine\Timer.cpp" />
   </ItemGroup>
@@ -185,9 +189,12 @@
     <ClInclude Include="SDLEngine\Input.h" />
     <ClInclude Include="SDLEngine\Rect.h" />
     <ClInclude Include="SDLEngine\Renderer.h" />
+    <ClInclude Include="SDLEngine\Renderers\IndexBuffer.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererSDL.h" />
-    <ClInclude Include="SDLEngine\Renderers\Shader.h" />
+    <ClInclude Include="SDLEngine\Renderers\VertexAtribArray.h" />
+    <ClInclude Include="SDLEngine\Renderers\VertexBuffer.h" />
+    <ClInclude Include="SDLEngine\Renderers\VertexBufferLayout.h" />
     <ClInclude Include="SDLEngine\Texture.h" />
     <ClInclude Include="SDLEngine\Timer.h" />
     <ClInclude Include="SDLEngine\typedefs.h" />

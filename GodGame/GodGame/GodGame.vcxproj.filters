@@ -63,6 +63,18 @@
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL.cpp">
       <Filter>Source Files\SDLEngine\Renderers</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\VertexBufferLayout.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\IndexBuffer.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\VertexAtribArray.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\VertexBuffer.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -116,7 +128,16 @@
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL.h">
       <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\Shader.h">
+    <ClInclude Include="SDLEngine\Renderers\VertexBufferLayout.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\IndexBuffer.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\VertexAtribArray.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\VertexBuffer.h">
       <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
