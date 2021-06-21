@@ -1,6 +1,8 @@
 #version 130
+//#version 140
 
 in vec2 LVertexPos2D;
+//layout (location = 0) in vec2 LVertexPos2D;
 
 out vec4 vertPos;
 

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../Renderer.h"
+#include "VertexBuffer.h"
+#include "VertexAtribArray.h"
+#include "IndexBuffer.h"
 
 class RendererOpenGL : public Renderer
 {
@@ -52,5 +55,9 @@ private:
 	Int32 gVertexPos2DLocation = -1;
 	UInt32 gVBO = 0;
 	UInt32 gIBO = 0;
+	IndexBuffer m_IBO; // We only need one of these for now.
+	VertexBuffer m_VBO; // We only need one of these for now.
+	VertexArray m_VAA;
+	
 	int flash = 0;
 };

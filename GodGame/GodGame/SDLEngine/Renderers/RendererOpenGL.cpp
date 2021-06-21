@@ -39,7 +39,7 @@ void printShaderLog( GLuint shader )
 }
 
 RendererOpenGL::RendererOpenGL() {
-	
+	std::cout << "what am i doing here\n";
 }
 
 RendererOpenGL::~RendererOpenGL() {
@@ -47,6 +47,7 @@ RendererOpenGL::~RendererOpenGL() {
 }
 
 bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
+	std::cout << "Creating OpenGL Renderer\n";
 	p_SDLwin = win;
 	p_GLContext = SDL_GL_CreateContext(win);
 	
@@ -54,12 +55,20 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 		std::cout << "Failed to create OpenGL context!\n";
 		return false;
 	}
+	else {
+		std::cout << "SDL2 created OpenGL Contex\n";
+		std::cout << "Version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n";
+	}
 	
 	if (glewInit() != GLEW_OK)
     {
 		std::cout << "Failed to Start Glew!\n";
         return false;
     }
+    else {
+		std::cout << "Glew Has Started\n";
+		std::cout << "Version: " << glewGetString(GLEW_VERSION) << "\n";
+	}
 	
 	//TODO Add config to disable this
 	//Use Vsync
@@ -68,13 +77,11 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 		printf( "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError() );
 	}
 	
-	std::cout << "Version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n";
-	std::cout << "Created SDL OpenGL Render Context!\n";
-	
 	//Load a test shader
 	if(CompileShader(&programID, "data/Shaders/fragment.frag","data/Shaders/vertex.vert")) {
 		
 		//Set the clear colour
+		//TODO why the fuck is this here!
 		glClearColor(0.0,0.0,0.0,1.0);
 		//VBO data
 		GLfloat vertexData[] =
@@ -87,16 +94,27 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 
 		//IBO data
 		GLuint indexData[] = { 0, 1, 2, 3 };
-
+		
+		//m_VAA = VertexArray(1, true);
+		//m_VBO = VertexBuffer(vertexData, 2 * 4 * sizeof(float));
+		//m_IBO = IndexBuffer(indexData, 4);
+		//VertexBufferLayout layout;
+		
+		//layout.Push<float>(2);
+		//m_VAA.AddBuffer(m_VBO, layout);
+		
+		
 		//Create VBO
 		glGenBuffers( 1, &gVBO );
 		glBindBuffer( GL_ARRAY_BUFFER, gVBO );
 		glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
-
+		
+		
 		//Create IBO
 		glGenBuffers( 1, &gIBO );
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
 		glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_STATIC_DRAW );
+		
 	}	
 	else {
 		return false;
@@ -120,17 +138,20 @@ void RendererOpenGL::OnDraw() {
 
 	//Enable vertex position
 	glEnableVertexAttribArray( gVertexPos2DLocation );
+	//m_VAA.Bind();
 
 	//Set vertex data
+	//m_VBO.Bind();
 	glBindBuffer( GL_ARRAY_BUFFER, gVBO );
 	glVertexAttribPointer( gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL );
 
 	//Set index data and render
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
+	//m_IBO.Bind();
 	glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL );
-
 	//Disable vertex position
 	glDisableVertexAttribArray( gVertexPos2DLocation );
+	//m_VAA.Unbind();
 
 	//Unbind program
 	glUseProgram(0);   
@@ -141,7 +162,9 @@ void RendererOpenGL::OnCleanUp() {
 }
 
 bool RendererOpenGL::CompileShader(UInt32 *id, const std::string &frag, const std::string &vert) {
-
+	
+	std::cout << "Starting to compile a shader\n";
+	
 	bool success = true;
 
 	auto LoadSource = [](std::string path) {
@@ -249,6 +272,7 @@ bool RendererOpenGL::CompileShader(UInt32 *id, const std::string &frag, const st
 					//success = false;
 				}
 				else {
+					
 					//TODO this needs to be done another way.
 					//Get vertex attribute location
 					gVertexPos2DLocation = glGetAttribLocation(programID, "LVertexPos2D");

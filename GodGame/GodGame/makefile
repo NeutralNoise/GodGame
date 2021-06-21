@@ -1,4 +1,4 @@
-SRC_FILES := GodGame.cpp SDLEngine/ErrorEngine.cpp SDLEngine/FontEngine.cpp SDLEngine/GameEngine.cpp SDLEngine/ImageLoader.cpp SDLEngine/InfoEngine.cpp SDLEngine/Input.cpp SDLEngine/Renderer.cpp SDLEngine/Texture.cpp SDLEngine/Timer.cpp SDLEngine/Renderers/RendererSDL.cpp SDLEngine/Renderers/RendererOpenGL.cpp
+SRC_FILES := GodGame.cpp SDLEngine/ErrorEngine.cpp SDLEngine/FontEngine.cpp SDLEngine/GameEngine.cpp SDLEngine/ImageLoader.cpp SDLEngine/InfoEngine.cpp SDLEngine/Input.cpp SDLEngine/Renderer.cpp SDLEngine/Texture.cpp SDLEngine/Timer.cpp SDLEngine/Renderers/RendererSDL.cpp SDLEngine/Renderers/RendererOpenGL.cpp SDLEngine/Renderers/IndexBuffer.cpp SDLEngine/Renderers/VertexBuffer.cpp SDLEngine/Renderers/VertexAtribArray.cpp SDLEngine/Renderers/VertexBufferLayout.cpp
 CXX := g++
 RELEASE_FLAGS := -w -std=c++11 -O3 -s
 DEBUG_FLAGS := -Wall -g -std=c++11
