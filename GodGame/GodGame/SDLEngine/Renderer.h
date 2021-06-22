@@ -272,13 +272,12 @@ public:
 	/**
 	 * \brief Compiles a fragment shader and a vertex shader into a shader program.
 	 * 
-	 * \param id The variable the program ID will be set in.
 	 * \param frag File path to the fragment shader sourcecode.
 	 * \param vert File path to the vertex shader sourcecode.
 	 * \return bool Returns true if compiled and id will be set to the program ID. If not returns false and id set to 0.
 	*/
 
-	virtual bool CompileShader(UInt32 *id, const std::string &frag, const std::string &vert);
+	virtual bool CompileShader(const std::string &frag, const std::string &vert);
 	
 protected:
 
