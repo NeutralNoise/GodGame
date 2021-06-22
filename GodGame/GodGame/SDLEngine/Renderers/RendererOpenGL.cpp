@@ -7,7 +7,6 @@
 #include <string>
 
 RendererOpenGL::RendererOpenGL() {
-	std::cout << "what am i doing here\n";
 }
 
 RendererOpenGL::~RendererOpenGL() {
@@ -18,7 +17,7 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 	std::cout << "Creating OpenGL Renderer\n";
 	p_SDLwin = win;
 	p_GLContext = SDL_GL_CreateContext(win);
-	
+	//TODO Better error handling.
 	if(p_GLContext == NULL) {
 		std::cout << "Failed to create OpenGL context!\n";
 		return false;
@@ -49,7 +48,7 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 
 	//Load a test shader
-	if(CompileShader(&programID, "data/Shaders/fragment.frag","data/Shaders/vertex.vert")) {
+	if(CompileShader("data/Shaders/fragment.frag","data/Shaders/vertex.vert")) {
 		
 		//VBO data
 		GLfloat vertexData[] =
@@ -70,20 +69,7 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 		
 		layout.Push<float>(2);
 		layout.Push<float>(3);
-		m_VAA.AddBuffer(m_VBO, layout);
-		
-		
-		//Create VBO
-		//glGenBuffers( 1, &gVBO );
-		//glBindBuffer( GL_ARRAY_BUFFER, gVBO );
-		//glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
-		
-		
-		//Create IBO
-		//glGenBuffers( 1, &gIBO );
-		//glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
-		//glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_STATIC_DRAW );
-		
+		m_VAA.AddBuffer(m_VBO, layout);		
 	}	
 	else {
 		return false;
@@ -104,24 +90,18 @@ void RendererOpenGL::OnDraw() {
     glClear( GL_COLOR_BUFFER_BIT );
     
 	//Bind program
-	//glUseProgram( programID );
 	m_shader.Bind();
 	m_shader.SetUniformu1f("u_time", time);
 	//Enable vertex position
-	//glEnableVertexAttribArray( gVertexPos2DLocation );
 	m_VAA.Bind();
 
 	//Set vertex data
 	m_VBO.Bind();
-	//glBindBuffer( GL_ARRAY_BUFFER, gVBO );
-	//glVertexAttribPointer( gVertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL );
 
 	//Set index data and render
-	//glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
 	m_IBO.Bind();
 	glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL );
 	//Disable vertex position
-	//glDisableVertexAttribArray( gVertexPos2DLocation );
 	m_VAA.Unbind();
 
 	time += timeValue;
@@ -139,6 +119,6 @@ void RendererOpenGL::OnCleanUp() {
 	
 }
 
-bool RendererOpenGL::CompileShader(UInt32 *id, const std::string &frag, const std::string &vert) {
+bool RendererOpenGL::CompileShader(const std::string &frag, const std::string &vert) {
 	return m_shader.CompileShader(frag, vert);
 }
