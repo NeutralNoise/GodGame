@@ -75,6 +75,9 @@
     <ClCompile Include="SDLEngine\Renderers\VertexBuffer.cpp">
       <Filter>Source Files\SDLEngine\Renderers</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\Shader.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
     <ClInclude Include="SDLEngine\Renderers\VertexBuffer.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\Shader.h">
       <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
   </ItemGroup>

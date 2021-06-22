@@ -4,6 +4,7 @@
 #include "VertexBuffer.h"
 #include "VertexAtribArray.h"
 #include "IndexBuffer.h"
+#include "Shader.h"
 
 class RendererOpenGL : public Renderer
 {
@@ -58,6 +59,7 @@ private:
 	IndexBuffer m_IBO; // We only need one of these for now.
 	VertexBuffer m_VBO; // We only need one of these for now.
 	VertexArray m_VAA;
-	
+	Shader m_shader; //The shader used by this renderer.
+
 	int flash = 0;
 };
