@@ -98,14 +98,15 @@ void RendererOpenGL::OnUpdate() {
 }
 
 void RendererOpenGL::OnDraw() {
-
+	static float time = 0.0;
+	static float timeValue = 0.01;
 	//Clear color buffer
     glClear( GL_COLOR_BUFFER_BIT );
     
 	//Bind program
 	//glUseProgram( programID );
 	m_shader.Bind();
-
+	m_shader.SetUniformu1f("u_time", time);
 	//Enable vertex position
 	//glEnableVertexAttribArray( gVertexPos2DLocation );
 	m_VAA.Bind();
@@ -123,6 +124,13 @@ void RendererOpenGL::OnDraw() {
 	//glDisableVertexAttribArray( gVertexPos2DLocation );
 	m_VAA.Unbind();
 
+	time += timeValue;
+	if (time > 1.0) {
+		timeValue = -timeValue;
+	}
+	else if (time < 0.0) {
+		timeValue = -timeValue;
+	}
 	//Unbind program
 	glUseProgram(0);   
 }

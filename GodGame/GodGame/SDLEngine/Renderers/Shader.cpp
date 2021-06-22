@@ -192,6 +192,46 @@ void Shader::Unbind() const {
 	glUseProgram(0);
 }
 
+void Shader::SetUniformu1ui(const std::string & name, const UInt32 & val)
+{
+	glUniform1ui(GetUniform(name), val);
+}
+
+void Shader::SetUniformu1f(const std::string & name, const float & val)
+{
+	glUniform1f(GetUniform(name), val);
+}
+
+void Shader::SetUniformu2f(const std::string & name, const float & val1, const float & val2)
+{
+	glUniform2f(GetUniform(name), val1, val2);
+}
+
+void Shader::SetUniformu3f(const std::string & name, const float & val1, const float & val2, const float & val3)
+{
+	glUniform3f(GetUniform(name), val1, val2, val3);
+}
+
+void Shader::SetUniformu4f(const std::string & name, const float & val1, const float & val2, const float & val3, const float & val4)
+{
+	glUniform4f(GetUniform(name), val1, val2, val3, val4);
+}
+
+int Shader::GetUniform(const std::string & name)
+{
+	if (m_uniformCache.find(name) != m_uniformCache.end()) {
+		return m_uniformCache[name];
+	}
+	//We haven't gotten it yet so we need to get the location.
+	Int32 loc = glGetUniformLocation(m_program.programID, name.c_str());
+	if (loc == -1) {
+		std::cout << "No active uniform variable with name " << name << " found\n";
+	}
+	m_uniformCache[name] = loc;
+
+	return loc;
+}
+
 std::string Shader::LoadSourceFile(const std::string &file) {
 	std::string source;
 	std::string line;
