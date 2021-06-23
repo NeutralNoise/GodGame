@@ -1,8 +1,9 @@
 #ifndef SHADER_H_INCLUDED
 #define SHADER_H_INCLUDED
 #include <string>
-#include "../typedefs.h"
 #include <unordered_map>
+#include <GLM/glm.hpp>
+#include "../typedefs.h"
 
 struct ShaderProgam {
 	UInt32 programID;
@@ -29,6 +30,7 @@ public:
 	void SetUniformu2f(const std::string &name, const float &val1, const float &val2);
 	void SetUniformu3f(const std::string &name, const float &val1, const float &val2, const float &val3);
 	void SetUniformu4f(const std::string &name, const float &val1, const float &val2, const float &val3, const float &val4);
+	void SetUniformuMatrix4f(const std::string &name, const glm::mat4 &mat4);
 	
 private:
 	int GetUniform(const std::string &name);

@@ -77,7 +77,8 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 	std::cout << "Compiling vertex shader: " << vertFile << "\n";
 	//Create vertex shader
 	GLint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	
+	//Create fragment shader
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	const GLchar* vertexShaderSource[] =
 	{
 		vertSource.c_str()
@@ -106,8 +107,8 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 		glAttachShader(m_program.programID, vertexShader);
 		std::cout << "Compiling fragment shader: " << fragFile << "\n";
 
-		//Create fragment shader
-		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		
+		
 		//Get fragment source
 		
 		const GLchar* fragmentShaderSource[] =
@@ -150,20 +151,7 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 				//printf( "Error linking program %d!\n", gProgramID );
 				std::cout << "Error linking program:" << m_program.programID << "\n";
 				printProgramLog( m_program.programID );
-				//success = false;
-			}
-			else {
-
-				//TODO this needs to be done another way.
-				//Get vertex attribute location
-				/*
-				gVertexPos2DLocation = glGetAttribLocation(programID, "LVertexPos2D");
-				if (gVertexPos2DLocation == -1)
-				{
-					printf("LVertexPos2D is not a valid glsl program variable!\n");
-					success = false;
-				}
-				*/
+				success = false;
 			}
 		}
 
@@ -179,7 +167,9 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 	else {
 		std::cout << "Compiled Shader: " << m_program.programID << "\n";
 	}
-
+	//We dont really need these now.
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 
 	return success;
 }
@@ -215,6 +205,10 @@ void Shader::SetUniformu3f(const std::string & name, const float & val1, const f
 void Shader::SetUniformu4f(const std::string & name, const float & val1, const float & val2, const float & val3, const float & val4)
 {
 	glUniform4f(GetUniform(name), val1, val2, val3, val4);
+}
+void Shader::SetUniformuMatrix4f(const std::string & name, const glm::mat4 &mat4)
+{
+	glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, &mat4[0][0]);
 }
 
 int Shader::GetUniform(const std::string & name)
