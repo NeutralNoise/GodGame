@@ -66,8 +66,8 @@ int main(int argc, char ** argv)
 	EngineInfo * RenderInfo = nullptr;
 	EngineInfo * RenderAvgInfo = nullptr;
 	EngineInfo * DrawCalls = nullptr;
-	int xpos = 0;
-	int ypos = 0;
+	float xpos = 0;
+	float ypos = 0;
 
 	float lastTime = 0.0f;
 	float thisTime = 0.0f;
@@ -162,6 +162,10 @@ int main(int argc, char ** argv)
 		RenderInfo = InfoEngine::GetEngineInfo("layer_render_time");
 		RenderAvgInfo = InfoEngine::GetEngineInfo("layer_render_time_avg");
 		DrawCalls = InfoEngine::GetEngineInfo("ren_draw_calls");
+
+		RenderObject ro(-0.5f, -0.5f, 1.0f, 1.0f);
+		testOpenGL.AddRenderObject(&ro);
+
 		while (isRunning) {
 			fpsTimer.StartTimer();
 			//testRender.AddRenderObject(&testObject);
@@ -238,7 +242,7 @@ int main(int argc, char ** argv)
 			//Work out FPS
 			thisTime = fpsTimer.GetTime();
 			if (MAX_FRAME_TIME > thisTime) {
-				ge.EngineWait(MAX_FRAME_TIME - (int)thisTime);
+				ge.EngineWait(MAX_FRAME_TIME - thisTime);
 				thisTime += MAX_FRAME_TIME - thisTime;
 			}
 

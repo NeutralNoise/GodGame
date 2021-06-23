@@ -104,26 +104,26 @@ void RendererOpenGL::OnDraw() {
 	//Set index data and render
 	m_IBO.Bind();
 	*/
-	int err = glGetError();
-	bool hasError = false;
 
-	RenderObject ro(-0.5f, -0.5f, 1.0f, 1.0f);
-	m_rBatch.AddQuard(ro);
-	m_VBO.SetData(m_rBatch.data->data(), sizeof(Vertex)* m_rBatch.count);
-	err = glGetError();
+	//RenderObject ro(-0.5f, -0.5f, 1.0f, 1.0f);
+	//m_rBatch.AddQuard(ro);
+	GenerateBatchs();
+	for (size_t i = 0; i <= m_batchIndex; i++) {
+		//m_VBO.SetData(m_rBatch.data->data(), sizeof(Vertex)* m_rBatch.count);
+		//m_IBO.SetData(m_rBatch.indices->data(), m_rBatch.count);
 
-	m_IBO.SetData(m_rBatch.indices->data(), m_rBatch.count);
-	err = glGetError();
+		m_VBO.SetData(m_renderBatchs[i].data->data(), sizeof(Vertex)* m_renderBatchs[i].count);
+		m_IBO.SetData(m_renderBatchs[i].indices->data(), m_renderBatchs[i].count);
 
-	glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL );
-
+		glDrawElements(GL_TRIANGLE_FAN, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+	}
 	int fdsf = 34;
 
 	//Disable vertex position
 	m_IBO.Unbind();
 	m_VBO.Unbind();
 	m_VAA.Unbind();
-	m_rBatch.Clear();
+	//m_rBatch.Clear();
 	time += timeValue;
 	if (time > 1.0) {
 		timeValue = -timeValue;
@@ -141,4 +141,51 @@ void RendererOpenGL::OnCleanUp() {
 
 bool RendererOpenGL::CompileShader(const std::string &frag, const std::string &vert) {
 	return m_shader.CompileShader(frag, vert);
+}
+
+void RendererOpenGL::AddNewBatch()
+{
+	//Add a  new batch
+	if (((m_renderBatchs.size() - 1) < m_batchIndex) || (m_renderBatchs.size() == 0) ) {
+		RenderBatchOpenGL newBatch;
+		m_renderBatchs.push_back(newBatch);
+	}
+}
+
+void RendererOpenGL::GenerateBatchs()
+{
+	AddNewBatch();
+	//Loop through the layers and add them to the batch
+	for (size_t i = 0; i < Renderer::m_layers.size(); i++) {
+		//Make sure this layer is valid.
+		if (Renderer::m_layers[i] != nullptr) {
+			//Get the render objects.
+			RenderObjectLayer* layer = Renderer::m_layers[i];
+			RenderObject* renObject;
+			//TODO use sublayers
+			for (size_t t = 0; t < layer->renderObjects.size(); t++) {
+				renObject = layer->renderObjects[t];
+
+				//Generate Vertexs
+				//If this fails we need a new batch
+				if (m_renderBatchs[m_batchIndex].AddQuard(*renObject) == -1) {
+					//Check if we need a new batch or if we can use an old one.
+					m_batchIndex++;
+					AddNewBatch();
+					m_renderBatchs[m_batchIndex].AddQuard(*renObject); //We should now have a clear batch.
+				}
+				
+			}
+		}
+	}
+	
+
+}
+
+void RendererOpenGL::ClearBatchs()
+{
+	for (size_t i = 0; i <= m_batchIndex; i++) {
+		m_renderBatchs[i].Clear();
+	}
+	m_batchIndex = 0;
 }

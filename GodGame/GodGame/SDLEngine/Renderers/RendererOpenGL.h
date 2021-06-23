@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "../Renderer.h"
 #include "VertexBuffer.h"
 #include "VertexAtribArray.h"
@@ -51,6 +52,12 @@ class RendererOpenGL : public Renderer
 	bool CompileShader(const std::string &frag, const std::string &vert) override;
 
 private:
+
+	void AddNewBatch();
+
+	void GenerateBatchs();
+	void ClearBatchs();
+
 	void * p_GLContext;
 	//TODO remove these
 	/*
@@ -62,7 +69,7 @@ private:
 	VertexBuffer m_VBO; // We only need one of these for now.
 	VertexArray m_VAA;
 	Shader m_shader; //The shader used by this renderer.
-	RenderBatchOpenGL m_rBatch;
-
+	std::vector<RenderBatchOpenGL> m_renderBatchs;
+	UInt32 m_batchIndex = 0;
 	int flash = 0;
 };
