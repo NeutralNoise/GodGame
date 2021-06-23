@@ -95,15 +95,6 @@ private:
 		rtn.points[3].position.y = ro.y + ro.height;
 		rtn.points[3].colour = { 0.0,1.0,0.0,1.0 };
 
-		
-
-		//Do a test print.
-		/*
-		std::cout << " " <<rtn.points[0].position.x << " " <<rtn.points[0].position.y << " " <<rtn.points[0].colour.x << " " <<rtn.points[0].colour.y << " " <<rtn.points[0].colour.z << " " <<std::endl;
-		std::cout << " " <<rtn.points[1].position.x << " " <<rtn.points[1].position.y << " " <<rtn.points[1].colour.x << " " <<rtn.points[1].colour.y << " " <<rtn.points[1].colour.z << " " <<std::endl;
-		std::cout << " " <<rtn.points[2].position.x << " " <<rtn.points[2].position.y << " " <<rtn.points[2].colour.x << " " <<rtn.points[2].colour.y << " " <<rtn.points[2].colour.z << " " <<std::endl;
-		std::cout << " " <<rtn.points[3].position.x << " " <<rtn.points[3].position.y << " " <<rtn.points[3].colour.x << " " <<rtn.points[3].colour.y << " " <<rtn.points[3].colour.z << " " <<std::endl;
-		*/
 		return rtn;
 	};
 	UInt32 m_indicesIndex = 0;
