@@ -73,28 +73,31 @@ struct RenderBatchOpenGL
 private:
 	VertexQuard GenerateVertexs(const RenderObject &ro) {
 		VertexQuard rtn;
-		//OpenGL renders starting from the Bottom left working around counter clockwise
 
+		bool translate = ro.translateWithCamera;
+		//bool translate = false;
+
+		//OpenGL renders starting from the Bottom left working around counter clockwise
 		//Bottom left
 		rtn.points[0].position.x = ro.x;
 		rtn.points[0].position.y = ro.y;
 		rtn.points[0].colour = { 1.0,0.0,0.0,1.0 };
-		
+		rtn.points[0].translate = translate;
 		//Bottom right
 		rtn.points[1].position.x = ro.x + ro.width;
 		rtn.points[1].position.y = ro.y;
 		rtn.points[1].colour = { 0.0,0.0,1.0,1.0 };
-
+		rtn.points[1].translate = translate;
 		//Top right
 		rtn.points[2].position.x = ro.x + ro.width;
 		rtn.points[2].position.y = ro.y + ro.height;
 		rtn.points[2].colour = { 1.0,1.0,1.0,1.0 };
-
+		rtn.points[2].translate = translate;
 		//Top left
 		rtn.points[3].position.x = ro.x;
 		rtn.points[3].position.y = ro.y + ro.height;
 		rtn.points[3].colour = { 0.0,1.0,0.0,1.0 };
-
+		rtn.points[3].translate = translate;
 		return rtn;
 	};
 	UInt32 m_indicesIndex = 0;

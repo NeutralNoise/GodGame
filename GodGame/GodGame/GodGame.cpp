@@ -165,6 +165,7 @@ int main(int argc, char ** argv)
 
 		//RenderObject ro(-0.5f, -0.5f, 1.0f, 1.0f);
 		RenderObject ro(0.0f, 0.0f, 32.0f, 32.0f);
+		ro.translateWithCamera = true;
 		testOpenGL.AddRenderObject(&ro);
 
 		while (isRunning) {

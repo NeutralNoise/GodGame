@@ -58,8 +58,9 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 		m_IBO = IndexBuffer(nullptr, sizeof(UInt32) * MAX_BATCH_INDICES);
 		VertexBufferLayout layout;
 	
-		layout.Push<glm::vec3>(1);
-		layout.Push<ColourRGBA>(1); //Vertex colour
+		layout.Push<glm::vec3>(1); //Vertex position.
+		layout.Push<ColourRGBA>(1); //Vertex colour.
+		layout.Push<UInt32>(1); //Translate vertex.
 		m_VAA.AddBuffer(m_VBO, layout);		
 	}	
 	else {
