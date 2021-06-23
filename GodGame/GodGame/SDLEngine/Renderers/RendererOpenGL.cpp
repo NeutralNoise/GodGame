@@ -50,22 +50,8 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 
 	//Load a test shader
 	if(CompileShader("data/Shaders/fragment.frag","data/Shaders/vertex.vert")) {
-		
-		//VBO data
-		GLfloat vertexData[] =
-		{
-			-0.5f, -0.5f, 1.0, 0.0, 0.0,
-			 0.5f, -0.5f, 0.0, 1.0, 0.0,
-			 0.5f,  0.5f, 0.0, 0.0, 1.0,
-			-0.5f,  0.5f, 1.0, 1.0, 1.0
-		};
-
-		//IBO data
-		GLuint indexData[] = { 0, 1, 2, 3 };
-		
+				
 		m_VAA = VertexArray(1);
-		//m_VBO = VertexBuffer(vertexData, 6 * 4 * sizeof(float));
-		//m_IBO = IndexBuffer(indexData, 4);
 		m_VBO = VertexBuffer(nullptr, sizeof(Vertex) * MAX_BATCH_VERTICES);
 		m_IBO = IndexBuffer(nullptr, sizeof(UInt32) * MAX_BATCH_INDICES);
 		VertexBufferLayout layout;
@@ -98,26 +84,15 @@ void RendererOpenGL::OnDraw() {
 	//Enable vertex position
 	m_VAA.Bind();
 
-	/*
-	//Set vertex data
-	m_VBO.Bind();
-	//Set index data and render
-	m_IBO.Bind();
-	*/
-
-	//RenderObject ro(-0.5f, -0.5f, 1.0f, 1.0f);
-	//m_rBatch.AddQuard(ro);
 	GenerateBatchs();
 	for (size_t i = 0; i <= m_batchIndex; i++) {
-		//m_VBO.SetData(m_rBatch.data->data(), sizeof(Vertex)* m_rBatch.count);
-		//m_IBO.SetData(m_rBatch.indices->data(), m_rBatch.count);
-
+		//Set vertex data
 		m_VBO.SetData(m_renderBatchs[i].data->data(), sizeof(Vertex)* m_renderBatchs[i].count);
+		//Set index data
 		m_IBO.SetData(m_renderBatchs[i].indices->data(), m_renderBatchs[i].count);
-
+		//Render
 		glDrawElements(GL_TRIANGLE_FAN, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 	}
-	int fdsf = 34;
 
 	//Disable vertex position
 	m_IBO.Unbind();
