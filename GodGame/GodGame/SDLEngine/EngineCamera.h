@@ -1,5 +1,7 @@
 #pragma once
 #include "Rect.h"
+#include <GLM/glm.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
 
 /** \struct EngineCamera
  * \brief A structure representing a camera.
@@ -16,6 +18,7 @@ struct EngineCamera
 		pos = Rect();
 		scale = 0.0f;
 		centerPos = Rect();
+		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f);
 	}
 
 	/**
@@ -33,6 +36,7 @@ struct EngineCamera
 		centerPos.x = pos.x + width / 2;
 		centerPos.y = pos.y+ height / 2;
 		this->scale = scale;
+		projection = glm::ortho(0.0f, width, height, 0.0f);
 	}
 
 	/**
@@ -115,7 +119,7 @@ struct EngineCamera
 		return true;
 	}
 
-
+	glm::mat4 projection;
 	Rect pos;	//!< The position of the camera in world space.
 	Rect centerPos; //!< The center of the camera in world space.
 	float scale; //!< Used for zoom. \warning not currently used.

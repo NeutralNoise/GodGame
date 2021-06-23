@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include "Vertex.h"
+#include  "../EngineCamera.h"
+#include "../GameEngine.h"
 
 RendererOpenGL::RendererOpenGL() {
 }
@@ -77,13 +79,14 @@ void RendererOpenGL::OnDraw() {
 	static float timeValue = 0.01f;
 	//Clear color buffer
     glClear( GL_COLOR_BUFFER_BIT );
-    
+	EngineCamera camera = *GameEngine::GetRenderer()->camera;
 	//Bind program
 	m_shader.Bind();
 	m_shader.SetUniformu1f("u_time", time);
+	m_shader.SetUniformuMatrix4f("u_mvp", camera.projection);
 	//Enable vertex position
 	m_VAA.Bind();
-
+	
 	GenerateBatchs();
 	for (size_t i = 0; i <= m_batchIndex; i++) {
 		//Set vertex data
