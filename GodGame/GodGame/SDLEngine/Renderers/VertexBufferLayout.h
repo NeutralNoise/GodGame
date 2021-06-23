@@ -19,7 +19,8 @@ struct VertexBufferLayoutElement {
         {
             case GL_FLOAT		: return sizeof(float);
             case GL_UNSIGNED_INT: return sizeof(UInt32);
-            //case GL_UNSIGNED_BYTE : return sizeof(unsigned char);
+			case GL_BOOL:		  return sizeof(bool);
+			case GL_UNSIGNED_BYTE:return sizeof(unsigned char);
         }
         assert(false);
         return 0;
@@ -45,6 +46,25 @@ public:
 		m_elements.push_back({GL_FLOAT, count, 0});
 		m_stride += count * sizeof(float);
 	}
+
+	template<>
+	void Push<bool>(const UInt32 &count) {
+		m_elements.push_back({ GL_BOOL, count, 0 });
+		m_stride += count * sizeof(bool);
+	}
+
+	template<>
+	void Push<unsigned char>(const UInt32 &count) {
+		m_elements.push_back({ GL_UNSIGNED_BYTE, count, 0 });
+		m_stride += count * sizeof(unsigned char);
+	}
+
+	template<>
+	void Push<UInt32>(const UInt32 &count) {
+		m_elements.push_back({ GL_UNSIGNED_INT, count, 0 });
+		m_stride += count * sizeof(UInt32);
+	}
+
 	//Just treat the vec3/vec4 as floats.
 	template<>
 	void Push<glm::vec3>(const UInt32 &count) {
