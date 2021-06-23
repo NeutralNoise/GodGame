@@ -19,6 +19,7 @@ struct EngineCamera
 		scale = 0.0f;
 		centerPos = Rect();
 		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f);
+		scale = 1.0f;
 	}
 
 	/**
@@ -37,6 +38,7 @@ struct EngineCamera
 		centerPos.y = pos.y+ height / 2;
 		this->scale = scale;
 		projection = glm::ortho(0.0f, width, height, 0.0f);
+		scale = 1.0f;
 	}
 
 	/**
@@ -58,6 +60,12 @@ struct EngineCamera
 		this->pos = pos;
 		centerPos.x = pos.x + pos.width / 2;
 		centerPos.y = pos.y + pos.height / 2;
+		glm::vec3 translate(-pos.x + centerPos.x, -pos.y + centerPos.y, 0.0f);
+		cameraMatrix = glm::translate(projection, translate);
+
+		//scale the camera.
+		glm::vec3 newScale(scale, scale, 0.0f);
+		cameraMatrix = glm::scale(glm::mat4(1.0f), newScale) * cameraMatrix;
 	}
 
 	/**
@@ -119,9 +127,9 @@ struct EngineCamera
 		return true;
 	}
 
-	glm::mat4 projection;
+	glm::mat4 projection; //!< The cameras projection matrix.
+	glm::mat4 cameraMatrix;	//!< The cameras view matrix.
 	Rect pos;	//!< The position of the camera in world space.
 	Rect centerPos; //!< The center of the camera in world space.
 	float scale; //!< Used for zoom. \warning not currently used.
-
 };

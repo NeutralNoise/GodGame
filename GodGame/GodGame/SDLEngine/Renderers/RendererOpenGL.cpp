@@ -83,7 +83,10 @@ void RendererOpenGL::OnDraw() {
 	//Bind program
 	m_shader.Bind();
 	m_shader.SetUniformu1f("u_time", time);
-	m_shader.SetUniformuMatrix4f("u_mvp", camera.projection);
+	//Translate the world around the camera.
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-camera.pos.x, -camera.pos.y, 0));
+	m_shader.SetUniformuMatrix4f("u_mvp", camera.cameraMatrix * model);
+	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
 	//Enable vertex position
 	m_VAA.Bind();
 	
