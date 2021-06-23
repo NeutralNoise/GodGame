@@ -6,8 +6,8 @@ typedef glm::vec4 ColourRGBA;
 
 struct Vertex
 {
-	glm::vec3 position;
-	ColourRGBA colour;
+	glm::vec3 position; // 12 bytes
+	ColourRGBA colour;	// 16 bytes
 	//TODO add stuff here for things like textures and uv maps.
 };
 
