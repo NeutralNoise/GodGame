@@ -92,7 +92,7 @@ void RendererSDL::OnCleanUp()
 
 void RendererSDL::DrawLighting()
 {
-
+	//WARN THIS WILL NOT WORK NOW!!!
 	//Convert a engine rect to an SDL2 Rect
 	auto RectToSDLRect = [](Rect r) {
 		//Some type punning
@@ -152,6 +152,7 @@ void RendererSDL::DrawLayer(RenderObjectLayer * layer) {
 
 	EngineCamera camera = *GameEngine::GetRenderer()->camera;
 
+	//WARN THIS WILL NOT WORK NOW!!!!
 	//Convert a RenderTile to an SDL2 Rect
 	auto RenToRect = [](RenderTile r) {
 		//Some type punning

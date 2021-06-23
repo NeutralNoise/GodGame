@@ -6,10 +6,10 @@
 */
 
 struct Rect {
-	int x; //!< The X position of the square/rectangle.
-	int y; //!< The Y position of the square/rectangle.
-	int width; //!< The wight of the square/rectangle in the X axis.
-	int height; //!< The height of the square/rectangle in the Y axis.
+	float x; //!< The X position of the square/rectangle.
+	float y; //!< The Y position of the square/rectangle.
+	float width; //!< The wight of the square/rectangle in the X axis.
+	float height; //!< The height of the square/rectangle in the Y axis.
 
 	/**
 	 * \brief Construct a new Rect object
@@ -32,7 +32,7 @@ struct Rect {
 	 * \param height The height of the square/rectangle in the Y axis.
 	*/
 
-	Rect(const int &x, const int &y, const int &width, const int &height) {
+	Rect(const float &x, const float &y, const float &width, const float &height) {
 		this->x = x;
 		this->y = y;
 		this->width = width;
@@ -43,14 +43,14 @@ struct Rect {
 
 struct Point
 {
-	int x, y;
+	float x, y;
 
 	Point() {
 		x = 0;
 		y = 0;
 	}
 
-	Point(const int &x, const int &y) {
+	Point(const float &x, const float &y) {
 		this->x = x;
 		this->y = y;
 	}

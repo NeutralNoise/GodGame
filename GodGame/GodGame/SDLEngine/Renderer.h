@@ -25,14 +25,14 @@ struct SDL_Window;
 */
 
 struct RenderTile {
-	int x = 0; //!< The x offset within the image.
-	int y = 0; //!< The y offset within the image.
-	int width = 32; //!< The width of the image tile.
-	int height = 32; //!< The height of the image tile.
+	float x = 0; //!< The x offset within the image.
+	float y = 0; //!< The y offset within the image.
+	float width = 32; //!< The width of the image tile.
+	float height = 32; //!< The height of the image tile.
 
 	RenderTile() {}
 
-	RenderTile(const int &x, const int &y, const int &w, const int &h) {
+	RenderTile(const float &x, const float &y, const float &w, const float &h) {
 		this->x = x;
 		this->y = y;
 		this->width = w;
@@ -47,11 +47,11 @@ struct RenderTile {
 
 struct RenderObject
 {
-	int x = 0; //!< The X position of the object.
-	int y = 0; //!< The Y position of the object.
+	float x = 0; //!< The X position of the object.
+	float y = 0; //!< The Y position of the object.
 
-	int width = TILE_SIZE; //!< The width of the tile.
-	int height = TILE_SIZE; //!< The height of the tile.
+	float width = TILE_SIZE; //!< The width of the tile.
+	float height = TILE_SIZE; //!< The height of the tile.
 	
 	//Is this an offest?
 	Point pivoitPoint; //!< Point the object rotates around.
@@ -85,7 +85,7 @@ struct RenderObject
 	 * 
 	*/
 
-	RenderObject(const int &x, const int &y, const int &w, const int &h) {
+	RenderObject(const float &x, const float &y, const float &w, const float &h) {
 		this->x = x;
 		this->y = y;
 		this->width = w;
@@ -104,7 +104,7 @@ struct RenderObject
 	 * \param py The y position of the pivoit point.
 	*/
 
-	RenderObject(const int &x, const int &y, const int &w, const int &h, const int &px, const int &py) {
+	RenderObject(const float &x, const float &y, const float &w, const float &h, const float &px, const float &py) {
 		this->x = x;
 		this->y = y;
 		this->width = w;

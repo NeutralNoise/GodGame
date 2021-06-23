@@ -28,7 +28,7 @@ struct EngineCamera
 	 * \param scale the zoom of the camera. \warning not currently used.
 	 */
 
-	EngineCamera(const int &x, const int &y, const int &width, const int &height, float scale = 1.0f) {
+	EngineCamera(const float &x, const float &y, const float &width, const float &height, float scale = 1.0f) {
 		pos = Rect(x,y,width, height);
 		centerPos.x = pos.x + width / 2;
 		centerPos.y = pos.y+ height / 2;
@@ -88,10 +88,10 @@ struct EngineCamera
 		//code taken from
 		//https://stackoverflow.com/questions/6083626/box-collision-code
 		// AABB 1
-		int x1Min = rect.x - rect.width;
-		int x1Max = rect.x + rect.width;
-		int y1Max = rect.y + rect.height;
-		int y1Min = rect.y - rect.height;
+		float x1Min = rect.x - rect.width;
+		float x1Max = rect.x + rect.width;
+		float y1Max = rect.y + rect.height;
+		float y1Min = rect.y - rect.height;
 
 		// AABB 2
 		/*
@@ -103,11 +103,11 @@ struct EngineCamera
 		int y2Min = pos.y - 32;
 		*/
 		//Whats with this.
-		int x2Min = pos.x - rect.width;
+		float x2Min = pos.x - rect.width;
 		//Not relly sure why i have to * 2 but i do :/
-		int x2Max = pos.x + (pos.width);
-		int y2Max = pos.y + (pos.height);
-		int y2Min = pos.y - rect.height;
+		float x2Max = pos.x + (pos.width);
+		float y2Max = pos.y + (pos.height);
+		float y2Min = pos.y - rect.height;
 		// Collision tests
 		if (x1Max < x2Min || x1Min > x2Max) return false;
 		if (y1Max < y2Min || y1Min > y2Max) return false;
