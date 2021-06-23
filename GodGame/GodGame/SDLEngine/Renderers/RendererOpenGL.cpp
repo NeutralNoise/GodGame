@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Vertex.h"
 
 RendererOpenGL::RendererOpenGL() {
 }
@@ -63,12 +64,14 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 		GLuint indexData[] = { 0, 1, 2, 3 };
 		
 		m_VAA = VertexArray(1);
-		m_VBO = VertexBuffer(vertexData, 6 * 4 * sizeof(float));
-		m_IBO = IndexBuffer(indexData, 4);
+		//m_VBO = VertexBuffer(vertexData, 6 * 4 * sizeof(float));
+		//m_IBO = IndexBuffer(indexData, 4);
+		m_VBO = VertexBuffer(nullptr, sizeof(Vertex) * MAX_BATCH_VERTICES);
+		m_IBO = IndexBuffer(nullptr, sizeof(UInt32) * MAX_BATCH_INDICES);
 		VertexBufferLayout layout;
-		
-		layout.Push<float>(2);
+	
 		layout.Push<float>(3);
+		layout.Push<float>(4);
 		m_VAA.AddBuffer(m_VBO, layout);		
 	}	
 	else {
@@ -84,8 +87,8 @@ void RendererOpenGL::OnUpdate() {
 }
 
 void RendererOpenGL::OnDraw() {
-	static float time = 0.0;
-	static float timeValue = 0.01;
+	static float time = 0.0f;
+	static float timeValue = 0.01f;
 	//Clear color buffer
     glClear( GL_COLOR_BUFFER_BIT );
     
@@ -95,15 +98,32 @@ void RendererOpenGL::OnDraw() {
 	//Enable vertex position
 	m_VAA.Bind();
 
+	/*
 	//Set vertex data
 	m_VBO.Bind();
-
 	//Set index data and render
 	m_IBO.Bind();
-	glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL );
-	//Disable vertex position
-	m_VAA.Unbind();
+	*/
+	int err = glGetError();
+	bool hasError = false;
 
+	RenderObject ro(-0.5f, -0.5f, 1.0f, 1.0f);
+	m_rBatch.AddQuard(ro);
+	m_VBO.SetData(m_rBatch.data->data(), sizeof(Vertex)* m_rBatch.count);
+	err = glGetError();
+
+	m_IBO.SetData(m_rBatch.indices->data(), m_rBatch.count);
+	err = glGetError();
+
+	glDrawElements( GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL );
+
+	int fdsf = 34;
+
+	//Disable vertex position
+	m_IBO.Unbind();
+	m_VBO.Unbind();
+	m_VAA.Unbind();
+	m_rBatch.Clear();
 	time += timeValue;
 	if (time > 1.0) {
 		timeValue = -timeValue;

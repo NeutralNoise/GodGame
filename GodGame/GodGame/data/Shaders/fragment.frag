@@ -3,7 +3,7 @@
 
 out vec4 LFragment;
 
-in vec3 fColour;
+in vec4 fColour;
 
 uniform float u_time;
 

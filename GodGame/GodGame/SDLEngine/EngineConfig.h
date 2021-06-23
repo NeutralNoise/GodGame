@@ -9,3 +9,8 @@ const int WINDOW_WIDTH = 600; //!< The width of the window.
 const int WINDOW_HEIGHT = 600; //!< The height of the window.
 const int MAX_FPS = 60; //!< The max frame rate to get too.
 const float MAX_FRAME_TIME = (SECOND_MICRO_SECONDS / MAX_FPS); //!< The max time each frame should take.
+
+
+const unsigned int MAX_RENDER_OBJECTS = 10000; //!< The maximum number of RenderObjects in one batch.
+const unsigned int MAX_BATCH_VERTICES = 4 * MAX_RENDER_OBJECTS; //!< The maximum number of vertices to be rendered.
+const unsigned int MAX_BATCH_INDICES = MAX_BATCH_VERTICES; //!< The maximum number of indices.

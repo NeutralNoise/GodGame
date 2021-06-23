@@ -78,6 +78,9 @@
     <ClCompile Include="SDLEngine\Renderers\Shader.cpp">
       <Filter>Source Files\SDLEngine\Renderers</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\RenderBatchOpenGL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -144,6 +147,12 @@
       <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
     <ClInclude Include="SDLEngine\Renderers\Shader.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\RenderBatchOpenGL.h">
+      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\Vertex.h">
       <Filter>Header Files\SDLEngine\Renderers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include <vector>
 #include <assert.h>
 #include <GL/glew.h>
+#include <GLM/glm.hpp>
 #include "../typedefs.h"
 
 struct VertexBufferLayoutElement {
@@ -24,7 +25,7 @@ struct VertexBufferLayoutElement {
         return 0;
     }
 };
-
+//TODO add push for glm types.
 class VertexBufferLayout {
 	
 public:
