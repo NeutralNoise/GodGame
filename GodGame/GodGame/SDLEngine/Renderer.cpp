@@ -163,7 +163,7 @@ void Renderer::ToggleLayerClear(const UInt32 & layer)
 	}
 }
 
-bool Renderer::CompileShader(UInt32 *id, const std::string &frag, const std::string &vert) {
+bool Renderer::CompileShader(const std::string &frag, const std::string &vert) {
 	AddEngineErrorMessage(203, ERR_TYPE_LOW_WARN, "This is the defualt renderer. There is no other CompileShader.");
 	return false;
 }
