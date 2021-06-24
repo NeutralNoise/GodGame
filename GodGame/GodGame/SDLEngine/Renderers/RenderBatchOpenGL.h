@@ -24,32 +24,39 @@ struct RenderBatchOpenGL
 			return -1;
 		}
 		VertexQuard vq = GenerateVertexs(ro);
-
+		UInt32 startIndex = m_indicesIndex;
+		UInt32 countStart = count;
 		//Add the vertexs and the indexs
 
 		//Bottom left
 		data->at(m_indicesIndex) = vq.points[0];
-		indices->at(m_indicesIndex) = m_indicesIndex;
+		//indices->at(m_indicesIndex) = m_indicesIndex;
 		m_indicesIndex++;
-		count++;
 		
 		//Bottom right
 		data->at(m_indicesIndex) = vq.points[1];
-		indices->at(m_indicesIndex) = m_indicesIndex;
+		//indices->at(m_indicesIndex) = m_indicesIndex;
 		m_indicesIndex++;
-		count++;
 
 		//Top right
 		data->at(m_indicesIndex) = vq.points[2];
-		indices->at(m_indicesIndex) = m_indicesIndex;
+		//indices->at(m_indicesIndex) = m_indicesIndex;
 		m_indicesIndex++;
-		count++;
 
 		//Top left
 		data->at(m_indicesIndex) = vq.points[3];
-		indices->at(m_indicesIndex) = m_indicesIndex;
+		//indices->at(m_indicesIndex) = m_indicesIndex;
 		m_indicesIndex++;
-		count++;
+
+		indices->at(countStart) = startIndex;			//0 Bottom left.
+		indices->at(countStart + 1) = startIndex + 2;	//1 Top Right.
+		indices->at(countStart + 2) = startIndex + 3;	//2 Top left.
+
+		indices->at(countStart + 3) = startIndex;		//0 Bottom left.
+		indices->at(countStart + 4) = startIndex + 2;	//1 Top Right.
+		indices->at(countStart + 5) = startIndex + 1;	//3 Bottom right.
+
+		count += 6;
 
 		quardCount++;
 		return 1;

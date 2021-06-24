@@ -92,19 +92,21 @@ void RendererOpenGL::OnDraw() {
 	m_VAA.Bind();
 	
 	GenerateBatchs();
-	for (size_t i = 0; i <= m_batchIndex; i++) {
+	for (size_t i = 0; i < m_batchIndex+1; i++) {
 		//Set vertex data
 		m_VBO.SetData(m_renderBatchs[i].data->data(), sizeof(Vertex)* m_renderBatchs[i].count);
 		//Set index data
 		m_IBO.SetData(m_renderBatchs[i].indices->data(), m_renderBatchs[i].count);
 		//Render
-		glDrawElements(GL_TRIANGLE_FAN, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+		//glDrawElements(GL_TRIANGLE_FAN, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 	}
 
 	//Disable vertex position
 	m_IBO.Unbind();
 	m_VBO.Unbind();
 	m_VAA.Unbind();
+	ClearBatchs();
 	//m_rBatch.Clear();
 	time += timeValue;
 	if (time > 1.0) {
@@ -155,8 +157,7 @@ void RendererOpenGL::GenerateBatchs()
 					m_batchIndex++;
 					AddNewBatch();
 					m_renderBatchs[m_batchIndex].AddQuard(*renObject); //We should now have a clear batch.
-				}
-				
+				}				
 			}
 		}
 	}
@@ -166,8 +167,11 @@ void RendererOpenGL::GenerateBatchs()
 
 void RendererOpenGL::ClearBatchs()
 {
-	for (size_t i = 0; i <= m_batchIndex; i++) {
-		m_renderBatchs[i].Clear();
+	//Check the size of the render batch to make sure we have something there.
+	if (m_renderBatchs.size()) {
+		for (size_t i = 0; i < m_batchIndex +1; i++) { //plus one just incase there is only 1 render batch.
+			m_renderBatchs[i].Clear();
+		}
 	}
 	m_batchIndex = 0;
 }
