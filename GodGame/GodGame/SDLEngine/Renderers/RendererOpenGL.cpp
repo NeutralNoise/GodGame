@@ -118,7 +118,8 @@ void RendererOpenGL::OnDraw() {
 		timeValue = -timeValue;
 	}
 	//Unbind program
-	glUseProgram(0);   
+	glUseProgram(0);
+	Renderer::ClearRenderObjects();
 }
 
 void RendererOpenGL::OnCleanUp() {
@@ -151,7 +152,9 @@ void RendererOpenGL::GenerateBatchs()
 			//TODO use sublayers
 			for (size_t t = 0; t < layer->renderObjects.size(); t++) {
 				renObject = layer->renderObjects[t];
-
+				if (!renObject) {
+					break;
+				}
 				//Generate Vertexs
 				//If this fails we need a new batch
 				if (m_renderBatchs[m_batchIndex].AddQuard(*renObject) == -1) {
@@ -162,10 +165,7 @@ void RendererOpenGL::GenerateBatchs()
 				}				
 			}
 		}
-		int test = 3;
 	}
-	
-
 }
 
 void RendererOpenGL::ClearBatchs()
