@@ -34,8 +34,10 @@ struct EngineCamera
 
 	EngineCamera(const float &x, const float &y, const float &width, const float &height, float scale = 1.0f) {
 		pos = Rect(x,y,width, height);
-		centerPos.x = pos.x + width / 2;
-		centerPos.y = pos.y+ height / 2;
+		halfWidth = width / 2;
+		halfHeight = height / 2;
+		centerPos.x = pos.x + halfWidth;
+		centerPos.y = pos.y+ halfHeight;
 		this->scale = scale;
 		projection = glm::ortho(0.0f, width, height, 0.0f);
 	}
@@ -57,8 +59,9 @@ struct EngineCamera
 
 	void MoveCamera(const Rect &pos) {
 		this->pos = pos;
-		centerPos.x = pos.x + pos.width / 2;
-		centerPos.y = pos.y + pos.height / 2;
+		centerPos.x = pos.x + halfWidth;
+		centerPos.y = pos.y + halfHeight;
+		//glm::vec3 translate(-pos.x + centerPos.x, -pos.y + centerPos.y, 0.0f);
 		glm::vec3 translate(-pos.x + centerPos.x, -pos.y + centerPos.y, 0.0f);
 		cameraMatrix = glm::translate(projection, translate);
 
@@ -104,21 +107,19 @@ struct EngineCamera
 		float y1Max = rect.y + rect.height;
 		float y1Min = rect.y - rect.height;
 
-		// AABB 2
+		// AABB 2		
 		/*
-		//Whats with this.
-		int x2Min = pos.x - 32;
-		//Not relly sure why i have to * 2 but i do :/
-		int x2Max = pos.x + (pos.width * 2);
-		int y2Max = pos.y + (pos.height * 2);
-		int y2Min = pos.y - 32;
-		*/
-		//Whats with this.
 		float x2Min = pos.x - rect.width;
-		//Not relly sure why i have to * 2 but i do :/
-		float x2Max = pos.x + (pos.width);
-		float y2Max = pos.y + (pos.height);
+		float x2Max = pos.x + pos.width;
+		float y2Max = pos.y + pos.height;
 		float y2Min = pos.y - rect.height;
+		*/
+
+		float x2Min = (pos.x - halfWidth);
+		float x2Max = (pos.x + halfWidth);
+		float y2Max = (pos.y + halfHeight);
+		float y2Min = (pos.y - halfHeight);
+
 		// Collision tests
 		if (x1Max < x2Min || x1Min > x2Max) return false;
 		if (y1Max < y2Min || y1Min > y2Max) return false;
@@ -131,4 +132,7 @@ struct EngineCamera
 	Rect pos;	//!< The position of the camera in world space.
 	Rect centerPos; //!< The center of the camera in world space.
 	float scale; //!< Used for zoom. \warning not currently used.
+
+	float halfWidth = 0;
+	float halfHeight = 0;
 };
