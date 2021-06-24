@@ -1,6 +1,7 @@
 #include "Renderer.h"
+#include "GameEngine.h"
 
-bool Renderer::OnInit(SDL_Window * win, const UInt32 &flags)
+bool Renderer::OnInit(SDL_Window * win, const UInt32 &flags, EngineRenderer * info)
 {
 	//ERR_TYPE_LOW_WARN
 	//ERR_TYPE_FATEL
@@ -166,6 +167,16 @@ void Renderer::ToggleLayerClear(const UInt32 & layer)
 bool Renderer::CompileShader(const std::string &frag, const std::string &vert) {
 	AddEngineErrorMessage(203, ERR_TYPE_LOW_WARN, "This is the defualt renderer. There is no other CompileShader.");
 	return false;
+}
+
+const EngineRendererVersion * Renderer::GetVersion()
+{
+	return p_version;
+}
+
+std::string Renderer::GetRenderName() const&
+{
+	return m_renName;
 }
 
 void Renderer::InitRendererInfo()

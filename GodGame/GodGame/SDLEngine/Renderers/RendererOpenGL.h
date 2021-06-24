@@ -26,7 +26,7 @@ class RendererOpenGL : public Renderer
 	 * \warning flags will change in the future. 
 	*/
 
-	bool OnInit(SDL_Window * win, const UInt32 &flags) override;
+	bool OnInit(SDL_Window * win, const UInt32 &flags, EngineRenderer * info) override;
 
 	/**
 	 * \brief Does nothing

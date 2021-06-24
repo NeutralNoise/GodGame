@@ -1,5 +1,5 @@
 #pragma once
-
+#include <sstream>
 #include "Rect.h"
 #include "ImageLoader.h"
 #include "EngineCamera.h"
@@ -28,7 +28,6 @@ struct EngineRenderer {
 	int window_width;  //!< The width of the window
 	EngineCamera * camera;	//!< Camera used to draw too.
 	UInt32 flags;
-	std::string renderName; //!< The name of the renderer. e.g OpenGL, SDL_Renderer
 	EngineRendererVersion version; //!< The version of this renderer.
 	//Stats
 	float fps; //!< Number of frames per second
@@ -66,7 +65,19 @@ struct EngineRenderer {
 	}
 
 	bool InitRenderer(SDL_Window * win) {
-		return renderer->OnInit(win, flags);
+		return renderer->OnInit(win, flags, this);
+	}
+
+	const std::string GetVersionString() {
+		std::stringstream rtn;
+		rtn << renderer->GetRenderName();
+		rtn << ": ";
+		rtn << version.major;
+		rtn << ".";
+		rtn << version.minor;
+		rtn << ".";
+		rtn << version.patch;
+		return rtn.str();
 	}
 
 };

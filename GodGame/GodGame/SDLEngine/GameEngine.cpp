@@ -56,6 +56,8 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 		return false;
 	}
 
+	std::cout << p_renderer->GetVersionString() << "\n";
+
 	//TODO this is jenky and needs to be replaced for when loading textures
 	//p_renderer->sdl_renderer = SDL_GetRenderer(p_window);
 

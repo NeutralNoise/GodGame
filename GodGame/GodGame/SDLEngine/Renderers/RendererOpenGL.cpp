@@ -16,8 +16,18 @@ RendererOpenGL::~RendererOpenGL() {
 	
 }
 
-bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
+bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRenderer * info) {
 	std::cout << "Creating OpenGL Renderer\n";
+	//Fill out the EngineRenderer information;
+
+	p_version = &(info->version);
+
+	p_version->major = 0;
+	p_version->minor = 1;
+	p_version->patch = 0;
+
+	Renderer::m_renName = "OpenGL";
+
 	p_SDLwin = win;
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);

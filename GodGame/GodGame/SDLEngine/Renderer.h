@@ -18,6 +18,8 @@
 
 
 struct SDL_Window;
+struct EngineRendererVersion;
+struct EngineRenderer;
 
 /** \struct RenderTile
  * \brief The tile within the texture that is rendered to the LayerTile.
@@ -214,7 +216,7 @@ public:
 	 * 
 	*/
 
-	virtual bool OnInit(SDL_Window * win, const UInt32 &flags);
+	virtual bool OnInit(SDL_Window * win, const UInt32 &flags, EngineRenderer * info);
 
 	//TODO is this needed.
 	virtual void OnUpdate();
@@ -279,6 +281,9 @@ public:
 
 	virtual bool CompileShader(const std::string &frag, const std::string &vert);
 	
+	const EngineRendererVersion * GetVersion();
+	std::string GetRenderName() const&;
+
 protected:
 
 	/**
@@ -294,7 +299,8 @@ protected:
 	SimpleTimer m_layerAvgTimer; //!< Timer used to time the time taken to render the layer.
 	SimpleTimer m_layerTimer; //!< Timer used to time the time taken to render the layer.
 	SDL_Window * p_SDLwin; //!< Copy of the SDL2 window that is being used.
-
+	std::string m_renName = "Unknown Renderer";
+	EngineRendererVersion *p_version;
 private:
 
 	/**

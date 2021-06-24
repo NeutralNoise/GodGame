@@ -12,7 +12,7 @@ RendererSDL::~RendererSDL()
 {
 }
 
-bool RendererSDL::OnInit(SDL_Window * win, const UInt32 &flags)
+bool RendererSDL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRenderer * info)
 {
 	p_SDLwin = win;
 	p_renderer = SDL_CreateRenderer(win, -1, flags);
