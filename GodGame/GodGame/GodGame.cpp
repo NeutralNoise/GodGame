@@ -14,26 +14,27 @@
 #include "SDLEngine/ErrorEngine.h"
 #include "SDLEngine/EngineConfig.h"
 
-#include "SDLEngine/Renderers/RendererSDL.h"
-#include "SDLEngine/Renderers/RendererOpenGL.h"
+#include "SDLEngine/Renderers/RendererSDL/RendererSDL.h"
+#include "SDLEngine/Renderers/RendererOpenGL/RendererOpenGL.h"
 
 
 //Uncomment this to spawn a shit load of tiles.
-//#define BULK_FAKE_TILE_TEST
-//#define BULK_FAKE_TILE_TEST_LOOP
+#define BULK_FAKE_TILE_TEST
+#define BULK_FAKE_TILE_TEST_LOOP
 //#define BULK_FAKE_TILE_TEST_LOOP_NO_CLEAR
-#define BULK_FAKE_TILE_NUM 16000
+#define BULK_FAKE_TILE_NUM 25000
 
 int main(int argc, char ** argv)
 {
     std::cout << "Hello World!\n"; 
 	bool isRunning = false;
 	GameEngine ge;
-	RendererSDL testRender;
-	RendererOpenGL testOpenGL;
+	//RendererSDL testRender;
+	//RendererOpenGL testOpenGL;
+	RendererOpenGL testRender;
 	//TODO Load window size from file.
 	//EngineRenderer EngineR(&testRender, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_RENDERER_ACCELERATED);
-	EngineRenderer EngineR(&testOpenGL, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+	EngineRenderer EngineR(&testRender, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
 	isRunning = ge.InitGameEngine("SDL_BASE_GAME_ENGINE", &EngineR, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	if (!isRunning) {
@@ -105,6 +106,7 @@ int main(int argc, char ** argv)
 		std::vector<RenderObject*> fakeTiles;
 
 		auto FAKE_TILE_TEST_LAMDA = [](Renderer*renderer, std::vector<RenderObject*> tiles, bool addAll) {
+			int drawCount = 0;
 			EngineCamera fake_camera = *GameEngine::GetRenderer()->camera;
 			size_t tileCount = tiles.size();
 			for (size_t i = 0; i < tileCount; i++) {
@@ -114,13 +116,15 @@ int main(int argc, char ** argv)
 				}
 				else if (fake_camera.CollisionWithCamera(Rect(object->x, object->y, object->width, object->height))) {
 					renderer->AddRenderObject(object);
+					drawCount++;
 				}
 			}
+			//std::cout << drawCount << std::endl;
 			return true;
 		};
 
 		//Simple test to test rendering speeds.
-		int Fake_layer = 1;
+		int Fake_layer = 0;
 		int Fake_X = 0;
 		int Fake_Y = 0;
 		int MAX_X = (64 * 128);
@@ -131,13 +135,13 @@ int main(int argc, char ** argv)
 			tileTest->height = 64;
 			tileTest->width = 64;
 			if (i >= BULK_FAKE_TILE_NUM / 2) {
-				Fake_layer = 2;
+				Fake_layer = 1;
 			}
 			tileTest->layer = Fake_layer;
 			tileTest->renderTile.width = 32;
 			tileTest->renderTile.height = 32;
 
-			tileTest->texture = texture;
+			//tileTest->texture = texture;
 			tileTest->translateWithCamera = true;
 			fakeTiles.push_back(tileTest);
 
@@ -163,11 +167,15 @@ int main(int argc, char ** argv)
 		RenderAvgInfo = InfoEngine::GetEngineInfo("layer_render_time_avg");
 		DrawCalls = InfoEngine::GetEngineInfo("ren_draw_calls");
 
-		//RenderObject ro(-0.5f, -0.5f, 1.0f, 1.0f);
+		/*
 		RenderObject ro(0.0f, 0.0f, 32.0f, 32.0f);
 		ro.translateWithCamera = true;
-		testOpenGL.AddRenderObject(&ro);
-
+		RenderObject ro2(64.0f, 0.0f, 32.0f, 32.0f);
+		ro2.translateWithCamera = true;
+		testRender.AddRenderObject(&ro);
+		testRender.AddRenderObject(&ro2);
+		*/
+		UInt32 countedFrames = 0;
 		while (isRunning) {
 			fpsTimer.StartTimer();
 			//testRender.AddRenderObject(&testObject);
@@ -247,9 +255,8 @@ int main(int argc, char ** argv)
 				ge.EngineWait(MAX_FRAME_TIME - thisTime);
 				thisTime += MAX_FRAME_TIME - thisTime;
 			}
-
+			//std::cout << SECOND_MICRO_SECONDS / thisTime << "\n";
 			ErrorEngine::GetInstance()->OnFatel();
-
 		}
 		//We still need clean up our objects.
 		//fe.CloseFontEngine();
