@@ -49,7 +49,9 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 	
 	//Set the clear colour
 	glClearColor(0.0, 0.0, 0.0, 1.0);
-
+	//Set blends mode for textures
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//Load a test shader
 	if(CompileShader("data/Shaders/fragment.frag","data/Shaders/vertex.vert")) {
 				
