@@ -36,11 +36,6 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 	SDL_VERSION(&version);
 	std::cout << "SDL Version: " << (int)version.major << "." << (int)version.minor << "." << (int)version.patch << "\n";
 
-	//TODO These will need to be wraped in a check to see if we are using OpenGL if not there not needed.
-	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 0 );
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
-
 	p_window = SDL_CreateWindow("GodGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, renderer->window_width,
 		renderer->window_height, flags);
 

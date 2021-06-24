@@ -19,6 +19,11 @@ RendererOpenGL::~RendererOpenGL() {
 bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags) {
 	std::cout << "Creating OpenGL Renderer\n";
 	p_SDLwin = win;
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
 	p_GLContext = SDL_GL_CreateContext(win);
 	//TODO Better error handling.
 	if(p_GLContext == NULL) {
