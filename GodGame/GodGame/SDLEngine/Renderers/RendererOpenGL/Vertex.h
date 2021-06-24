@@ -1,7 +1,7 @@
 #ifndef VERTEX_H_INCLUDED
 #define VERTEX_H_INCLUDED
 #include <GLM/glm.hpp>
-#include "../typedefs.h"
+#include "../../typedefs.h"
 
 typedef glm::vec4 ColourRGBA;
 

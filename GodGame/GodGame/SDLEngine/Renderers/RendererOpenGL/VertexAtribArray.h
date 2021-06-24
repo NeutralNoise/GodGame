@@ -3,7 +3,7 @@
 
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
-#include "../typedefs.h"
+#include "../../typedefs.h"
 
 class VertexArray
 {

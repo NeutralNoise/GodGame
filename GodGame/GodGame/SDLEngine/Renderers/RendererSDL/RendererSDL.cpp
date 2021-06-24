@@ -1,7 +1,7 @@
 #include "RendererSDL.h"
 #include <SDL2/SDL.h>
-#include "../EngineCamera.h"
-#include "../GameEngine.h"
+//#include "../../EngineCamera.h"
+#include "../../GameEngine.h"
 #include <memory>
 
 RendererSDL::RendererSDL()

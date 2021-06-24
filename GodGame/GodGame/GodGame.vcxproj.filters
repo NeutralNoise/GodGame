@@ -25,6 +25,18 @@
     <Filter Include="Source Files\SDLEngine\Renderers">
       <UniqueIdentifier>{a2d89a6f-53b1-4886-9dbe-db6400e0607d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SDLEngine\Renderers\RendererSDL">
+      <UniqueIdentifier>{d5cd9c17-d9fc-4062-8d19-edf56be99383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDLEngine\Renderers\RendererOpenGL">
+      <UniqueIdentifier>{f74a041c-094b-4fa2-9672-cb1c64bfa400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SDLEngine\Renderers\RendererSDL">
+      <UniqueIdentifier>{80905d14-3132-4684-ad6c-ab144d7e3fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SDLEngine\Renderers\RendererOpenGL">
+      <UniqueIdentifier>{323ec571-9f47-4e6b-8b46-6c0a040d3981}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GodGame.cpp">
@@ -54,32 +66,32 @@
     <ClCompile Include="SDLEngine\Renderer.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\RendererSDL.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
-    </ClCompile>
     <ClCompile Include="SDLEngine\Texture.cpp">
       <Filter>Source Files\SDLEngine</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    <ClCompile Include="SDLEngine\Renderers\RendererSDL\RendererSDL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererSDL</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\VertexBufferLayout.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\IndexBuffer.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\RenderBatchOpenGL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\VertexAtribArray.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\RendererOpenGL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\VertexBuffer.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\VertexAtribArray.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\Shader.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\Shader.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="SDLEngine\Renderers\RenderBatchOpenGL.cpp">
-      <Filter>Source Files\SDLEngine\Renderers</Filter>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\VertexBufferLayout.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\VertexBuffer.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,35 +137,35 @@
     <ClInclude Include="SDLEngine\EngineConfig.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\RendererSDL.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
-    </ClInclude>
     <ClInclude Include="SDLEngine\Texture.h">
       <Filter>Header Files\SDLEngine</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererSDL\RendererSDL.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererSDL</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\VertexBufferLayout.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\IndexBuffer.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\RenderBatchOpenGL.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\VertexAtribArray.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\RendererOpenGL.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\VertexBuffer.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\Shader.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\Shader.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\Vertex.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\RenderBatchOpenGL.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\VertexAtribArray.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="SDLEngine\Renderers\Vertex.h">
-      <Filter>Header Files\SDLEngine\Renderers</Filter>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\VertexBuffer.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\VertexBufferLayout.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

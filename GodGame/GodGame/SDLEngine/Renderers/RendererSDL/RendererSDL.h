@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Renderer.h"
+#include "../../Renderer.h"
 
 struct SDL_Renderer;
 struct Texture;

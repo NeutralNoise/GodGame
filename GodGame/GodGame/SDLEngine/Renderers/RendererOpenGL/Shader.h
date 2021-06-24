@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <GLM/glm.hpp>
-#include "../typedefs.h"
+#include "../../typedefs.h"
 
 struct ShaderProgam {
 	UInt32 programID;

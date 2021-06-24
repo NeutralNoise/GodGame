@@ -6,8 +6,8 @@
 #include <fstream>
 #include <string>
 #include "Vertex.h"
-#include  "../EngineCamera.h"
-#include "../GameEngine.h"
+#include  "../../EngineCamera.h"
+#include "../../GameEngine.h"
 
 RendererOpenGL::RendererOpenGL() {
 }

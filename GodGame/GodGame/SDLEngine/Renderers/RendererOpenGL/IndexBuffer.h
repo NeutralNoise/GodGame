@@ -1,6 +1,6 @@
 #ifndef INDEX_BUFFER_H_INCLUDED
 #define INDEX_BUFFER_H_INCLUDED
-#include "../typedefs.h"
+#include "../../typedefs.h"
 
 class IndexBuffer
 {

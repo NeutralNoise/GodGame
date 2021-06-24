@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <GL/glew.h>
 #include <GLM/glm.hpp>
-#include "../typedefs.h"
+#include "../../typedefs.h"
 
 struct VertexBufferLayoutElement {
 	

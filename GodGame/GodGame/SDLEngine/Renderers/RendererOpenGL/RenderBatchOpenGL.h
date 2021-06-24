@@ -2,9 +2,9 @@
 #define RENDER_BATCH_OPENGL_H_INCLUDED
 #include <vector>
 #include "Vertex.h"
-#include "../typedefs.h"
-#include "../EngineConfig.h"
-#include "../Renderer.h"
+#include "../../typedefs.h"
+#include "../../EngineConfig.h"
+#include "../../Renderer.h"
 #include <iostream>
 struct VertexQuard
 {
