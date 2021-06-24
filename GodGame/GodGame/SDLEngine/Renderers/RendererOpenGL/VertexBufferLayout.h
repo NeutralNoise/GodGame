@@ -41,6 +41,7 @@ public:
 	}
 
 #if !defined(__linux__)
+
 	template<>
 	void Push<float>(const UInt32 &count) {
 		m_elements.push_back({GL_FLOAT, count, 0});
