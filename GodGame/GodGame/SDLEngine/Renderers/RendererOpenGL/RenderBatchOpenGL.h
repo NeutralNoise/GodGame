@@ -31,46 +31,21 @@ struct RenderBatchOpenGL
 		//Add the vertexs and the indexs
 
 		//Bottom left
-		//data->at(m_vertexIndex) = vq.points[0];
-		//(*data)[m_vertexIndex] = vq.points[0];
 		*(data+m_vertexIndex) = vq.points[0];
 		m_vertexIndex++;
 		
 		//Bottom right
-		//data->at(m_vertexIndex) = vq.points[1];
-		//(*data)[m_vertexIndex] = vq.points[1];
 		*(data + m_vertexIndex) = vq.points[1];
 		m_vertexIndex++;
 
 		//Top right
-		//data->at(m_vertexIndex) = vq.points[2];
-		//(*data)[m_vertexIndex] = vq.points[2];
 		*(data + m_vertexIndex) = vq.points[2];
 		m_vertexIndex++;
 
 		//Top left
-		//data->at(m_vertexIndex) = vq.points[3];
-		//(*data)[m_vertexIndex] = vq.points[3];
 		*(data + m_vertexIndex) = vq.points[3];
 		m_vertexIndex++;
-		/*
-		indices->at(countStart) = startIndex;			//0 Bottom left.
-		indices->at(countStart + 1) = startIndex + 2;	//1 Top Right.
-		indices->at(countStart + 2) = startIndex + 3;	//2 Top left.
 
-		indices->at(countStart + 3) = startIndex;		//0 Bottom left.
-		indices->at(countStart + 4) = startIndex + 2;	//1 Top Right.
-		indices->at(countStart + 5) = startIndex + 1;	//3 Bottom right.
-		*/
-		/*
-		(*indices)[countStart] = startIndex;			//0 Bottom left.
-		(*indices)[countStart + 1] = startIndex + 2;	//1 Top Right.
-		(*indices)[countStart + 2] = startIndex + 3;	//2 Top left.
-
-		(*indices)[countStart + 3] = startIndex;		//0 Bottom left.
-		(*indices)[countStart + 4] = startIndex + 2;	//1 Top Right.
-		(*indices)[countStart + 5] = startIndex + 1;	//3 Bottom right.
-		*/
 		*(indices + (countStart)) = startIndex;			//0 Bottom left.
 		*(indices + (countStart + 1)) = startIndex + 2;	//1 Top Right.
 		*(indices + (countStart + 2)) = startIndex + 3;	//2 Top left.
