@@ -38,7 +38,6 @@ struct EngineCamera
 		centerPos.y = pos.y+ height / 2;
 		this->scale = scale;
 		projection = glm::ortho(0.0f, width, height, 0.0f);
-		scale = 1.0f;
 	}
 
 	/**
