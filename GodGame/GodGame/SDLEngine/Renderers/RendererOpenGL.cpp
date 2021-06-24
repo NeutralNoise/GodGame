@@ -96,7 +96,7 @@ void RendererOpenGL::OnDraw() {
 	GenerateBatchs();
 	for (size_t i = 0; i < m_batchIndex+1; i++) {
 		//Set vertex data
-		m_VBO.SetData(m_renderBatchs[i].data->data(), sizeof(Vertex)* m_renderBatchs[i].count);
+		m_VBO.SetData(m_renderBatchs[i].data->data(), sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
 		//Set index data
 		m_IBO.SetData(m_renderBatchs[i].indices->data(), m_renderBatchs[i].count);
 		//Render
@@ -162,6 +162,7 @@ void RendererOpenGL::GenerateBatchs()
 				}				
 			}
 		}
+		int test = 3;
 	}
 	
 

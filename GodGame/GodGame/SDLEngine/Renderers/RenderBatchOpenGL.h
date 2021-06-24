@@ -24,29 +24,29 @@ struct RenderBatchOpenGL
 			return -1;
 		}
 		VertexQuard vq = GenerateVertexs(ro);
-		UInt32 startIndex = m_indicesIndex;
+		UInt32 startIndex = m_vertexIndex;
 		UInt32 countStart = count;
 		//Add the vertexs and the indexs
 
 		//Bottom left
-		data->at(m_indicesIndex) = vq.points[0];
+		data->at(m_vertexIndex) = vq.points[0];
 		//indices->at(m_indicesIndex) = m_indicesIndex;
-		m_indicesIndex++;
+		m_vertexIndex++;
 		
 		//Bottom right
-		data->at(m_indicesIndex) = vq.points[1];
+		data->at(m_vertexIndex) = vq.points[1];
 		//indices->at(m_indicesIndex) = m_indicesIndex;
-		m_indicesIndex++;
+		m_vertexIndex++;
 
 		//Top right
-		data->at(m_indicesIndex) = vq.points[2];
+		data->at(m_vertexIndex) = vq.points[2];
 		//indices->at(m_indicesIndex) = m_indicesIndex;
-		m_indicesIndex++;
+		m_vertexIndex++;
 
 		//Top left
-		data->at(m_indicesIndex) = vq.points[3];
+		data->at(m_vertexIndex) = vq.points[3];
 		//indices->at(m_indicesIndex) = m_indicesIndex;
-		m_indicesIndex++;
+		m_vertexIndex++;
 
 		indices->at(countStart) = startIndex;			//0 Bottom left.
 		indices->at(countStart + 1) = startIndex + 2;	//1 Top Right.
@@ -63,7 +63,7 @@ struct RenderBatchOpenGL
 	};
 
 	void Clear() {
-		m_indicesIndex = 0;
+		m_vertexIndex = 0;
 		count = 0;
 		quardCount = 0;
 	};
@@ -107,7 +107,7 @@ private:
 		rtn.points[3].translate = translate;
 		return rtn;
 	};
-	UInt32 m_indicesIndex = 0;
+	UInt32 m_vertexIndex = 0;
 
 };
 
