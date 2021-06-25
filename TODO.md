@@ -10,7 +10,6 @@
 - [ ] Rendering
   - [x] Inherited renderer class.
   - [ ] Sprite Sheets.
-  - [ ] Sprite batching. (More for openGL)
   - [x] RenderLayers
     - [x] Each layer should be able to have more then one layer.
     - [x] Check if layer update is needed.
@@ -27,21 +26,26 @@
       - [ ] Motion blur.
   - [ ] OpenGL render.
     - [x] SDL2 OpenGL context
+    - [ ] Sprite batching. (More for openGL)
+      - [x] Render a sprite batch.
+      - [ ] Create more sprite batchs as they fill up.
+        - [x] Vertex/Quard based.
+        - [ ] Texture based.
     - [ ] Sprite rotation.
     - [ ] Draw line.
     - [ ] Shaders.
-      - [ ] Shader loading.
-      - [ ] Shader compiling.
-      - [ ] Basic image display shader.
+      - [x] Shader loading.
+      - [x] Shader compiling.
+      - [x] Basic image display shader.
         - [ ] Rander to FBO for post processing.
       - [ ] Lighting.
       - [ ] Post processing.
         - [ ] Gaussian Blur.
         - [ ] Bloom.
         - [ ] Motion blur.
-      - [ ] Uniforms.
+      - [x] Uniforms.
       - [ ] Custom shaders.
-  - [ ] VSYNC.
+  - [x] VSYNC.
 
 ### File system.
 
