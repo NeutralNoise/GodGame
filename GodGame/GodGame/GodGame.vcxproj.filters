@@ -93,6 +93,12 @@
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\VertexBuffer.cpp">
       <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\TextureOpenGL.cpp">
+      <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -165,6 +171,12 @@
       <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\VertexBufferLayout.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\TextureOpenGL.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.h">
       <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
   </ItemGroup>

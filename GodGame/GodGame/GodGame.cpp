@@ -75,6 +75,7 @@ int main(int argc, char ** argv)
 	SimpleTimer fpsTimer;
 	if (isRunning) {
 		Input input;
+		ImageLoader::LoadTexture("data/test.png");
 		/*
 		ImageLoader::LoadTexture("data/test.png");
 		Texture *texture = ImageLoader::GetTexture("data/test.png");

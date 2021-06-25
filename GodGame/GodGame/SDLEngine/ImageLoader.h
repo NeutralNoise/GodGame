@@ -26,6 +26,9 @@ public:
 
 	~ImageLoader();
 
+	template<class T>
+	static void Init();
+
 	/**
 	 * \brief Laods a image into a texture
 	 * 
@@ -33,7 +36,7 @@ public:
 	 * \return true if image is loaded else false.
 	 */
 
-	static bool LoadTexture(const std::string &file);
+	static Texture* LoadTexture(const std::string &file);
 
 	/**
 	 * \brief Get the a Texture object
@@ -44,7 +47,18 @@ public:
 
 	static Texture* GetTexture(const std::string &file);
 
+protected:
+	virtual Texture * TextureLoader(const std::string &path);
+	std::map<std::string, Texture*> m_textures; //!< Texture storeage. The string is the path to the image used to generate this texture.
 private:
-	static std::map<std::string, Texture*> m_textures; //!< Texture storeage. The string is the path to the image used to generate this texture.
+	static ImageLoader * p_instance;
 };
 
+template<class T>
+inline void ImageLoader::Init()
+{
+	if (!p_instance) {
+		T * tmp = new T;
+		p_instance = (ImageLoader*)tmp;
+	}
+}

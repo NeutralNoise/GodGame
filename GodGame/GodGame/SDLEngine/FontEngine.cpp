@@ -45,9 +45,9 @@ EngineFont * FontEngine::LoadFont(const std::string &file, const int &fontsize) 
 void FontEngine::CloseFontEngine() {
 	if (p_font != NULL) {
 		if (p_font->texture != nullptr) {
-			if (p_font->texture->texture != NULL) {
-				SDL_DestroyTexture(p_font->texture->texture);
-				p_font->texture->texture = NULL;
+			if (p_font->texture->textureData.textureTexture != NULL) {
+				SDL_DestroyTexture(p_font->texture->textureData.textureTexture);
+				p_font->texture->textureData.textureTexture = NULL;
 				delete p_font->texture;
 				p_font->texture = nullptr;
 			}
@@ -66,9 +66,9 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 	//Free the last texture;
 	if (p_font != NULL) {
 		if (p_font->texture != nullptr) {
-			if (p_font->texture->texture != NULL) {
-				SDL_DestroyTexture(p_font->texture->texture);
-				p_font->texture->texture = NULL;
+			if (p_font->texture->textureData.textureTexture != NULL) {
+				SDL_DestroyTexture(p_font->texture->textureData.textureTexture);
+				p_font->texture->textureData.textureTexture = NULL;
 			}
 		}
 	}
@@ -87,8 +87,8 @@ bool FontEngine::LoadFromRenderedText(const std::string &text /*,const Colour &t
 	}
 	else {
 		//Create texture from the surface.
-		p_font->texture->texture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->sdl_renderer, textSurface);
-		if (p_font->texture->texture == NULL) {
+		p_font->texture->textureData.textureTexture = SDL_CreateTextureFromSurface(GameEngine::GetRenderer()->sdl_renderer, textSurface);
+		if (p_font->texture->textureData.textureTexture == NULL) {
 			AddEngineErrorMessage(111, EngineErrorTypes::ERR_TYPE_FATEL,
 				"SDL2 Unable to create surface from texture. " + std::string(SDL_GetError()));
 		}

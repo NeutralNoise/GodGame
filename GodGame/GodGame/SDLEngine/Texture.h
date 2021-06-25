@@ -7,17 +7,24 @@ struct SDL_Surface;
 struct SDL_Texture;
 struct SDL_Renderer;
 
-/** \struct Texture
+struct SDLTextureData
+{
+	SDL_Surface * textureSurface = nullptr;
+	SDL_Texture * textureTexture = nullptr;
+};
+
+/** \class Texture
  * \brief A structure representing a texture.
  *
  */
 
-struct Texture
+class Texture
 {
-	friend ImageLoader;
+public:
 	std::string file; //!< Path to the texture.
 	//This should be hiden really buts its kind of needed atm.
-	SDL_Texture * texture = NULL; //!< SDL2 Texture
+	SDLTextureData textureData;
+	//SDL_Texture * texture = NULL; //!< SDL2 Texture
 	int width; //!< The width of the texture in pixels
 	int height; //!< The height of the texture in pixels
 	int access; //!< What SDL2 texture access this texture has.
@@ -33,14 +40,19 @@ struct Texture
 	 * \param r Pointer to an SDL2_Renderer.
 	 * \return True if texture was created.
 	*/
-
+	//TODO remove this.
 	bool CreateBlankTexture(const int &access, const int &w = -1, const int &h = -1, SDL_Renderer * r = nullptr);
+
+	virtual Texture* LoadTexture(const std::string& path);
+
+	virtual void Bind(const UInt32 &slot) {};
+	virtual void Unbind() {};
 
 	/**
 	 * \brief Cleans the texture.
 	 * 
 	*/
-
+	//TODO this should be DestroyTexture
 	void CleanTexture();
 
 	/**
@@ -51,7 +63,6 @@ struct Texture
 
 	void GetPixels();
 
-private:
 	int RefCount = 0; //!< Not used ATM
 	bool m_createdTexture = false; //!< Has this texture been created yet.
 };

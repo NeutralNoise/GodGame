@@ -3,7 +3,7 @@
 #include "../../Renderer.h"
 
 struct SDL_Renderer;
-struct Texture;
+class Texture;
 
 /** \class RendererSDL
  * \brief Used to render things to the screen using SDL2

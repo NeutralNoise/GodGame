@@ -167,10 +167,12 @@
     <ClCompile Include="SDLEngine\InfoEngine.cpp" />
     <ClCompile Include="SDLEngine\Input.cpp" />
     <ClCompile Include="SDLEngine\Renderer.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\RenderBatchOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\RendererOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\Shader.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\TextureOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\VertexAtribArray.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\VertexBuffer.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\VertexBufferLayout.cpp" />
@@ -191,10 +193,12 @@
     <ClInclude Include="SDLEngine\Input.h" />
     <ClInclude Include="SDLEngine\Rect.h" />
     <ClInclude Include="SDLEngine\Renderer.h" />
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\RenderBatchOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\RendererOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\Shader.h" />
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\TextureOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\Vertex.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\VertexAtribArray.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\VertexBuffer.h" />

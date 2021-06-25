@@ -14,12 +14,8 @@ struct VertexQuard
 struct RenderBatchOpenGL
 {
 	RenderBatchOpenGL() {
-		//data = new std::vector<Vertex>;
 		data = new Vertex[MAX_BATCH_VERTICES];
 		indices = new UInt32[MAX_BATCH_INDICES];
-		//indices = new std::vector<UInt32>;
-		//data->resize(MAX_BATCH_VERTICES);
-		//indices->resize(MAX_BATCH_INDICES);
 	}
 	Int32 AddQuard(const RenderObject &ro) {
 		if (quardCount == MAX_RENDER_OBJECTS) {
@@ -31,28 +27,32 @@ struct RenderBatchOpenGL
 		//Add the vertexs and the indexs
 
 		//Bottom left
+		//Top Left
 		*(data+m_vertexIndex) = vq.points[0];
 		m_vertexIndex++;
 		
 		//Bottom right
+		//Top right
 		*(data + m_vertexIndex) = vq.points[1];
 		m_vertexIndex++;
 
 		//Top right
+		//Bottom right
 		*(data + m_vertexIndex) = vq.points[2];
 		m_vertexIndex++;
 
 		//Top left
+		//Bottom Left
 		*(data + m_vertexIndex) = vq.points[3];
 		m_vertexIndex++;
 
-		*(indices + (countStart)) = startIndex;			//0 Bottom left.
-		*(indices + (countStart + 1)) = startIndex + 2;	//1 Top Right.
-		*(indices + (countStart + 2)) = startIndex + 3;	//2 Top left.
+		*(indices + (countStart)) = startIndex;			//0 Top left.
+		*(indices + (countStart + 1)) = startIndex + 2;	//1 Bottom Right.
+		*(indices + (countStart + 2)) = startIndex + 3;	//2 Bottom left.
 
-		*(indices + (countStart + 3)) = startIndex;		//0 Bottom left.
-		*(indices + (countStart + 4)) = startIndex + 2;	//1 Top Right.
-		*(indices + (countStart + 5)) = startIndex + 1;	//3 Bottom right.
+		*(indices + (countStart + 3)) = startIndex;		//0 Top left.
+		*(indices + (countStart + 4)) = startIndex + 2;	//1 Bottom right.
+		*(indices + (countStart + 5)) = startIndex + 1;	//3 Top right.
 
 		count += 6;
 
@@ -85,25 +85,33 @@ private:
 		//bool translate = false;
 
 		//OpenGL renders starting from the Bottom left working around counter clockwise
-		//Bottom left
+		//Top left
 		vq.points[0].position.x = ro.x;
 		vq.points[0].position.y = ro.y;
 		vq.points[0].colour = c1;
+		vq.points[0].uv.x = 0.0f;
+		vq.points[0].uv.y = 0.0f;
 		vq.points[0].translate = translate;
-		//Bottom right
+		//Top right
 		vq.points[1].position.x = ro.x + ro.width;
 		vq.points[1].position.y = ro.y;
 		vq.points[1].colour = c2;
+		vq.points[1].uv.x = 1.0f;
+		vq.points[1].uv.y = 0.0f;
 		vq.points[1].translate = translate;
-		//Top right
+		//Bottom right
 		vq.points[2].position.x = ro.x + ro.width;
 		vq.points[2].position.y = ro.y + ro.height;
 		vq.points[2].colour = c3;
+		vq.points[2].uv.x = 1.0f;
+		vq.points[2].uv.y = 1.0f;
 		vq.points[2].translate = translate;
-		//Top left
+		//Bottom left
 		vq.points[3].position.x = ro.x;
 		vq.points[3].position.y = ro.y + ro.height;
 		vq.points[3].colour = c4;
+		vq.points[3].uv.x = 0.0f;
+		vq.points[3].uv.y = 1.0f;
 		vq.points[3].translate = translate;
 	};
 	UInt32 m_vertexIndex = 0;

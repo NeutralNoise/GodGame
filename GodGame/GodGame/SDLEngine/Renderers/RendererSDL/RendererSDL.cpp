@@ -55,7 +55,7 @@ void RendererSDL::OnDraw()
 	m_layerTimer.StartTimer(); //Times everything
 	p_layerRenderTimeAvg->fdata = 0;
 	//Draw everything to an offscreen texture.
-	SDL_SetRenderTarget(p_renderer, p_renderTexture->texture);
+	SDL_SetRenderTarget(p_renderer, p_renderTexture->textureData.textureTexture);
 	//Clear the offscreen texture.
 	SDL_RenderClear(p_renderer);
 	int numLayers = 0;
@@ -75,7 +75,7 @@ void RendererSDL::OnDraw()
 	//Switch to the the defualt render target.
 	SDL_SetRenderTarget(p_renderer, NULL);
 	//Render the offsreen texture to the window.
-	SDL_RenderCopy(p_renderer, p_renderTexture->texture, NULL, NULL);
+	SDL_RenderCopy(p_renderer, p_renderTexture->textureData.textureTexture, NULL, NULL);
 	//SDL_RenderCopy(p_renderer, p_lightTexture->texture, NULL, NULL);
 
 	p_layerRenderTimeAvg->fdata = p_layerRenderTimeAvg->fdata / numLayers;
@@ -107,7 +107,7 @@ void RendererSDL::DrawLighting()
 		return rtn;
 	};
 
-	SDL_SetRenderTarget(p_renderer, p_lightTexture->texture);
+	SDL_SetRenderTarget(p_renderer, p_lightTexture->textureData.textureTexture);
 	SDL_RenderClear(p_renderer);
 	EngineCamera camera = *GameEngine::GetRenderer()->camera;
 	//Draw the lights to the light texture.
@@ -128,7 +128,7 @@ void RendererSDL::DrawLighting()
 						}
 						SDL_Rect sRect = RenToSDLRect(lights[l]->renderTile);
 						SDL_Rect dRect = RectToSDLRect(destRect);
-						SDL_RenderCopy(p_renderer, lights[l]->texture->texture, &sRect, &dRect);
+						SDL_RenderCopy(p_renderer, lights[l]->texture->textureData.textureTexture, &sRect, &dRect);
 					}
 					else {
 						break;
@@ -138,10 +138,10 @@ void RendererSDL::DrawLighting()
 		}
 	}
 
-	SDL_SetTextureBlendMode(p_lightTexture->texture, SDL_BLENDMODE_MOD);
-	SDL_SetRenderTarget(p_renderer, p_renderTexture->texture);
-	SDL_RenderCopy(p_renderer, p_lightTexture->texture, NULL, NULL);
-	SDL_SetTextureBlendMode(p_lightTexture->texture, SDL_BLENDMODE_NONE);
+	SDL_SetTextureBlendMode(p_lightTexture->textureData.textureTexture, SDL_BLENDMODE_MOD);
+	SDL_SetRenderTarget(p_renderer, p_renderTexture->textureData.textureTexture);
+	SDL_RenderCopy(p_renderer, p_lightTexture->textureData.textureTexture, NULL, NULL);
+	SDL_SetTextureBlendMode(p_lightTexture->textureData.textureTexture, SDL_BLENDMODE_NONE);
 
 }
 
@@ -198,7 +198,7 @@ void RendererSDL::DrawLayer(RenderObjectLayer * layer) {
 			center.x = renObject->x + (int)(renObject->width / 2);
 			center.y = renObject->y + (int)(renObject->height / 2);
 
-			SDL_RenderCopyEx(p_renderer, renObject->texture->texture, &sRect, &dRect, renObject->angle, &center, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(p_renderer, renObject->texture->textureData.textureTexture, &sRect, &dRect, renObject->angle, &center, SDL_FLIP_NONE);
 			p_drawCalls->uidata++;
 		}
 	}

@@ -5,6 +5,8 @@
 #include <iostream>
 #include "ErrorEngine.h"
 #include "EngineConfig.h"
+#include "ImageLoader.h"
+#include "Renderers/RendererOpenGL/TextureOpenGL.h"
 
 
 GameEngine::GameEngine()
@@ -78,6 +80,7 @@ bool GameEngine::InitGameEngine(const char * appName, EngineRenderer * renderer,
 	}
 
 	m_isRunning = true;
+
 	return true;
 }
 
@@ -112,20 +115,20 @@ void GameEngine::RenderCopy(Texture * tex, const Rect *rect, const Rect *winRect
 		if (winRect) {
 			SDL_Rect sdlwinRect;
 			sdlwinRect = RectToSDLRect(*winRect);
-			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, &sdlrect, &sdlwinRect);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->textureData.textureTexture, &sdlrect, &sdlwinRect);
 		}
 		else {
-			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, &sdlrect, NULL);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->textureData.textureTexture, &sdlrect, NULL);
 		}
 	}
 	else {
 		if (winRect) {
 			SDL_Rect sdlwinRect;
 			sdlwinRect = RectToSDLRect(*winRect);
-			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, NULL, &sdlwinRect);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->textureData.textureTexture, NULL, &sdlwinRect);
 		}
 		else {
-			SDL_RenderCopy(p_renderer->sdl_renderer, tex->texture, NULL, NULL);
+			SDL_RenderCopy(p_renderer->sdl_renderer, tex->textureData.textureTexture, NULL, NULL);
 		}
 	}
 

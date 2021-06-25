@@ -6,8 +6,10 @@
 #include <fstream>
 #include <string>
 #include "Vertex.h"
+#include "ImageLoaderOpenGL.h"
 #include  "../../EngineCamera.h"
 #include "../../GameEngine.h"
+
 
 RendererOpenGL::RendererOpenGL() {
 }
@@ -61,10 +63,13 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 	{
 		printf( "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError() );
 	}
-	
+	Int32 texCount = 0;
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texCount);
+	std::cout << "GL_MAX_TEXTURE_IMAGE_UNITS: " << texCount << "\n";
 	//Set the clear colour
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	//Set blends mode for textures
+	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//Load a test shader
@@ -77,6 +82,7 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 	
 		layout.Push<glm::vec3>(1); //Vertex position.
 		layout.Push<ColourRGBA>(1); //Vertex colour.
+		layout.Push<glm::vec2>(1);	//Texture uv
 		layout.Push<UInt32>(1); //Translate vertex.
 		m_VAA.AddBuffer(m_VBO, layout);		
 	}	
@@ -84,6 +90,8 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 		return false;
 	}
 	
+	ImageLoader::Init<ImageLoaderOpenGL>();
+
 	return true;
 }
 
@@ -95,6 +103,8 @@ void RendererOpenGL::OnUpdate() {
 void RendererOpenGL::OnDraw() {
 	static float time = 0.0f;
 	static float timeValue = 0.01f;
+	//TODO this is just to test.
+	Texture * test = ImageLoader::GetTexture("data/test.png");
 	//Clear color buffer
     glClear( GL_COLOR_BUFFER_BIT );
 	EngineCamera camera = *GameEngine::GetRenderer()->camera;
@@ -107,8 +117,9 @@ void RendererOpenGL::OnDraw() {
 	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
 	//Enable vertex position
 	m_VAA.Bind();
-	
+	test->Bind(0);
 	GenerateBatchs();
+	m_shader.SetUniformu1ui("u_Texture", 0);
 	for (size_t i = 0; i < m_batchIndex+1; i++) {
 		//Set vertex data
 		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
@@ -123,6 +134,7 @@ void RendererOpenGL::OnDraw() {
 	m_IBO.Unbind();
 	m_VBO.Unbind();
 	m_VAA.Unbind();
+	test->Unbind();
 	ClearBatchs();
 	//m_rBatch.Clear();
 	time += timeValue;

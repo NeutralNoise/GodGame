@@ -66,7 +66,14 @@ public:
 		m_stride += count * sizeof(UInt32);
 	}
 
-	//Just treat the vec3/vec4 as floats.
+	//Just treat the vec2/vec3/vec4 as floats.
+
+	template<>
+	void Push<glm::vec2>(const UInt32 &count) {
+		m_elements.push_back({ GL_FLOAT, count * 2, 0 });
+		m_stride += count * sizeof(glm::vec2);
+	}
+
 	template<>
 	void Push<glm::vec3>(const UInt32 &count) {
 		m_elements.push_back({ GL_FLOAT, count  * 3, 0 });
