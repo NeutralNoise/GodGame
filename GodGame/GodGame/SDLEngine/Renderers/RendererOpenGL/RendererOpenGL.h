@@ -98,6 +98,7 @@ private:
 	Shader m_shader; //The shader used by this renderer.
 	std::vector<RenderBatchOpenGL> m_renderBatchs;
 	UInt32 m_batchIndex = 0;
+	bool m_needsRender = false;
 	int flash = 0;
 	OpenGLRenderStats m_stats;
 };

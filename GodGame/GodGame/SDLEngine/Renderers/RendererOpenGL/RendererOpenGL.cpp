@@ -116,54 +116,58 @@ void RendererOpenGL::OnUpdate() {
 void RendererOpenGL::OnDraw() {
 	static float time = 0.0f;
 	static float timeValue = 0.01f;
-	//TODO this is just to test.
-	Texture * test = ImageLoader::GetTexture("data/test.png");
+
 	//Clear color buffer
-    glClear( GL_COLOR_BUFFER_BIT );
-	EngineCamera camera = *GameEngine::GetRenderer()->camera;
-	//Bind program
-	m_shader.Bind();
-	m_shader.SetUniformu1f("u_time", time);
-	//Translate the world around the camera.
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-camera.pos.x, -camera.pos.y, 0));
-	m_shader.SetUniformuMatrix4f("u_mvp", camera.cameraMatrix * model);
-	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
-	//Enable vertex position
-	m_VAA.Bind();
-	test->Bind(0);
+	glClear(GL_COLOR_BUFFER_BIT);
 	GenerateBatchs();
-	m_shader.SetUniformu1ui("u_Texture", 0);
-	m_stats.ClearData();
-	m_stats.p_batchCount->uidata = m_renderBatchs.size();
+	if (m_needsRender) {
+		//TODO this is just to test.
+		Texture * test = ImageLoader::GetTexture("data/test.png");
+		EngineCamera camera = *GameEngine::GetRenderer()->camera;
+		//Bind program
+		m_shader.Bind();
+		m_shader.SetUniformu1f("u_time", time);
+		//Translate the world around the camera.
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-camera.pos.x, -camera.pos.y, 0));
+		m_shader.SetUniformuMatrix4f("u_mvp", camera.cameraMatrix * model);
+		m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
+		//Enable vertex position
+		m_VAA.Bind();
+		test->Bind(0);
+		m_shader.SetUniformu1ui("u_Texture", 0);
+		m_stats.ClearData();
+		m_stats.p_batchCount->uidata = m_renderBatchs.size();
 
-	for (size_t i = 0; i < m_batchIndex+1; i++) {
-		//Set vertex data
-		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
-		//Set index data
-		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
-		//Render
-		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
-		m_stats.p_drawCalls->uidata += 1;
-		m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
-		m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
-	}
+		for (size_t i = 0; i < m_batchIndex + 1; i++) {
+			//Set vertex data
+			m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
+			//Set index data
+			m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
+			//Render
+			glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+			m_stats.p_drawCalls->uidata += 1;
+			m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
+			m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
+		}
 
-	//Disable vertex position
-	m_IBO.Unbind();
-	m_VBO.Unbind();
-	m_VAA.Unbind();
-	test->Unbind();
-	ClearBatchs();
-	//m_rBatch.Clear();
-	time += timeValue;
-	if (time > 1.0) {
-		timeValue = -timeValue;
+		//Disable vertex position
+		m_IBO.Unbind();
+		m_VBO.Unbind();
+		m_VAA.Unbind();
+		test->Unbind();
+		ClearBatchs();
+		//m_rBatch.Clear();
+		time += timeValue;
+		if (time > 1.0) {
+			timeValue = -timeValue;
+		}
+		else if (time < 0.0) {
+			timeValue = -timeValue;
+		}
+		//Unbind program
+		glUseProgram(0);
 	}
-	else if (time < 0.0) {
-		timeValue = -timeValue;
-	}
-	//Unbind program
-	glUseProgram(0);
+	m_needsRender = false;
 	Renderer::ClearRenderObjects();
 }
 
@@ -207,7 +211,11 @@ void RendererOpenGL::GenerateBatchs()
 					m_batchIndex++;
 					AddNewBatch();
 					m_renderBatchs[m_batchIndex].AddQuard(*renObject); //We should now have a clear batch.
-				}				
+					m_needsRender = true;
+				}
+				else if (!m_needsRender) {
+					m_needsRender = true;
+				}
 			}
 		}
 	}
