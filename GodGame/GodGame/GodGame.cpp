@@ -80,6 +80,12 @@ int main(int argc, char ** argv)
 	float lastTime = 0.0f;
 	float thisTime = 0.0f;
 	SimpleTimer fpsTimer;
+
+	double frameTimeCount = 0.0f;
+	double frameRateCount = 0.0f;
+
+	double frameNumber = 0.0f;
+
 	if (isRunning) {
 		Input input;
 		ImageLoader::LoadTexture("data/test.png");
@@ -238,6 +244,7 @@ int main(int argc, char ** argv)
 				ImGui::Text("Drawn quards: %i", DrawnQuards->uidata);
 				ImGui::Text("Render batch count: %i", BatchCount->uidata);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", frameTimeCount / frameNumber , frameRateCount);
 				ImGui::Text("Application %.3f ms/frame (%.1f FPS)", thisTime, SECOND_MICRO_SECONDS / thisTime);
 				ImGui::End();
 			}
@@ -301,6 +308,15 @@ int main(int argc, char ** argv)
 				ge.EngineWait(MAX_FRAME_TIME - thisTime);
 				thisTime += MAX_FRAME_TIME - thisTime;
 			}
+
+			if (frameRateCount > 1000000 | frameTimeCount > 1000000 | frameNumber > 100000) {
+				frameTimeCount = 0.0f;
+				frameRateCount = 0.0f;
+				frameNumber = 0.0f;
+			}
+			frameNumber += 1.0f;
+			frameTimeCount += thisTime;
+			frameRateCount = SECOND_MICRO_SECONDS / (frameTimeCount / frameNumber);
 			//std::cout << SECOND_MICRO_SECONDS / thisTime << "\n";
 			ErrorEngine::GetInstance()->OnFatel();
 		}
