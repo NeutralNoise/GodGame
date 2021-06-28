@@ -148,6 +148,7 @@ void RendererOpenGL::OnDraw() {
 			m_stats.p_drawCalls->uidata += 1;
 			m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
 			m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
+			m_stats.p_renderBacthUsedMem->uidata += ((sizeof(Vertex) * 4) * m_renderBatchs[i].quardCount) + (m_renderBatchs[i].count * sizeof(UInt32));
 		}
 
 		//Disable vertex position
@@ -185,6 +186,7 @@ void RendererOpenGL::AddNewBatch()
 	if (((m_renderBatchs.size() - 1) < m_batchIndex) || (m_renderBatchs.size() == 0) ) {
 		RenderBatchOpenGL newBatch;
 		m_renderBatchs.push_back(newBatch);
+		m_stats.p_renderBacthMaxMem->uidata += (sizeof(Vertex) * MAX_BATCH_VERTICES) + (sizeof(UInt32) * MAX_BATCH_INDICES);
 	}
 }
 

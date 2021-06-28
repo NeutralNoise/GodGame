@@ -58,17 +58,23 @@ private:
 		EngineInfo * p_quardCount;
 		EngineInfo * p_batchCount;
 		EngineInfo * p_drawCalls;
+		EngineInfo * p_renderBacthMaxMem;
+		EngineInfo * p_renderBacthUsedMem;
 
 		OpenGLRenderStats() {
 			p_vertexCount = new EngineInfo("ren_vertex_count", EI_TYPE_UINT);
 			p_quardCount = new EngineInfo("ren_quard_count", EI_TYPE_UINT);
 			p_batchCount = new EngineInfo("ren_batch_count", EI_TYPE_UINT);
 			p_drawCalls = new EngineInfo("ren_draw_calls", EI_TYPE_UINT);
+			p_renderBacthMaxMem = new EngineInfo("ren_max_batch_mem", EI_TYPE_UINT);
+			p_renderBacthUsedMem = new EngineInfo("ren_used_batch_mem", EI_TYPE_UINT);
 
 			InfoEngine::AddEngineInfo(p_vertexCount);
 			InfoEngine::AddEngineInfo(p_quardCount);
 			InfoEngine::AddEngineInfo(p_batchCount);
 			InfoEngine::AddEngineInfo(p_drawCalls);
+			InfoEngine::AddEngineInfo(p_renderBacthMaxMem);
+			InfoEngine::AddEngineInfo(p_renderBacthUsedMem);
 		}
 
 		void ClearData() {
@@ -76,6 +82,7 @@ private:
 			p_quardCount->uidata = 0;
 			p_batchCount->uidata = 0;
 			p_drawCalls->uidata = 0;
+			p_renderBacthUsedMem->uidata = 0;
 		}
 
 	};
