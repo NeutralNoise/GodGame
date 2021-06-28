@@ -73,6 +73,7 @@ int main(int argc, char ** argv)
 	EngineInfo * DrawCalls = nullptr;
 	EngineInfo * DrawnQuards = nullptr;
 	EngineInfo * DrawVertexs = nullptr;
+	EngineInfo * BatchCount = nullptr;
 	float xpos = 0;
 	float ypos = 0;
 
@@ -164,8 +165,8 @@ int main(int argc, char ** argv)
 
 #ifdef BULK_FAKE_TILE_TEST_LOOP_NO_CLEAR
 		FAKE_TILE_TEST_LAMDA(&testRender, fakeTiles, true);
+		testRender.ToggleLayerClear(0);
 		testRender.ToggleLayerClear(1);
-		testRender.ToggleLayerClear(2);
 #endif //BULK_FAKE_TILE_TEST
 
 		//Draw some stats on the screen.
@@ -175,6 +176,7 @@ int main(int argc, char ** argv)
 		DrawCalls = InfoEngine::GetEngineInfo("ren_draw_calls");
 		DrawnQuards = InfoEngine::GetEngineInfo("ren_quard_count");
 		DrawVertexs = InfoEngine::GetEngineInfo("ren_vertex_count");
+		BatchCount = InfoEngine::GetEngineInfo("ren_batch_count");
 		/*
 		RenderObject ro(0.0f, 0.0f, 32.0f, 32.0f);
 		ro.translateWithCamera = true;
@@ -216,7 +218,7 @@ int main(int argc, char ** argv)
 				static float f = 0.0f;
 				static int counterGUI = 0;
 
-				ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+				ImGui::Begin("Renderer stats");                          // Create a window called "Hello, world!" and append into it.
 				/*
 				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 				//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
@@ -230,10 +232,13 @@ int main(int argc, char ** argv)
 				ImGui::SameLine();
 				ImGui::Text("counter = %d", counterGUI);
 				*/
+				ImGui::Text("%s", EngineR.GetVersionString().c_str());
 				ImGui::Text("Draw calls: %i", DrawCalls->uidata);
 				ImGui::Text("Drawn vertexs: %i", DrawVertexs->uidata);
 				ImGui::Text("Drawn quards: %i", DrawnQuards->uidata);
+				ImGui::Text("Render batch count: %i", BatchCount->uidata);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::Text("Application %.3f ms/frame (%.1f FPS)", thisTime, SECOND_MICRO_SECONDS / thisTime);
 				ImGui::End();
 			}
 			ImGui::Render();

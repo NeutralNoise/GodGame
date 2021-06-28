@@ -133,10 +133,9 @@ void RendererOpenGL::OnDraw() {
 	test->Bind(0);
 	GenerateBatchs();
 	m_shader.SetUniformu1ui("u_Texture", 0);
+	m_stats.ClearData();
 	m_stats.p_batchCount->uidata = m_renderBatchs.size();
-	m_stats.p_drawCalls->uidata = 0;
-	m_stats.p_vertexCount->uidata = 0;
-	m_stats.p_quardCount->uidata = 0;
+
 	for (size_t i = 0; i < m_batchIndex+1; i++) {
 		//Set vertex data
 		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));

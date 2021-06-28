@@ -71,6 +71,13 @@ private:
 			InfoEngine::AddEngineInfo(p_drawCalls);
 		}
 
+		void ClearData() {
+			p_vertexCount->uidata = 0;
+			p_quardCount->uidata = 0;
+			p_batchCount->uidata = 0;
+			p_drawCalls->uidata = 0;
+		}
+
 	};
 
 	void AddNewBatch();
