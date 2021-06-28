@@ -5,6 +5,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "../../../ImGUI/imgui.h"
+#include "../../../ImGUI/imgui_impl_sdl.h"
+#include "../../../ImGUI/imgui_impl_opengl3.h"
 #include "Vertex.h"
 #include "ImageLoaderOpenGL.h"
 #include  "../../EngineCamera.h"
@@ -90,6 +93,16 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 		return false;
 	}
 	
+	//TODO move this.
+	//Init ImGUI
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	//TODO ImGUI io.
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplSDL2_InitForOpenGL(win, SDL_GL_GetCurrentContext());
+	ImGui_ImplOpenGL3_Init("#version 130");
+
 	ImageLoader::Init<ImageLoaderOpenGL>();
 
 	return true;
@@ -120,6 +133,10 @@ void RendererOpenGL::OnDraw() {
 	test->Bind(0);
 	GenerateBatchs();
 	m_shader.SetUniformu1ui("u_Texture", 0);
+	m_stats.p_batchCount->uidata = m_renderBatchs.size();
+	m_stats.p_drawCalls->uidata = 0;
+	m_stats.p_vertexCount->uidata = 0;
+	m_stats.p_quardCount->uidata = 0;
 	for (size_t i = 0; i < m_batchIndex+1; i++) {
 		//Set vertex data
 		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
@@ -127,6 +144,9 @@ void RendererOpenGL::OnDraw() {
 		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
 		//Render
 		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+		m_stats.p_drawCalls->uidata += 1;
+		m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
+		m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
 	}
 
 	//Disable vertex position

@@ -190,9 +190,10 @@ public:
 
 	static void SetRenderer(Renderer * renderer);
 
+	static SDL_Window * p_window; //!< SDL2 window.
+
 private:
 	//TODO Make these not static.
-	static SDL_Window * p_window; //!< SDL2 window.
 	static EngineRenderer * p_renderer; //!< Used to render the current state of the engine.
 	//
 	static bool m_isRunning; //!< Used by the engine to make if it is not longer running. \note Read-only

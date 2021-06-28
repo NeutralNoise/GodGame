@@ -17,6 +17,10 @@
 #include "SDLEngine/Renderers/RendererSDL/RendererSDL.h"
 #include "SDLEngine/Renderers/RendererOpenGL/RendererOpenGL.h"
 
+#include "ImGUI/imgui.h"
+#include "ImGUI/imgui_impl_sdl.h"
+#include "ImGUI/imgui_impl_opengl3.h"
+
 
 //Uncomment this to spawn a shit load of tiles.
 #define BULK_FAKE_TILE_TEST
@@ -67,6 +71,8 @@ int main(int argc, char ** argv)
 	EngineInfo * RenderInfo = nullptr;
 	EngineInfo * RenderAvgInfo = nullptr;
 	EngineInfo * DrawCalls = nullptr;
+	EngineInfo * DrawnQuards = nullptr;
+	EngineInfo * DrawVertexs = nullptr;
 	float xpos = 0;
 	float ypos = 0;
 
@@ -167,7 +173,8 @@ int main(int argc, char ** argv)
 		RenderInfo = InfoEngine::GetEngineInfo("layer_render_time");
 		RenderAvgInfo = InfoEngine::GetEngineInfo("layer_render_time_avg");
 		DrawCalls = InfoEngine::GetEngineInfo("ren_draw_calls");
-
+		DrawnQuards = InfoEngine::GetEngineInfo("ren_quard_count");
+		DrawVertexs = InfoEngine::GetEngineInfo("ren_vertex_count");
 		/*
 		RenderObject ro(0.0f, 0.0f, 32.0f, 32.0f);
 		ro.translateWithCamera = true;
@@ -197,7 +204,40 @@ int main(int argc, char ** argv)
 			engineFPS.Draw(&testRender, Rect(5, 90, 0, 0), 5);
 			currentFPS.Draw(&testRender, Rect(5, 135, 0, 0), 5);
 			*/
+
+			// Start the Dear ImGui frame
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplSDL2_NewFrame(ge.p_window);
+			ImGui::NewFrame();
+
 			ge.Draw();
+
+			{
+				static float f = 0.0f;
+				static int counterGUI = 0;
+
+				ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+				/*
+				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+				//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+				//ImGui::Checkbox("Another Window", &show_another_window);
+
+				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+				//ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+				if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+					counterGUI++;
+				ImGui::SameLine();
+				ImGui::Text("counter = %d", counterGUI);
+				*/
+				ImGui::Text("Draw calls: %i", DrawCalls->uidata);
+				ImGui::Text("Drawn vertexs: %i", DrawVertexs->uidata);
+				ImGui::Text("Drawn quards: %i", DrawnQuards->uidata);
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::End();
+			}
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 			ge.UpdateWindow();
 			input.Update();
 			//testRender.ClearRenderObjects();

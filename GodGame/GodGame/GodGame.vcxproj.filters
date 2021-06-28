@@ -37,6 +37,12 @@
     <Filter Include="Header Files\SDLEngine\Renderers\RendererOpenGL">
       <UniqueIdentifier>{323ec571-9f47-4e6b-8b46-6c0a040d3981}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ImGUI">
+      <UniqueIdentifier>{adbce10d-5340-44bc-8b80-98985c137c30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImGUI">
+      <UniqueIdentifier>{d822e7d2-140f-4129-a2da-67d34d7c0851}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GodGame.cpp">
@@ -98,6 +104,24 @@
     </ClCompile>
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\TextureOpenGL.cpp">
       <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_draw.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_impl_sdl.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_tables.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_widgets.cpp">
+      <Filter>Source Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\ImGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +202,27 @@
     </ClInclude>
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.h">
       <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imconfig.h">
+      <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui.h">
+      <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui_impl_opengl3.h">
+      <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui_impl_sdl.h">
+      <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_rectpack.h">
+      <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_textedit.h">
+      <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_truetype.h">
+      <Filter>Header Files\ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

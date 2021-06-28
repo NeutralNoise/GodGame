@@ -53,6 +53,26 @@ class RendererOpenGL : public Renderer
 
 private:
 
+	struct OpenGLRenderStats {
+		EngineInfo * p_vertexCount;
+		EngineInfo * p_quardCount;
+		EngineInfo * p_batchCount;
+		EngineInfo * p_drawCalls;
+
+		OpenGLRenderStats() {
+			p_vertexCount = new EngineInfo("ren_vertex_count", EI_TYPE_UINT);
+			p_quardCount = new EngineInfo("ren_quard_count", EI_TYPE_UINT);
+			p_batchCount = new EngineInfo("ren_batch_count", EI_TYPE_UINT);
+			p_drawCalls = new EngineInfo("ren_draw_calls", EI_TYPE_UINT);
+
+			InfoEngine::AddEngineInfo(p_vertexCount);
+			InfoEngine::AddEngineInfo(p_quardCount);
+			InfoEngine::AddEngineInfo(p_batchCount);
+			InfoEngine::AddEngineInfo(p_drawCalls);
+		}
+
+	};
+
 	void AddNewBatch();
 
 	void GenerateBatchs();
@@ -72,4 +92,5 @@ private:
 	std::vector<RenderBatchOpenGL> m_renderBatchs;
 	UInt32 m_batchIndex = 0;
 	int flash = 0;
+	OpenGLRenderStats m_stats;
 };

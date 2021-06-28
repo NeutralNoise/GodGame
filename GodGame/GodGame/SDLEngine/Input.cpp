@@ -1,5 +1,6 @@
 #include "Input.h"
 #include <SDL2/SDL.h>
+#include "../ImGUI/imgui_impl_sdl.h"
 
 Input::Input()
 {
@@ -14,7 +15,7 @@ void Input::ProcessEvents() {
 
 	SDL_Event m_e;
 	while (SDL_PollEvent(&m_e) != 0) {
-
+		ImGui_ImplSDL2_ProcessEvent(&m_e);
 		switch (m_e.type)
 		{
 		case::SDL_QUIT:
