@@ -126,7 +126,6 @@ void RendererOpenGL::OnDraw() {
 		//Set index data
 		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
 		//Render
-		//glDrawElements(GL_TRIANGLE_FAN, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 	}
 

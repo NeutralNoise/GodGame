@@ -61,7 +61,6 @@ struct EngineCamera
 		this->pos = pos;
 		centerPos.x = pos.x + halfWidth;
 		centerPos.y = pos.y + halfHeight;
-		//glm::vec3 translate(-pos.x + centerPos.x, -pos.y + centerPos.y, 0.0f);
 		glm::vec3 translate(-pos.x + centerPos.x, -pos.y + centerPos.y, 0.0f);
 		cameraMatrix = glm::translate(projection, translate);
 
