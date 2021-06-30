@@ -107,6 +107,19 @@ Texture* ImageLoader::GetTexture(const std::string &file) {
 	 return iter->second;
 }
 
+void ImageLoader::AddTexture(const std::string & file, Texture* tex)
+{
+	//std::map<std::string, Texture*>::iterator
+	auto iter = p_instance->m_textures.find(file);
+	if (iter == p_instance->m_textures.end()) {
+		p_instance->m_textures.emplace(file, tex);
+	}
+	else {
+		//NOTE we might have to delete the texture here.
+		iter->second = tex;
+	}
+}
+
 Texture * ImageLoader::TextureLoader(const std::string & path)
 {
 	std::cout << "Can not loat Texture as there is no function here.\n";

@@ -47,6 +47,8 @@ public:
 
 	static Texture* GetTexture(const std::string &file);
 
+	static void AddTexture(const std::string& file, Texture* tex);
+
 protected:
 	virtual Texture * TextureLoader(const std::string &path);
 	std::map<std::string, Texture*> m_textures; //!< Texture storeage. The string is the path to the image used to generate this texture.
