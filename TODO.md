@@ -26,18 +26,20 @@
       - [ ] Motion blur.
   - [ ] OpenGL render.
     - [x] SDL2 OpenGL context
-    - [ ] Sprite batching. (More for openGL)
+    - [x] Sprite batching. (More for openGL)
       - [x] Render a sprite batch.
-      - [ ] Create more sprite batchs as they fill up.
+      - [x] Create more sprite batchs as they fill up.
         - [x] Vertex/Quard based.
-        - [ ] Texture based.
+        - [x] Texture based.
     - [ ] Sprite rotation.
     - [ ] Draw line.
     - [ ] Shaders.
       - [x] Shader loading.
       - [x] Shader compiling.
       - [x] Basic image display shader.
-        - [ ] Rander to FBO for post processing.
+      - [x] Rander to FBO.
+        - [ ] FBO shader
+        - [ ] Flip FBO
       - [ ] Lighting.
       - [ ] Post processing.
         - [ ] Gaussian Blur.
@@ -135,12 +137,20 @@
       - [ ] Avg object update time.
     - [ ] ??
   - [ ] Counters.
-    - [ ] Drawn sprites.
-    - [ ] Draw calls.
-    - [ ] Frame rate.
-    - [ ] Avg drawn sprites.
-    - [ ] Avg draw calls.
-    - [ ] Loaded textures.
+    - [ ] SDL2
+      - [ ] Drawn sprites.
+      - [ ] Draw calls.
+      - [ ] Frame rate.
+      - [ ] Avg drawn sprites.
+      - [ ] Avg draw calls.
+      - [ ] Loaded textures.
+    - [ ] OpenGL
+      - [x] Drawn sprites.
+      - [x] Draw calls.
+      - [x] Frame rate.
+      - [ ] Avg drawn sprites.
+      - [ ] Avg draw calls.
+      - [ ] Loaded textures.
     - [ ] Physis objects.
   - [ ] System.
     - [ ] Memory useage.
@@ -193,12 +203,14 @@
     - [ ] [Nuklear](https://github.com/vurtun/nuklear)
     - [ ] [Imgui](https://github.com/ocornut/imgui)
   - [ ] Triggers.
-  - [ ] Text box.
-    - [ ] Scrolling
+  - [ ] Text
+    - [ ] Label
+    - [ ] Text box.
+      - [ ] Scrolling
   - [ ] Load bar.
   - [ ] Buttons.
   - [ ] Image display.
-  - [ ] Label
+
 
 ### Misc
 
