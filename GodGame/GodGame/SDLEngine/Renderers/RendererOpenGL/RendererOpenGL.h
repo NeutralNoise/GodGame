@@ -52,7 +52,7 @@ class RendererOpenGL : public Renderer
 	
 	bool CompileShader(const std::string &frag, const std::string &vert) override;
 
-	FrameBufferOpenGL m_renObjFBO;
+	FrameBufferOpenGL m_renObjFBO; //!< The frame buffer used to render the RenderObjects too. /warn this will be moved
 
 private:
 
@@ -107,6 +107,7 @@ private:
 	VertexArray m_VAA;
 	Shader m_shader; //The shader used by this renderer.
 	std::vector<RenderBatchOpenGL> m_renderBatchs;
+	RenderObject m_mainScreenQuard;
 	UInt32 m_batchIndex = 0;
 	bool m_needsRender = false;
 	int flash = 0;

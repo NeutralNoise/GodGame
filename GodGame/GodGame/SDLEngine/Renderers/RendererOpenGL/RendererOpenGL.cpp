@@ -114,6 +114,13 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 		return false;
 	}
 
+	//Set up the quard to render the frame buffers too.
+	m_mainScreenQuard.x = 0.0;
+	m_mainScreenQuard.y = 0.0;
+	m_mainScreenQuard.width = WINDOW_WIDTH;
+	m_mainScreenQuard.height = WINDOW_HEIGHT;
+	m_mainScreenQuard.translateWithCamera = false;
+
 	return true;
 }
 
@@ -186,17 +193,13 @@ void RendererOpenGL::OnDraw() {
 	m_needsRender = false;
 	ClearBatchs();
 	Renderer::ClearRenderObjects();
+
+
+	//Render the frame buffer
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
-	RenderObject mainScreen;
-	mainScreen.x = 0.0;
-	mainScreen.y = 0.0;
-	mainScreen.width = 600;
-	mainScreen.height = 600;
-	mainScreen.translateWithCamera = false;
-	m_renObjFBO.GetAttachment();
-	AddRenderObject(&mainScreen);
+	AddRenderObject(&m_mainScreenQuard);
 	GenerateBatchs();
 	m_shader.Bind();
 	m_shader.SetUniformu1f("u_time", time);
