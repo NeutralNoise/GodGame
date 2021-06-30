@@ -88,6 +88,7 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 		layout.Push<ColourRGBA>(1); //Vertex colour.
 		layout.Push<glm::vec2>(1);	//Texture uv
 		layout.Push<UInt32>(1); //Translate vertex.
+		layout.Push<UInt32>(1); //Texture ID vertex.
 		m_VAA.AddBuffer(m_VBO, layout);		
 	}	
 	else {
@@ -143,7 +144,7 @@ void RendererOpenGL::OnDraw() {
 	GenerateBatchs();
 	if (m_needsRender) {
 		//TODO this is just to test.
-		Texture * test = ImageLoader::GetTexture("data/test.png");
+		//Texture * test = ImageLoader::GetTexture("data/test.png");
 		EngineCamera camera = *GameEngine::GetRenderer()->camera;
 		m_renObjFBO.Bind();
 		glClearColor(0.1, 0.1,0.1, 1.0);
@@ -157,8 +158,8 @@ void RendererOpenGL::OnDraw() {
 		m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
 		//Enable vertex position
 		m_VAA.Bind();
-		test->Bind(0);
-		m_shader.SetUniformu1ui("u_Texture", 0);
+		
+		//test->Bind(0);
 		m_stats.ClearData();
 		m_stats.p_batchCount->uidata = m_renderBatchs.size();
 
@@ -167,19 +168,23 @@ void RendererOpenGL::OnDraw() {
 			m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
 			//Set index data
 			m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
+			//Bind the Textures
+			BindBatchTextures(m_renderBatchs[i]);
+			m_shader.SetUniformu1ui("u_Textures[0]", 0);
 			//Render
 			glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 			m_stats.p_drawCalls->uidata += 1;
 			m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
 			m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
 			m_stats.p_renderBacthUsedMem->uidata += ((sizeof(Vertex) * 4) * m_renderBatchs[i].quardCount) + (m_renderBatchs[i].count * sizeof(UInt32));
+			UnBindBatchTextures();
 		}
 
 		//Disable vertex position
 		m_IBO.Unbind();
 		m_VBO.Unbind();
 		m_VAA.Unbind();
-		test->Unbind();
+		//test->Unbind();
 		ClearBatchs();
 		m_renObjFBO.Unbind();
 		//m_rBatch.Clear();
@@ -191,12 +196,12 @@ void RendererOpenGL::OnDraw() {
 			timeValue = -timeValue;
 		}
 		//Unbind program
-		glUseProgram(0);
+		//glUseProgram(0);
+		m_shader.Unbind();
 	}
 	m_needsRender = false;
 	ClearBatchs();
 	Renderer::ClearRenderObjects();
-
 
 	//Render the frame buffer
 	glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -213,8 +218,8 @@ void RendererOpenGL::OnDraw() {
 	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
 	//Enable vertex position
 	m_VAA.Bind();
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, (UInt32)m_renObjFBO.GetAttachment());
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, (UInt32)m_renObjFBO.GetAttachment());
 
 	m_stats.p_batchCount->uidata += m_renderBatchs.size();
 
@@ -223,12 +228,15 @@ void RendererOpenGL::OnDraw() {
 		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
 		//Set index data
 		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
+		BindBatchTextures(m_renderBatchs[i]);
+		m_shader.SetUniformu1ui("u_Textures[0]", 0);
 		//Render
 		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 		m_stats.p_drawCalls->uidata += 1;
 		m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
 		m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
 		m_stats.p_renderBacthUsedMem->uidata += ((sizeof(Vertex) * 4) * m_renderBatchs[i].quardCount) + (m_renderBatchs[i].count * sizeof(UInt32));
+		UnBindBatchTextures();
 	}
 
 	m_shader.Unbind();
@@ -285,6 +293,22 @@ void RendererOpenGL::GenerateBatchs()
 			}
 		}
 	}
+}
+
+void RendererOpenGL::BindBatchTextures(const RenderBatchOpenGL & batch)
+{
+	//Loop though the batch textures and bind them.
+	for (UInt32 i = 0; i < batch.m_textureMaxSlot + 1; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		UInt32 texID = *(batch.p_textureBuffer + i);
+		//glBindTexture(GL_TEXTURE_2D, *(batch.p_textureBuffer + i));
+		glBindTexture(GL_TEXTURE_2D, texID);
+	}
+}
+
+void RendererOpenGL::UnBindBatchTextures()
+{
+	glBindTexture(GL_TEXTURE_2D,0);
 }
 
 void RendererOpenGL::ClearBatchs()

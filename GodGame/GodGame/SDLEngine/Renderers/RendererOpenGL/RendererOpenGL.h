@@ -93,6 +93,8 @@ private:
 	void AddNewBatch();
 
 	void GenerateBatchs();
+	void BindBatchTextures(const RenderBatchOpenGL & batch);
+	void UnBindBatchTextures();
 	void ClearBatchs();
 
 	void * p_GLContext;

@@ -90,7 +90,7 @@ int main(int argc, char ** argv)
 
 	if (isRunning) {
 		Input input;
-		ImageLoader::LoadTexture("data/test.png");
+		//ImageLoader::LoadTexture("data/test.png");
 		/*
 		ImageLoader::LoadTexture("data/test.png");
 		Texture *texture = ImageLoader::GetTexture("data/test.png");
@@ -158,6 +158,7 @@ int main(int argc, char ** argv)
 			tileTest->renderTile.height = 32;
 
 			//tileTest->texture = texture;
+			tileTest->texture = ImageLoader::GetTexture("data/test.png");
 			tileTest->translateWithCamera = true;
 			fakeTiles.push_back(tileTest);
 
@@ -262,7 +263,12 @@ int main(int argc, char ** argv)
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", frameTimeCount / frameNumber , frameRateCount);
 				ImGui::Text("Application %.3f ms/frame (%.1f FPS)", thisTime, SECOND_MICRO_SECONDS / thisTime);
 				ImGui::End();
+			
+				ImGui::Begin("View Port"); 
+				ImGui::Image(testRender.m_renObjFBO.GetAttachment(), ImVec2(300.0, 300.0));
+				ImGui::End();
 			}
+
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 			ge.UpdateWindow();
