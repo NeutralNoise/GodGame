@@ -10,6 +10,7 @@
 #include "../../../ImGUI/imgui_impl_opengl3.h"
 #include "Vertex.h"
 #include "ImageLoaderOpenGL.h"
+#include "TextureOpenGL.h"
 #include  "../../EngineCamera.h"
 #include "../../GameEngine.h"
 
@@ -113,14 +114,16 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 		std::cout << "Failed to create frame buffer object\n";
 		return false;
 	}
-
+	TextureOpenGL * texture = new TextureOpenGL;
+	texture->SetTexure(m_renObjFBO.GetAttachment());
+	ImageLoader::AddTexture("FrameBuffer", (Texture*)texture);
 	//Set up the quard to render the frame buffers too.
 	m_mainScreenQuard.x = 0.0;
 	m_mainScreenQuard.y = 0.0;
 	m_mainScreenQuard.width = WINDOW_WIDTH;
 	m_mainScreenQuard.height = WINDOW_HEIGHT;
 	m_mainScreenQuard.translateWithCamera = false;
-
+	m_mainScreenQuard.texture = texture;
 	return true;
 }
 

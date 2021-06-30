@@ -8,7 +8,8 @@ public:
 	Texture * LoadTexture(const std::string &path) override;
 	void Bind(const UInt32 &slot) override;
 	void Unbind() override;
-
+	void SetTexure(void * tex) override;
+	void* GetTexure() override;
 private:
 	UInt32 m_textureID;
 };

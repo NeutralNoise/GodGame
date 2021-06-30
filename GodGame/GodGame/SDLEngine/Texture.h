@@ -47,6 +47,8 @@ public:
 
 	virtual void Bind(const UInt32 &slot) {};
 	virtual void Unbind() {};
+	virtual void SetTexure(void * tex) {};
+	virtual void* GetTexure() { return nullptr; };
 
 	/**
 	 * \brief Cleans the texture.

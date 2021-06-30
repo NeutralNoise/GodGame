@@ -50,3 +50,13 @@ void TextureOpenGL::Unbind()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void TextureOpenGL::SetTexure(void * tex)
+{
+	m_textureID = (UInt32)(tex);
+}
+
+void * TextureOpenGL::GetTexure()
+{
+	return (void *)m_textureID;
+}
