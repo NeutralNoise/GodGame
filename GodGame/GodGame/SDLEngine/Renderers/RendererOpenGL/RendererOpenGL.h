@@ -7,6 +7,7 @@
 #include "IndexBuffer.h"
 #include "Shader.h"
 #include "RenderBatchOpenGL.h"
+#include "FrameBufferOpenGL.h"
 
 class RendererOpenGL : public Renderer
 {
@@ -50,6 +51,8 @@ class RendererOpenGL : public Renderer
 	void OnCleanUp() override;
 	
 	bool CompileShader(const std::string &frag, const std::string &vert) override;
+
+	FrameBufferOpenGL m_renObjFBO;
 
 private:
 

@@ -168,11 +168,13 @@
     <ClCompile Include="ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="SDLEngine\ErrorEngine.cpp" />
     <ClCompile Include="SDLEngine\FontEngine.cpp" />
+    <ClCompile Include="SDLEngine\FrameBuffer.cpp" />
     <ClCompile Include="SDLEngine\GameEngine.cpp" />
     <ClCompile Include="SDLEngine\ImageLoader.cpp" />
     <ClCompile Include="SDLEngine\InfoEngine.cpp" />
     <ClCompile Include="SDLEngine\Input.cpp" />
     <ClCompile Include="SDLEngine\Renderer.cpp" />
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\FrameBufferOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\RenderBatchOpenGL.cpp" />
@@ -199,6 +201,7 @@
     <ClInclude Include="SDLEngine\EngineEvents.h" />
     <ClInclude Include="SDLEngine\ErrorCodeFunctions.h" />
     <ClInclude Include="SDLEngine\ErrorEngine.h" />
+    <ClInclude Include="SDLEngine\FrameBuffer.h" />
     <ClInclude Include="SDLEngine\InfoEngine.h" />
     <ClInclude Include="SDLEngine\FontEngine.h" />
     <ClInclude Include="SDLEngine\GameEngine.h" />
@@ -206,6 +209,7 @@
     <ClInclude Include="SDLEngine\Input.h" />
     <ClInclude Include="SDLEngine\Rect.h" />
     <ClInclude Include="SDLEngine\Renderer.h" />
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\FrameBufferOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\RenderBatchOpenGL.h" />

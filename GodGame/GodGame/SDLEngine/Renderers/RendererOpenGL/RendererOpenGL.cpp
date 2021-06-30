@@ -105,6 +105,15 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 
 	ImageLoader::Init<ImageLoaderOpenGL>();
 
+	FrameBufferSpec spec;
+	spec.width = info->window_width;
+	spec.height = info->window_height;
+	if (!m_renObjFBO.Create(spec)) {
+		//We need the FBO
+		std::cout << "Failed to create frame buffer object\n";
+		return false;
+	}
+
 	return true;
 }
 
@@ -118,12 +127,17 @@ void RendererOpenGL::OnDraw() {
 	static float timeValue = 0.01f;
 
 	//Clear color buffer
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 	GenerateBatchs();
 	if (m_needsRender) {
 		//TODO this is just to test.
 		Texture * test = ImageLoader::GetTexture("data/test.png");
 		EngineCamera camera = *GameEngine::GetRenderer()->camera;
+		m_renObjFBO.Bind();
+		glClearColor(0.1, 0.1,0.1, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//Bind program
 		m_shader.Bind();
 		m_shader.SetUniformu1f("u_time", time);
@@ -157,6 +171,7 @@ void RendererOpenGL::OnDraw() {
 		m_VAA.Unbind();
 		test->Unbind();
 		ClearBatchs();
+		m_renObjFBO.Unbind();
 		//m_rBatch.Clear();
 		time += timeValue;
 		if (time > 1.0) {
@@ -169,6 +184,49 @@ void RendererOpenGL::OnDraw() {
 		glUseProgram(0);
 	}
 	m_needsRender = false;
+	ClearBatchs();
+	Renderer::ClearRenderObjects();
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);
+	RenderObject mainScreen;
+	mainScreen.x = 0.0;
+	mainScreen.y = 0.0;
+	mainScreen.width = 600;
+	mainScreen.height = 600;
+	mainScreen.translateWithCamera = false;
+	m_renObjFBO.GetAttachment();
+	AddRenderObject(&mainScreen);
+	GenerateBatchs();
+	m_shader.Bind();
+	m_shader.SetUniformu1f("u_time", time);
+	EngineCamera camera = *GameEngine::GetRenderer()->camera;
+	//Translate the world around the camera.
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-camera.pos.x, -camera.pos.y, 0));
+	m_shader.SetUniformuMatrix4f("u_mvp", camera.cameraMatrix * model);
+	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
+	//Enable vertex position
+	m_VAA.Bind();
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, (UInt32)m_renObjFBO.GetAttachment());
+
+	m_stats.p_batchCount->uidata += m_renderBatchs.size();
+
+	for (size_t i = 0; i < m_batchIndex + 1; i++) {
+		//Set vertex data
+		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
+		//Set index data
+		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
+		//Render
+		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+		m_stats.p_drawCalls->uidata += 1;
+		m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
+		m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
+		m_stats.p_renderBacthUsedMem->uidata += ((sizeof(Vertex) * 4) * m_renderBatchs[i].quardCount) + (m_renderBatchs[i].count * sizeof(UInt32));
+	}
+
+	m_shader.Unbind();
+	ClearBatchs();
 	Renderer::ClearRenderObjects();
 }
 
