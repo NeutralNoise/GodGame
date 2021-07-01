@@ -2,24 +2,26 @@
 #include <iostream>
 #include <fstream>
 #include <GL/glew.h>
+#include "ErrorOpenGL.h"
 
 void printProgramLog(GLuint program)
 {
+	GLCall(bool madeShader = glIsProgram(program));
 	//Make sure name is shader
-	if (glIsProgram(program))
+	if (madeShader)
 	{
 		//Program log length
 		int infoLogLength = 0;
 		int maxLength = infoLogLength;
 
 		//Get info string length
-		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+		GLCall(glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength));
 
 		//Allocate string
 		char* infoLog = new char[maxLength];
 
 		//Get info log
-		glGetProgramInfoLog(program, maxLength, &infoLogLength, infoLog);
+		GLCall(glGetProgramInfoLog(program, maxLength, &infoLogLength, infoLog));
 		if (infoLogLength > 0)
 		{
 			//Print Log
@@ -38,20 +40,21 @@ void printProgramLog(GLuint program)
 void printShaderLog( GLuint shader )
 {
     //Make sure name is shader
-    if( glIsShader( shader ) )
+	GLCall(bool isShader = glIsShader(shader));
+    if(isShader)
     {
         //Shader log length
         int infoLogLength = 0;
         int maxLength = infoLogLength;
         
         //Get info string length
-        glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &maxLength );
+		GLCall(glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &maxLength ));
         
         //Allocate string
         char* infoLog = new char[ maxLength ];
         
         //Get info log
-        glGetShaderInfoLog( shader, maxLength, &infoLogLength, infoLog );
+		GLCall(glGetShaderInfoLog( shader, maxLength, &infoLogLength, infoLog ));
         if( infoLogLength > 0 )
         {
             //Print Log
@@ -73,26 +76,26 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 	std::string fragSource = LoadSourceFile(fragFile);
 
 	//Create Shader program.
-	m_program.programID = glCreateProgram();
+	GLCall(m_program.programID = glCreateProgram());
 	std::cout << "Compiling vertex shader: " << vertFile << "\n";
 	//Create vertex shader
-	GLint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	GLCall(GLint vertexShader = glCreateShader(GL_VERTEX_SHADER));
 	//Create fragment shader
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	GLCall(GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER));
 	const GLchar* vertexShaderSource[] =
 	{
 		vertSource.c_str()
 	};
 	
 	//Set vertex source
-	glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
+	GLCall(glShaderSource(vertexShader, 1, vertexShaderSource, NULL));
 
 	//Compile vertex source
-	glCompileShader(vertexShader);
+	GLCall(glCompileShader(vertexShader));
 
 	//Check vertex shader for errors
 	GLint vShaderCompiled = GL_FALSE;
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled);
+	GLCall(glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vShaderCompiled));
 	if (vShaderCompiled != GL_TRUE)
 	{
 		//TODO Better error message
@@ -104,11 +107,9 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 	else {
 		std::cout << "Vertex shader compiled.\n";
 		//Attach vertex shader to program
-		glAttachShader(m_program.programID, vertexShader);
+		GLCall(glAttachShader(m_program.programID, vertexShader));
 		std::cout << "Compiling fragment shader: " << fragFile << "\n";
 
-		
-		
 		//Get fragment source
 		
 		const GLchar* fragmentShaderSource[] =
@@ -117,14 +118,14 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 		};
 		
 		//Set fragment source
-		glShaderSource(fragmentShader, 1, fragmentShaderSource, NULL);
+		GLCall(glShaderSource(fragmentShader, 1, fragmentShaderSource, NULL));
 
 		//Compile fragment source
-		glCompileShader(fragmentShader);
+		GLCall(glCompileShader(fragmentShader));
 
 		//Check fragment shader for errors
 		GLint fShaderCompiled = GL_FALSE;
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled);
+		GLCall(glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled));
 		if (fShaderCompiled != GL_TRUE)
 		{
 			//TODO Better error message
@@ -137,14 +138,14 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 			std::cout << "Fragment shader compiled\n";
 
 			//Attach fragment shader to program
-			glAttachShader(m_program.programID, fragmentShader);
+			GLCall(glAttachShader(m_program.programID, fragmentShader));
 
 			//Link program
-			glLinkProgram(m_program.programID);
+			GLCall(glLinkProgram(m_program.programID));
 
 			//Check for errors
 			GLint programSuccess = GL_TRUE;
-			glGetProgramiv(m_program.programID, GL_LINK_STATUS, &programSuccess);
+			GLCall(glGetProgramiv(m_program.programID, GL_LINK_STATUS, &programSuccess));
 			if (programSuccess != GL_TRUE)
 			{
 				//TODO Better error message.
@@ -160,7 +161,7 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 	//Double check if we have compiled the shader and set the id to 0 if we haven't.
 	if (!success) {
 		if (m_program.programID) {
-			glDeleteProgram(m_program.programID); //Is this needed?
+			GLCall(glDeleteProgram(m_program.programID)); //Is this needed?
 			m_program.programID = 0;
 		}
 	}
@@ -168,47 +169,47 @@ bool Shader::CompileShader(const std::string &fragFile, const std::string &vertF
 		std::cout << "Compiled Shader: " << m_program.programID << "\n";
 	}
 	//We dont really need these now.
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	GLCall(glDeleteShader(vertexShader));
+	GLCall(glDeleteShader(fragmentShader));
 
 	return success;
 }
 
 void Shader::Bind() const {
-	glUseProgram(m_program.programID);
+	GLCall(glUseProgram(m_program.programID));
 }
 
 void Shader::Unbind() const {
-	glUseProgram(0);
+	GLCall(glUseProgram(0));
 }
 
 void Shader::SetUniformu1ui(const std::string & name, const UInt32 & val)
 {
-	glUniform1ui(GetUniform(name), val);
+	GLCall(glUniform1ui(GetUniform(name), val));
 }
 
 void Shader::SetUniformu1f(const std::string & name, const float & val)
 {
-	glUniform1f(GetUniform(name), val);
+	GLCall(glUniform1f(GetUniform(name), val));
 }
 
 void Shader::SetUniformu2f(const std::string & name, const float & val1, const float & val2)
 {
-	glUniform2f(GetUniform(name), val1, val2);
+	GLCall(glUniform2f(GetUniform(name), val1, val2));
 }
 
 void Shader::SetUniformu3f(const std::string & name, const float & val1, const float & val2, const float & val3)
 {
-	glUniform3f(GetUniform(name), val1, val2, val3);
+	GLCall(glUniform3f(GetUniform(name), val1, val2, val3));
 }
 
 void Shader::SetUniformu4f(const std::string & name, const float & val1, const float & val2, const float & val3, const float & val4)
 {
-	glUniform4f(GetUniform(name), val1, val2, val3, val4);
+	GLCall(glUniform4f(GetUniform(name), val1, val2, val3, val4));
 }
 void Shader::SetUniformuMatrix4f(const std::string & name, const glm::mat4 &mat4)
 {
-	glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, &mat4[0][0]);
+	GLCall(glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, &mat4[0][0]));
 }
 
 int Shader::GetUniform(const std::string & name)
@@ -217,7 +218,7 @@ int Shader::GetUniform(const std::string & name)
 		return m_uniformCache[name];
 	}
 	//We haven't gotten it yet so we need to get the location.
-	Int32 loc = glGetUniformLocation(m_program.programID, name.c_str());
+	GLCall(Int32 loc = glGetUniformLocation(m_program.programID, name.c_str()));
 	if (loc == -1) {
 		std::cout << "No active uniform variable with name " << name << " found\n";
 	}

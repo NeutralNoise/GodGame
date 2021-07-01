@@ -13,6 +13,7 @@
 #include "TextureOpenGL.h"
 #include  "../../EngineCamera.h"
 #include "../../GameEngine.h"
+#include "ErrorOpenGL.h"
 
 
 RendererOpenGL::RendererOpenGL() {
@@ -68,14 +69,14 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 		printf( "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError() );
 	}
 	Int32 texCount = 0;
-	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texCount);
+	GLCall(glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texCount));
 	std::cout << "GL_MAX_TEXTURE_IMAGE_UNITS: " << texCount << "\n";
 	//Set the clear colour
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	GLCall(glClearColor(0.0, 0.0, 0.0, 1.0));
 	//Set blends mode for textures
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	GLCall(glEnable(GL_TEXTURE_2D));
+	GLCall(glEnable(GL_BLEND));
+	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 	if (!m_fboShader.CompileShader("data/Shaders/screenFBO.frag", "data/Shaders/screenFBO.vert")) {
 		//TODO error message this is fatel.
@@ -148,15 +149,15 @@ void RendererOpenGL::OnDraw() {
 	static float timeValue = 0.01f;
 
 	//Clear color buffer
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
+	GLCall(glClearColor(0.0, 0.0, 0.0, 1.0));
+	GLCall(glClear(GL_COLOR_BUFFER_BIT));
+	GLCall(glEnable(GL_DEPTH_TEST));
 	GenerateBatchs();
 	if (m_needsRender) {
 		EngineCamera camera = *GameEngine::GetRenderer()->camera;
 		m_renObjFBO.Bind();
-		glClearColor(0.1, 0.1,0.1, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		GLCall(glClearColor(0.1, 0.1,0.1, 1.0));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 		//Bind program
 		m_shader.Bind();
 		m_shader.SetUniformu1f("u_time", time);
@@ -178,7 +179,7 @@ void RendererOpenGL::OnDraw() {
 			//Bind the Textures
 			BindBatchTextures(m_renderBatchs[i]);
 			//Render
-			glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+			GLCall(glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL));
 			m_stats.p_drawCalls->uidata += 1;
 			m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
 			m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
@@ -266,16 +267,15 @@ void RendererOpenGL::BindBatchTextures(const RenderBatchOpenGL & batch)
 {
 	//Loop though the batch textures and bind them.
 	for (UInt32 i = 0; i < batch.m_textureMaxSlot + 1; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
+		GLCall(glActiveTexture(GL_TEXTURE0 + i));
 		UInt32 texID = *(batch.p_textureBuffer + i);
-		//glBindTexture(GL_TEXTURE_2D, *(batch.p_textureBuffer + i));
-		glBindTexture(GL_TEXTURE_2D, texID);
+		GLCall(glBindTexture(GL_TEXTURE_2D, texID));
 	}
 }
 
 void RendererOpenGL::UnBindBatchTextures()
 {
-	glBindTexture(GL_TEXTURE_2D,0);
+	GLCall(glBindTexture(GL_TEXTURE_2D,0));
 }
 
 void RendererOpenGL::ClearBatchs()
@@ -293,9 +293,9 @@ void RendererOpenGL::RenderScreenFrame()
 {
 
 	//Render the frame buffer
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
+	GLCall(glClearColor(0.0, 0.0, 0.0, 1.0));
+	GLCall(glClear(GL_COLOR_BUFFER_BIT));
+	GLCall(glDisable(GL_DEPTH_TEST));
 	AddRenderObject(&m_mainScreenQuard);
 	GenerateBatchs();
 	m_fboShader.Bind();
@@ -313,7 +313,7 @@ void RendererOpenGL::RenderScreenFrame()
 		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
 		BindBatchTextures(m_renderBatchs[i]);
 		//Render
-		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+		GLCall(glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL));
 		m_stats.p_drawCalls->uidata += 1;
 		m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
 		m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;

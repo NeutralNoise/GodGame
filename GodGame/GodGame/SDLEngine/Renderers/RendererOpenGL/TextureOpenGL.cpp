@@ -1,10 +1,11 @@
 #include "TextureOpenGL.h"
 #include <iostream>
 #include <GL/glew.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+//#include <SDL2/SDL.h>
+//#include <SDL2/SDL_image.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <STB/stb_image.h>
+#include "ErrorOpenGL.h"
 
 Texture * TextureOpenGL::LoadTexture(const std::string & path)
 {
@@ -20,17 +21,17 @@ Texture * TextureOpenGL::LoadTexture(const std::string & path)
 	else
 		this->format = GL_RGB;
 
-	glGenTextures(1, &m_textureID);
-	glBindTexture(GL_TEXTURE_2D, m_textureID);
+	GLCall(glGenTextures(1, &m_textureID));
+	GLCall(glBindTexture(GL_TEXTURE_2D, m_textureID));
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, this->width, this->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer);
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+	GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, this->width, this->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
 	
 	
-	glBindTexture(GL_TEXTURE_2D, 0);
+	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
 	//SDL_FreeSurface(this->textureData.textureSurface);
 	return this;
@@ -38,13 +39,13 @@ Texture * TextureOpenGL::LoadTexture(const std::string & path)
 
 void TextureOpenGL::Bind(const UInt32 & slot)
 {
-	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, m_textureID);
+	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+	GLCall(glBindTexture(GL_TEXTURE_2D, m_textureID));
 }
 
 void TextureOpenGL::Unbind()
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
 void TextureOpenGL::SetTexure(void * tex)
