@@ -125,6 +125,9 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 	m_mainScreenQuard.height = WINDOW_HEIGHT;
 	m_mainScreenQuard.translateWithCamera = false;
 	m_mainScreenQuard.texture = texture;
+	//invert the V of the UV to flip the texture.
+	RenderTile fboUV = RenderTile(0.0f,1.0f,1.0f,0.0f);
+	m_mainScreenQuard.renderTile = fboUV;
 	return true;
 }
 

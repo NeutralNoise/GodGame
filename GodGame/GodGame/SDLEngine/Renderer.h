@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <GLM/glm.hpp>
 #include "InfoEngine.h"
 #include "ImageLoader.h"
 #include "EngineConfig.h"
@@ -31,6 +32,10 @@ struct RenderTile {
 	float y = 0; //!< The y offset within the image.
 	float width = 32; //!< The width of the image tile.
 	float height = 32; //!< The height of the image tile.
+	glm::vec2 topLeft = glm::vec2(0.0f, 0.0f);
+	glm::vec2 topRight = glm::vec2(1.0f, 0.0f);
+	glm::vec2 bottomLeft = glm::vec2(0.0f, 1.0f);
+	glm::vec2 bottomRight = glm::vec2(1.0f, 1.0f);
 
 	RenderTile() {}
 
@@ -39,6 +44,25 @@ struct RenderTile {
 		this->y = y;
 		this->width = w;
 		this->height = h;
+
+		topLeft.x = x;
+		topLeft.y = y;
+
+		topRight.x = w;
+		topRight.y = y;
+
+		bottomLeft.x = x;
+		bottomLeft.y = h;
+
+		bottomRight.x = w;
+		bottomRight.y = h;
+	}
+
+	RenderTile(const glm::vec2 &topLeft, const glm::vec2 &topRight, const glm::vec2 &bottomLeft, const glm::vec2 &bottomRight) {
+		this->topLeft = topLeft;
+		this->topRight = topRight;
+		this->bottomLeft = bottomLeft;
+		this->bottomRight = bottomRight;
 	}
 };
 

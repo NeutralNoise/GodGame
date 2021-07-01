@@ -154,8 +154,9 @@ int main(int argc, char ** argv)
 				Fake_layer = 1;
 			}
 			tileTest->layer = Fake_layer;
-			tileTest->renderTile.width = 32;
-			tileTest->renderTile.height = 32;
+			//tileTest->renderTile.width = 32;
+			//tileTest->renderTile.height = 32;
+			tileTest->renderTile = RenderTile(0.0f, 0.0f, 1.0f, 1.0f);
 
 			//tileTest->texture = texture;
 			tileTest->texture = ImageLoader::GetTexture("data/test.png");
@@ -265,7 +266,7 @@ int main(int argc, char ** argv)
 				ImGui::End();
 			
 				ImGui::Begin("View Port"); 
-				ImGui::Image(testRender.m_renObjFBO.GetAttachment(), ImVec2(300.0, 300.0));
+				ImGui::Image(testRender.m_renObjFBO.GetAttachment(), ImVec2(300.0, 300.0), ImVec2(0,1), ImVec2(1,0));
 				ImGui::End();
 			}
 

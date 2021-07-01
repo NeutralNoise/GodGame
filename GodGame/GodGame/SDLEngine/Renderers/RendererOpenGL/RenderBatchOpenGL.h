@@ -100,32 +100,36 @@ private:
 		vq.points[0].position.x = ro.x;
 		vq.points[0].position.y = ro.y;
 		vq.points[0].colour = c1;
-		vq.points[0].uv.x = 0.0f;
-		vq.points[0].uv.y = 0.0f;
+		//vq.points[0].uv.x = 0.0f;
+		//vq.points[0].uv.y = 0.0f;
+		vq.points[0].uv = ro.renderTile.topLeft;
 		vq.points[0].translate = translate;
 		//vq.points[0].texture = (UInt32)ro.texture->GetTexure();
 		//Top right
 		vq.points[1].position.x = ro.x + ro.width;
 		vq.points[1].position.y = ro.y;
 		vq.points[1].colour = c2;
-		vq.points[1].uv.x = 1.0f;
-		vq.points[1].uv.y = 0.0f;
+		//vq.points[1].uv.x = 1.0f;
+		//vq.points[1].uv.y = 0.0f;
+		vq.points[1].uv = ro.renderTile.topRight;
 		vq.points[1].translate = translate;
 		//vq.points[1].texture = (UInt32)ro.texture->GetTexure();
 		//Bottom right
 		vq.points[2].position.x = ro.x + ro.width;
 		vq.points[2].position.y = ro.y + ro.height;
 		vq.points[2].colour = c3;
-		vq.points[2].uv.x = 1.0f;
-		vq.points[2].uv.y = 1.0f;
+		//vq.points[2].uv.x = 1.0f;
+		//vq.points[2].uv.y = 1.0f;
+		vq.points[2].uv = ro.renderTile.bottomRight;
 		vq.points[2].translate = translate;
 		//vq.points[2].texture = (UInt32)ro.texture->GetTexure();
 		//Bottom left
 		vq.points[3].position.x = ro.x;
 		vq.points[3].position.y = ro.y + ro.height;
 		vq.points[3].colour = c4;
-		vq.points[3].uv.x = 0.0f;
-		vq.points[3].uv.y = 1.0f;
+		//vq.points[3].uv.x = 0.0f;
+		//vq.points[3].uv.y = 1.0f;
+		vq.points[3].uv = ro.renderTile.bottomLeft;
 		vq.points[3].translate = translate;
 		//vq.points[3].texture = (UInt32)ro.texture->GetTexure();
 		
