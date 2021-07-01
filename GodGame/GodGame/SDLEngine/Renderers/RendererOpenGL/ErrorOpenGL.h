@@ -3,13 +3,14 @@
 
 #include <assert.h>
 #include <iostream>
+#include <stdio.h>
 #include <gl/glew.h>
 
 #define GLASSERT(x) if (!(x)) assert(false)
 
 #define GLCall(x) GLClearError();\
     x;\
-    GLASSERT(GLCheckError())
+    GLASSERT(GLCheckError(#x))
 
 
 inline void GLClearError()
@@ -17,11 +18,11 @@ inline void GLClearError()
 	while (glGetError() != GL_NO_ERROR);
 }
 
-inline bool GLCheckError()
+inline bool GLCheckError(const char * func)
 {
 	while (GLenum error = glGetError())
 	{
-
+		printf("%s\n", func);
 		std::cout << "[OpenGL Error] ";
 		switch (error) {
 		case GL_INVALID_ENUM:

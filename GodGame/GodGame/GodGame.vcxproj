@@ -177,7 +177,7 @@
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\FrameBufferOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.cpp" />
-    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\OpenGLError.h" />
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\ErrorOpenGL.h" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\RenderBatchOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\RendererOpenGL.cpp" />
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\Shader.cpp" />
