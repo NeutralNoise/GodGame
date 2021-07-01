@@ -146,6 +146,9 @@ void Renderer::ClearRenderObjects()
 		if (m_layers[i] != nullptr) {
 			m_layers[i]->Clear();
 		}
+		else {
+			i++;
+		}
 	}
 
 }
