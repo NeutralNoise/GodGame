@@ -200,43 +200,8 @@ void RendererOpenGL::OnDraw() {
 	ClearBatchs();
 	Renderer::ClearRenderObjects();
 
-	//Render the frame buffer
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
-	AddRenderObject(&m_mainScreenQuard);
-	GenerateBatchs();
-	m_shader.Bind();
-	m_shader.SetUniformu1f("u_time", time);
-	EngineCamera camera = *GameEngine::GetRenderer()->camera;
-	//Translate the world around the camera.
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-camera.pos.x, -camera.pos.y, 0));
-	m_shader.SetUniformuMatrix4f("u_mvp", camera.cameraMatrix * model);
-	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
-	//Enable vertex position
-	m_VAA.Bind();
+	RenderScreenFrame();
 
-	m_stats.p_batchCount->uidata += m_renderBatchs.size();
-
-	for (size_t i = 0; i < m_batchIndex + 1; i++) {
-		//Set vertex data
-		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
-		//Set index data
-		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
-		BindBatchTextures(m_renderBatchs[i]);
-		m_shader.SetUniformu1ui("u_Textures[0]", 0);
-		//Render
-		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
-		m_stats.p_drawCalls->uidata += 1;
-		m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
-		m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
-		m_stats.p_renderBacthUsedMem->uidata += ((sizeof(Vertex) * 4) * m_renderBatchs[i].quardCount) + (m_renderBatchs[i].count * sizeof(UInt32));
-		UnBindBatchTextures();
-	}
-
-	m_shader.Unbind();
-	ClearBatchs();
-	Renderer::ClearRenderObjects();
 }
 
 void RendererOpenGL::OnCleanUp() {
@@ -315,4 +280,42 @@ void RendererOpenGL::ClearBatchs()
 		}
 	}
 	m_batchIndex = 0;
+}
+
+void RendererOpenGL::RenderScreenFrame()
+{
+
+	//Render the frame buffer
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);
+	AddRenderObject(&m_mainScreenQuard);
+	GenerateBatchs();
+	m_shader.Bind();
+	EngineCamera camera = *GameEngine::GetRenderer()->camera;
+	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
+	//Enable vertex position
+	m_VAA.Bind();
+
+	m_stats.p_batchCount->uidata += m_renderBatchs.size();
+
+	for (size_t i = 0; i < m_batchIndex + 1; i++) {
+		//Set vertex data
+		m_VBO.SetData(m_renderBatchs[i].data, sizeof(Vertex)* (m_renderBatchs[i].quardCount * 4));
+		//Set index data
+		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
+		BindBatchTextures(m_renderBatchs[i]);
+		m_shader.SetUniformu1ui("u_Textures[0]", 0);
+		//Render
+		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
+		m_stats.p_drawCalls->uidata += 1;
+		m_stats.p_vertexCount->uidata += m_renderBatchs[i].quardCount * 4;
+		m_stats.p_quardCount->uidata += m_renderBatchs[i].quardCount;
+		m_stats.p_renderBacthUsedMem->uidata += ((sizeof(Vertex) * 4) * m_renderBatchs[i].quardCount) + (m_renderBatchs[i].count * sizeof(UInt32));
+		UnBindBatchTextures();
+	}
+
+	m_shader.Unbind();
+	ClearBatchs();
+	Renderer::ClearRenderObjects();
 }

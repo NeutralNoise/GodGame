@@ -97,6 +97,8 @@ private:
 	void UnBindBatchTextures();
 	void ClearBatchs();
 
+	void RenderScreenFrame();
+
 	void * p_GLContext;
 	IndexBuffer m_IBO; // We only need one of these for now.
 	VertexBuffer m_VBO; // We only need one of these for now.
