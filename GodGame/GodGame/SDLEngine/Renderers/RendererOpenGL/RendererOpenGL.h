@@ -104,6 +104,7 @@ private:
 	VertexBuffer m_VBO; // We only need one of these for now.
 	VertexArray m_VAA;
 	Shader m_shader; //The shader used by this renderer.
+	Shader m_fboShader;
 	std::vector<RenderBatchOpenGL> m_renderBatchs;
 	RenderObject m_mainScreenQuard;
 	UInt32 m_batchIndex = 0;

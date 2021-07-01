@@ -76,6 +76,12 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	if (!m_fboShader.CompileShader("data/Shaders/screenFBO.frag", "data/Shaders/screenFBO.vert")) {
+		//TODO error message this is fatel.
+		return false;
+	}
+
 	//Load a test shader
 	if(CompileShader("data/Shaders/fragment.frag","data/Shaders/vertex.vert")) {
 				
@@ -92,6 +98,7 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 		m_VAA.AddBuffer(m_VBO, layout);		
 	}	
 	else {
+		//TODO error message this is fatel.
 		return false;
 	}
 	
@@ -170,7 +177,6 @@ void RendererOpenGL::OnDraw() {
 			m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
 			//Bind the Textures
 			BindBatchTextures(m_renderBatchs[i]);
-			m_shader.SetUniformu1ui("u_Textures[0]", 0);
 			//Render
 			glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 			m_stats.p_drawCalls->uidata += 1;
@@ -209,6 +215,7 @@ void RendererOpenGL::OnCleanUp() {
 }
 
 bool RendererOpenGL::CompileShader(const std::string &frag, const std::string &vert) {
+	//TODO improve this.
 	return m_shader.CompileShader(frag, vert);
 }
 
@@ -291,9 +298,9 @@ void RendererOpenGL::RenderScreenFrame()
 	glDisable(GL_DEPTH_TEST);
 	AddRenderObject(&m_mainScreenQuard);
 	GenerateBatchs();
-	m_shader.Bind();
+	m_fboShader.Bind();
 	EngineCamera camera = *GameEngine::GetRenderer()->camera;
-	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
+	m_fboShader.SetUniformuMatrix4f("u_proj", camera.projection);
 	//Enable vertex position
 	m_VAA.Bind();
 
@@ -305,7 +312,6 @@ void RendererOpenGL::RenderScreenFrame()
 		//Set index data
 		m_IBO.SetData(m_renderBatchs[i].indices, m_renderBatchs[i].count);
 		BindBatchTextures(m_renderBatchs[i]);
-		m_shader.SetUniformu1ui("u_Textures[0]", 0);
 		//Render
 		glDrawElements(GL_TRIANGLES, m_renderBatchs[i].count, GL_UNSIGNED_INT, NULL);
 		m_stats.p_drawCalls->uidata += 1;
@@ -314,8 +320,7 @@ void RendererOpenGL::RenderScreenFrame()
 		m_stats.p_renderBacthUsedMem->uidata += ((sizeof(Vertex) * 4) * m_renderBatchs[i].quardCount) + (m_renderBatchs[i].count * sizeof(UInt32));
 		UnBindBatchTextures();
 	}
-
-	m_shader.Unbind();
+	m_fboShader.Unbind();
 	ClearBatchs();
 	Renderer::ClearRenderObjects();
 }
