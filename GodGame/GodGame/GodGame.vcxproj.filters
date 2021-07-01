@@ -129,6 +129,9 @@
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\FrameBufferOpenGL.cpp">
       <Filter>Source Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\OpenGLError.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
