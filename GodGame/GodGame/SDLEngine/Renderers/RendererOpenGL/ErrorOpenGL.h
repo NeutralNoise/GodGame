@@ -6,11 +6,18 @@
 #include <stdio.h>
 #include <gl/glew.h>
 
+//#define NO_GL_ERROR_CHECK
+
 #define GLASSERT(x) if (!(x)) assert(false)
 
-#define GLCall(x) GLClearError();\
+#ifdef NO_GL_ERROR_CHECK
+#define GLCall(x) x;
+#else 
+#define GLCall(x) \
+	GLClearError();\
     x;\
     GLASSERT(GLCheckError(#x))
+#endif
 
 
 inline void GLClearError()
