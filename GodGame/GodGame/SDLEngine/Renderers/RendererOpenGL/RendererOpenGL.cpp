@@ -146,8 +146,6 @@ void RendererOpenGL::OnDraw() {
 	glEnable(GL_DEPTH_TEST);
 	GenerateBatchs();
 	if (m_needsRender) {
-		//TODO this is just to test.
-		//Texture * test = ImageLoader::GetTexture("data/test.png");
 		EngineCamera camera = *GameEngine::GetRenderer()->camera;
 		m_renObjFBO.Bind();
 		glClearColor(0.1, 0.1,0.1, 1.0);
@@ -162,7 +160,6 @@ void RendererOpenGL::OnDraw() {
 		//Enable vertex position
 		m_VAA.Bind();
 		
-		//test->Bind(0);
 		m_stats.ClearData();
 		m_stats.p_batchCount->uidata = m_renderBatchs.size();
 
@@ -187,10 +184,8 @@ void RendererOpenGL::OnDraw() {
 		m_IBO.Unbind();
 		m_VBO.Unbind();
 		m_VAA.Unbind();
-		//test->Unbind();
 		ClearBatchs();
 		m_renObjFBO.Unbind();
-		//m_rBatch.Clear();
 		time += timeValue;
 		if (time > 1.0) {
 			timeValue = -timeValue;
@@ -199,7 +194,6 @@ void RendererOpenGL::OnDraw() {
 			timeValue = -timeValue;
 		}
 		//Unbind program
-		//glUseProgram(0);
 		m_shader.Unbind();
 	}
 	m_needsRender = false;
@@ -221,8 +215,6 @@ void RendererOpenGL::OnDraw() {
 	m_shader.SetUniformuMatrix4f("u_proj", camera.projection);
 	//Enable vertex position
 	m_VAA.Bind();
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, (UInt32)m_renObjFBO.GetAttachment());
 
 	m_stats.p_batchCount->uidata += m_renderBatchs.size();
 
