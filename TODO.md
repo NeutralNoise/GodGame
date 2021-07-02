@@ -33,7 +33,7 @@
         - [x] Texture based.
     - [x] Sprite rotation.
     - [ ] Draw line.
-    - [ ] Backface Culling.
+    - [x] Backface Culling.
     - [ ] Shaders.
       - [x] Shader loading.
       - [x] Shader compiling.
