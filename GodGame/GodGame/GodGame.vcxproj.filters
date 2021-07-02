@@ -239,5 +239,8 @@
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\FrameBufferOpenGL.h">
       <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\DefinesOpenGL.h">
+      <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -210,6 +210,7 @@
     <ClInclude Include="SDLEngine\Input.h" />
     <ClInclude Include="SDLEngine\Rect.h" />
     <ClInclude Include="SDLEngine\Renderer.h" />
+    <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\DefinesOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\FrameBufferOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\ImageLoaderOpenGL.h" />
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\IndexBuffer.h" />
