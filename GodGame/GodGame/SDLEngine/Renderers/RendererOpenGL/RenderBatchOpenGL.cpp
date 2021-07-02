@@ -35,43 +35,8 @@ bool RenderBatchOpenGL::DrawQuad(const RenderObject & ro)
 
 	Int32 tslot = -1;
 
-	//Check if we have a texture already taking up a slot.
-	if (m_textureMaxSlot != -1) {
-		//Add the texture to the list.
-		if (m_textureCache != (UInt32)ro.texture->GetTexure()) {
-			m_textureCache = (UInt32)ro.texture->GetTexure();
-			//Check to see if we have the texture in the buffer.
-			for (UInt32 i = 0; i < m_textureMaxSlot + 1; i++) {
-				if (*(p_textureBuffer + i) == m_textureCache) {
-					//We already have the texture in the buffer.
-					tslot = i;
-					m_currentTextureSlot = i;
-					break;
-				}
-			}
-			//We need to add the texture to the buffer.
-			if (tslot == -1) {
-				//Check to make sure we are not over the max texture units.
-				if ((m_textureMaxSlot + 1) > MAX_TEXTURE_UNITS) {
-					return false;
-				}
-				m_textureMaxSlot++;
-				tslot = m_textureMaxSlot;
-				m_currentTextureSlot = tslot;
-				*(p_textureBuffer + m_textureMaxSlot) = (UInt32)ro.texture->GetTexure();
-			}
-		}
-		else {
-			tslot = m_currentTextureSlot;
-		}
-	}
-	else {
-		//We can just add  the texture now.
-		m_textureMaxSlot++;
-		tslot = m_textureMaxSlot;
-		m_textureCache = (UInt32)ro.texture->GetTexure();
-		m_currentTextureSlot = m_textureMaxSlot;
-		*(p_textureBuffer + m_textureMaxSlot) = (UInt32)ro.texture->GetTexure();
+	if (!GetTextureSlot(ro, &tslot)) {
+		return false;
 	}
 
 	vq.points[0].texture = tslot;
@@ -154,43 +119,8 @@ bool RenderBatchOpenGL::DrawRotatedQuad(const RenderObject & ro)
 
 	Int32 tslot = -1;
 
-	//Check if we have a texture already taking up a slot.
-	if (m_textureMaxSlot != -1) {
-		//Add the texture to the list.
-		if (m_textureCache != (UInt32)ro.texture->GetTexure()) {
-			m_textureCache = (UInt32)ro.texture->GetTexure();
-			//Check to see if we have the texture in the buffer.
-			for (UInt32 i = 0; i < m_textureMaxSlot + 1; i++) {
-				if (*(p_textureBuffer + i) == m_textureCache) {
-					//We already have the texture in the buffer.
-					tslot = i;
-					m_currentTextureSlot = i;
-					break;
-				}
-			}
-			//We need to add the texture to the buffer.
-			if (tslot == -1) {
-				//Check to make sure we are not over the max texture units.
-				if ((m_textureMaxSlot + 1) > MAX_TEXTURE_UNITS) {
-					return false;
-				}
-				m_textureMaxSlot++;
-				tslot = m_textureMaxSlot;
-				m_currentTextureSlot = tslot;
-				*(p_textureBuffer + m_textureMaxSlot) = (UInt32)ro.texture->GetTexure();
-			}
-		}
-		else {
-			tslot = m_currentTextureSlot;
-		}
-	}
-	else {
-		//We can just add  the texture now.
-		m_textureMaxSlot++;
-		tslot = m_textureMaxSlot;
-		m_textureCache = (UInt32)ro.texture->GetTexure();
-		m_currentTextureSlot = m_textureMaxSlot;
-		*(p_textureBuffer + m_textureMaxSlot) = (UInt32)ro.texture->GetTexure();
+	if (!GetTextureSlot(ro, &tslot)) {
+		return false;
 	}
 
 	vq.points[0].texture = tslot;
