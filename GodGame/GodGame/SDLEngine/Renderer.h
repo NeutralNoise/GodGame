@@ -88,9 +88,12 @@ struct RenderObject
 	int layer = 0; //!< What layer is this object drawn on.
 	int sublayer = 0; //!< What sublayer of the layer is the object drawn on.
 	// This should be in clockwise direction
-	double angle = 0.0; //!< Angle of rotation in degrees.
+	float spinAngle = 0.0; //!< Angle of rotation in radians.
+	float orbitAngle = 0.0; //!< Angle of orbit rotation in radians. \warn Not used.
 	int frame = 0; //!< What frame of the animeation is this object on.
 	bool translateWithCamera = false; //!< Is the tile rendered in world space of tile space.
+	bool doesRotate = false; //!< Does this rotate around the pivoitPoint.
+	bool hasOrbit = false; //!< Does this orbit around a point. \warn Not used.
 
 	/**
 	 * \brief Construct a new RenderObject object.

@@ -5,7 +5,10 @@
 #include "../../typedefs.h"
 #include "../../EngineConfig.h"
 #include "../../Renderer.h"
+#include "DefinesOpenGL.h"
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 struct VertexQuard
 {
 	Vertex points[4];
@@ -80,6 +83,9 @@ struct RenderBatchOpenGL
 		delete[] indices;
 	};
 
+	bool DrawQuad(const RenderObject &ro);
+	bool DrawRotatedQuad(const RenderObject &ro);
+
 	//std::vector<Vertex>* data = nullptr;
 	//std::vector<UInt32>* indices = nullptr;
 	Vertex* data = nullptr;
@@ -92,102 +98,44 @@ struct RenderBatchOpenGL
 private:
 	bool GenerateVertexs(const RenderObject &ro) {
 
-		bool translate = ro.translateWithCamera;
+		//bool translate = ro.translateWithCamera;
 		//bool translate = false;
 
-		//OpenGL renders starting from the Bottom left working around counter clockwise
-		//Top left
-		vq.points[0].position.x = ro.x;
-		vq.points[0].position.y = ro.y;
-		vq.points[0].colour = c1;
-		//vq.points[0].uv.x = 0.0f;
-		//vq.points[0].uv.y = 0.0f;
-		vq.points[0].uv = ro.renderTile.topLeft;
-		vq.points[0].translate = translate;
-		//vq.points[0].texture = (UInt32)ro.texture->GetTexure();
-		//Top right
-		vq.points[1].position.x = ro.x + ro.width;
-		vq.points[1].position.y = ro.y;
-		vq.points[1].colour = c2;
-		//vq.points[1].uv.x = 1.0f;
-		//vq.points[1].uv.y = 0.0f;
-		vq.points[1].uv = ro.renderTile.topRight;
-		vq.points[1].translate = translate;
-		//vq.points[1].texture = (UInt32)ro.texture->GetTexure();
-		//Bottom right
-		vq.points[2].position.x = ro.x + ro.width;
-		vq.points[2].position.y = ro.y + ro.height;
-		vq.points[2].colour = c3;
-		//vq.points[2].uv.x = 1.0f;
-		//vq.points[2].uv.y = 1.0f;
-		vq.points[2].uv = ro.renderTile.bottomRight;
-		vq.points[2].translate = translate;
-		//vq.points[2].texture = (UInt32)ro.texture->GetTexure();
-		//Bottom left
-		vq.points[3].position.x = ro.x;
-		vq.points[3].position.y = ro.y + ro.height;
-		vq.points[3].colour = c4;
-		//vq.points[3].uv.x = 0.0f;
-		//vq.points[3].uv.y = 1.0f;
-		vq.points[3].uv = ro.renderTile.bottomLeft;
-		vq.points[3].translate = translate;
-		//vq.points[3].texture = (UInt32)ro.texture->GetTexure();
-		
-		Int32 tslot = -1;
-
-		//Check if we have a texture already taking up a slot.
-		if (m_textureMaxSlot != -1) {
-			//Add the texture to the list.
-			if (m_textureCache != (UInt32)ro.texture->GetTexure()) {
-				m_textureCache = (UInt32)ro.texture->GetTexure();
-				//Check to see if we have the texture in the buffer.
-				for (UInt32 i = 0; i < m_textureMaxSlot + 1; i++) {
-					if (*(p_textureBuffer + i) == m_textureCache) {
-						//We already have the texture in the buffer.
-						tslot = i;
-						m_currentTextureSlot = i;
-						break;
-					}
-				}
-				//We need to add the texture to the buffer.
-				if (tslot == -1) {
-					//Check to make sure we are not over the max texture units.
-					if ((m_textureMaxSlot + 1) > MAX_TEXTURE_UNITS) {
-						return false;
-					}
-					m_textureMaxSlot++;
-					tslot = m_textureMaxSlot;
-					m_currentTextureSlot = tslot;
-					*(p_textureBuffer + m_textureMaxSlot) == (UInt32)ro.texture->GetTexure();
-				}
-			}
-			else {
-				tslot = m_currentTextureSlot;
-			}
+		if (!ro.doesRotate) {
+			return DrawQuad(ro);
 		}
 		else {
-			//We can just add  the texture now.
-			m_textureMaxSlot++;
-			tslot = m_textureMaxSlot;
-			m_textureCache = (UInt32)ro.texture->GetTexure();
-			m_currentTextureSlot = m_textureMaxSlot;
-			*(p_textureBuffer + m_textureMaxSlot) = (UInt32)ro.texture->GetTexure();
+			return DrawRotatedQuad(ro);
 		}
-
-		vq.points[0].texture = tslot;
-		vq.points[1].texture = tslot;
-		vq.points[2].texture = tslot;
-		vq.points[3].texture = tslot;
-		return true;
+		//we should never get here.
+		//TODO Fatel Error message.
+		return false;
 	};
 	UInt32 m_vertexIndex = 0;
 	const glm::vec4 c1{ 1.0f,0.0f,0.0f,1.0f };
 	const glm::vec4 c2{ 0.0f,1.0f,0.0f,1.0f };
 	const glm::vec4 c3{ 0.0f,0.0f,1.0f,1.0f };
 	const glm::vec4 c4{ 1.0f,1.0f,1.0f,1.0f };
+
 	VertexQuard vq;
 	//Texture * p_textureBuffer = nullptr;
 	UInt32 m_textureCache;
+#if defined(ROTATE_AROUND_TOP_LEFT)
+	glm::vec4 m_staticRotateQuad[4] = { {0.0f, 0.0f, 0.0f, 1.0f},
+									{1.0f, 0.0f,0.0f, 1.0f},
+									{1.0f, 1.0f,0.0f, 1.0f},
+									{0.0f, 1.0f,0.0f, 1.0f} };
+	glm::vec4 m_rotateQuad[4] = { m_staticRotateQuad[0], m_staticRotateQuad[1], m_staticRotateQuad[2], m_staticRotateQuad[3] };
+#elif defined(ROTATE_AROUND_CENTER)
+	glm::vec4 m_staticRotateQuad[4] = { {-0.5f, -0.5f, 0.0f, 1.0f},
+									{0.5f, -0.5f,0.0f, 1.0f},
+									{0.5f, 0.5f,0.0f, 1.0f},
+									{-0.5f, 0.5f,0.0f, 1.0f} };
+	glm::vec4 m_rotateQuad[4] = { m_staticRotateQuad[0], m_staticRotateQuad[1], m_staticRotateQuad[2], m_staticRotateQuad[3] };
+#endif
+	
+	glm::mat4 transform;
+	glm::mat4 orbit;
 };
 
 #endif //RENDER_BATCH_OPENGL_H_INCLUDED

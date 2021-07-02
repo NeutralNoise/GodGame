@@ -198,7 +198,7 @@ void RendererSDL::DrawLayer(RenderObjectLayer * layer) {
 			center.x = renObject->x + (int)(renObject->width / 2);
 			center.y = renObject->y + (int)(renObject->height / 2);
 
-			SDL_RenderCopyEx(p_renderer, renObject->texture->textureData.textureTexture, &sRect, &dRect, renObject->angle, &center, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(p_renderer, renObject->texture->textureData.textureTexture, &sRect, &dRect, renObject->spinAngle, &center, SDL_FLIP_NONE);
 			p_drawCalls->uidata++;
 		}
 	}

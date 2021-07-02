@@ -120,13 +120,19 @@ int main(int argc, char ** argv)
 #ifdef BULK_FAKE_TILE_TEST
 
 		std::vector<RenderObject*> fakeTiles;
-
+		static float rangle = 0.0;
+		static float oangle = 0.0;
 		auto FAKE_TILE_TEST_LAMDA = [](Renderer*renderer, std::vector<RenderObject*> tiles, bool addAll) {
 			int drawCount = 0;
 			EngineCamera fake_camera = *GameEngine::GetRenderer()->camera;
 			size_t tileCount = tiles.size();
 			for (size_t i = 0; i < tileCount; i++) {
 				RenderObject * object = tiles[i];
+				object->doesRotate = true;
+				object->spinAngle = -rangle;
+				object->pivoitPoint.x = 32.0;
+				object->pivoitPoint.y = 32.0;
+				
 				if (addAll) {
 					renderer->AddRenderObject(object);
 				}
@@ -136,6 +142,7 @@ int main(int argc, char ** argv)
 				}
 			}
 			//std::cout << drawCount << std::endl;
+			rangle += 1.0f;
 			return true;
 		};
 
