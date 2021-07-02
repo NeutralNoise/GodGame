@@ -53,11 +53,16 @@ struct RenderBatchOpenGL
 		//Bottom Left
 		*(data + m_vertexIndex) = vq.points[3];
 		m_vertexIndex++;
-
+		/*
 		*(indices + (countStart)) = startIndex;			//0 Top left.
 		*(indices + (countStart + 1)) = startIndex + 2;	//1 Bottom Right.
 		*(indices + (countStart + 2)) = startIndex + 3;	//2 Bottom left.
+		*/
 
+		*(indices + (countStart)) = startIndex;				//0 Top left.
+		*(indices + (countStart + 1)) = startIndex + 3;		//2 Bottom left.
+		*(indices + (countStart + 2)) = startIndex + 2;		//1 Bottom Right.
+		
 		*(indices + (countStart + 3)) = startIndex;		//0 Top left.
 		*(indices + (countStart + 4)) = startIndex + 2;	//1 Bottom right.
 		*(indices + (countStart + 5)) = startIndex + 1;	//3 Top right.

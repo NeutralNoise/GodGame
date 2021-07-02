@@ -77,6 +77,10 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 	GLCall(glEnable(GL_TEXTURE_2D));
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	//Enable backface culling
+	//TODO set config to turn this off or change to front face.
+	GLCall(glEnable(GL_CULL_FACE));
+	GLCall(glCullFace(GL_BACK));
 
 	if (!m_fboShader.CompileShader("data/Shaders/screenFBO.frag", "data/Shaders/screenFBO.vert")) {
 		//TODO error message this is fatel.
@@ -136,6 +140,7 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 	//invert the V of the UV to flip the texture.
 	RenderTile fboUV = RenderTile(0.0f,1.0f,1.0f,0.0f);
 	m_mainScreenQuard.renderTile = fboUV;
+
 	return true;
 }
 
