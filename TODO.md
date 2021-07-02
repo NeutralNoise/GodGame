@@ -31,15 +31,16 @@
       - [x] Create more sprite batchs as they fill up.
         - [x] Vertex/Quard based.
         - [x] Texture based.
-    - [ ] Sprite rotation.
+    - [x] Sprite rotation.
     - [ ] Draw line.
+    - [ ] Backface Culling.
     - [ ] Shaders.
       - [x] Shader loading.
       - [x] Shader compiling.
       - [x] Basic image display shader.
       - [x] Rander to FBO.
-        - [ ] FBO shader
-        - [ ] Flip FBO
+        - [x] FBO shader (Basic shader complete).
+        - [x] Flip FBO
       - [ ] Lighting.
       - [ ] Post processing.
         - [ ] Gaussian Blur.
