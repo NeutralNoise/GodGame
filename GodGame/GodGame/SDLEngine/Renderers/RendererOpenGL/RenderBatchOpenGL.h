@@ -7,6 +7,10 @@
 #include "../../Renderer.h"
 #include "DefinesOpenGL.h"
 #include <iostream>
+//These are used to force GLM to sse2 or avx2
+//#define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
+//#define GLM_FORCE_AVX2
+//#define GLM_FORCE_SSE2
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 struct VertexQuard
