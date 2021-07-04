@@ -68,7 +68,7 @@ struct RenderBatchOpenGL
 	 * \see MAX_RENDER_OBJECTS
 	*/
 	//TODO move this to the RenderBatchOpenGL.cpp file.
-	Int32 AddQuard(const RenderObject &ro) {
+	Int32 AddQuad(const RenderObject &ro) {
 		if (quardCount == MAX_RENDER_OBJECTS) {
 			return -1;
 		}

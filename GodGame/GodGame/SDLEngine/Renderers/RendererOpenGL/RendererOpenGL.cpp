@@ -253,11 +253,11 @@ void RendererOpenGL::GenerateBatchs()
 				}
 				//Generate Vertexs
 				//If this fails we need a new batch
-				if (m_renderBatchs[m_batchIndex].AddQuard(*renObject) == -1) {
+				if (m_renderBatchs[m_batchIndex].AddQuad(*renObject) == -1) {
 					//Check if we need a new batch or if we can use an old one.
 					m_batchIndex++;
 					AddNewBatch();
-					m_renderBatchs[m_batchIndex].AddQuard(*renObject); //We should now have a clear batch.
+					m_renderBatchs[m_batchIndex].AddQuad(*renObject); //We should now have a clear batch.
 					m_needsRender = true;
 				}
 				else if (!m_needsRender) {
