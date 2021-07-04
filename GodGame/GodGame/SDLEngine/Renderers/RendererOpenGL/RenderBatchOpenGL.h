@@ -143,6 +143,7 @@ struct RenderBatchOpenGL
 		//delete data;
 		delete[] data;
 		delete[] indices;
+		delete[] p_textureBuffer;
 	};
 
 	/**
