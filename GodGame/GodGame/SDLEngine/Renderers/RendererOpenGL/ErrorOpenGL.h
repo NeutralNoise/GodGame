@@ -1,3 +1,14 @@
+/**
+ * \file ErrorOpenGL.h
+ * \author NeutralNoise
+ * \brief Macros/functions to get OpenGL errors.
+ * \version 1.0
+ * \date 2021-07-03
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+*/
+
 #ifndef OPENGL_ERROR_H_INCLUDED
 #define OPENGL_ERROR_H_INCLUDED
 
@@ -19,11 +30,21 @@
     GLASSERT(GLCheckError(#x))
 #endif
 
-
+/**
+ * \brief Clears all errors from the OpenGL error buffer.
+ * 
+*/
 inline void GLClearError()
 {
 	while (glGetError() != GL_NO_ERROR);
 }
+
+/**
+ * \brief Checks if there was any OpenGL errors.
+ * 
+ * \param func Name of the OpenGL function called.
+ * \return bool returns return true if no OpenGL error.
+*/
 
 inline bool GLCheckError(const char * func)
 {

@@ -1,3 +1,14 @@
+/**
+ * \file RendererOpenGL.h
+ * \author NeutralNoise
+ * \brief Renders OpenGL
+ * \version 1.0
+ * \date 2021-07-04
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+*/
+
 #pragma once
 
 #include <vector>
@@ -19,11 +30,11 @@ class RendererOpenGL : public Renderer
 	~RendererOpenGL();
 	
 	/**
-	 * \brief 
+	 * \brief Creates an OpenGL contex and sets up the renderer.
 	 * 
 	 * \param win The SDL2 window to render too.
 	 * \param flags SDL2 renderer flags to set for the renderer.
-	 * \return Returns true if renderer started.
+	 * \return Returns true if renderer started otherwise false.
 	 * \warning flags will change in the future. 
 	*/
 
@@ -50,19 +61,38 @@ class RendererOpenGL : public Renderer
 
 	void OnCleanUp() override;
 	
+	/**
+	 * \brief Compiles an OpenGL shader.
+	 * 
+	 * \param frag File path to a fragment shader.
+	 * \param vert File path to a vertex shader.
+	 * \return bool Returns true if shader compiled otherwise false.
+	*/
+
 	bool CompileShader(const std::string &frag, const std::string &vert) override;
 
-	FrameBufferOpenGL m_renObjFBO; //!< The frame buffer used to render the RenderObjects too. /warn this will be moved
+	FrameBufferOpenGL m_renObjFBO; //!< The frame buffer used to render the RenderObjects too. /warning this will be moved.
 
 private:
 
+	/**
+	 *  \struct OpenGLRenderStats
+	 *  \brief Stores render statistics.
+	 * 
+	*/
+
 	struct OpenGLRenderStats {
-		EngineInfo * p_vertexCount;
-		EngineInfo * p_quardCount;
-		EngineInfo * p_batchCount;
-		EngineInfo * p_drawCalls;
-		EngineInfo * p_renderBacthMaxMem;
-		EngineInfo * p_renderBacthUsedMem;
+		EngineInfo * p_vertexCount; //!< The number of vertexs rendered.
+		EngineInfo * p_quardCount; //!< The number of quads rendered.
+		EngineInfo * p_batchCount; //!< The number of render batchs.
+		EngineInfo * p_drawCalls; //!< The number of draw calls.
+		EngineInfo * p_renderBacthMaxMem; //!< The max memory allocated for render batchs.
+		EngineInfo * p_renderBacthUsedMem; //!< The current amount of allocated render bacth memory used.
+
+		/**
+		 * \brief Construct a new OpenGLRenderStats object
+		 * 
+		*/
 
 		OpenGLRenderStats() {
 			p_vertexCount = new EngineInfo("ren_vertex_count", EI_TYPE_UINT);
@@ -80,6 +110,11 @@ private:
 			InfoEngine::AddEngineInfo(p_renderBacthUsedMem);
 		}
 
+		/**
+		 * \brief Resets the statistics back to zero.
+		 * 
+		*/
+
 		void ClearData() {
 			p_vertexCount->uidata = 0;
 			p_quardCount->uidata = 0;
@@ -90,25 +125,60 @@ private:
 
 	};
 
+	/**
+	 * \brief Add a new render batch.
+	 * 
+	*/
+
 	void AddNewBatch();
 
+	/**
+	 * \brief Generates the render bachs.
+	 * 
+	*/
+
 	void GenerateBatchs();
+
+	/**
+	 * \brief Bind a render batchs textures.
+	 * 
+	 * \param batch The batch to have its textures bound.
+	 * \see RenderBatchOpenGL
+	*/
+
 	void BindBatchTextures(const RenderBatchOpenGL & batch);
+
+	/**
+	 * \brief Unbind the textures.
+	 * 
+	*/
+
 	void UnBindBatchTextures();
+
+	/**
+	 * \brief Clear the render batchs.
+	 * 
+	*/
+
 	void ClearBatchs();
+
+	/**
+	 * \brief Render m_renObjFBO to the screen.
+	 * 
+	*/
 
 	void RenderScreenFrame();
 
-	void * p_GLContext;
+	void * p_GLContext; //!< Our OpenGL rendering context ID.
 	IndexBuffer m_IBO; // We only need one of these for now.
 	VertexBuffer m_VBO; // We only need one of these for now.
 	VertexArray m_VAA;
 	Shader m_shader; //The shader used by this renderer.
 	Shader m_fboShader;
-	std::vector<RenderBatchOpenGL> m_renderBatchs;
-	RenderObject m_mainScreenQuard;
-	UInt32 m_batchIndex = 0;
-	bool m_needsRender = false;
-	int flash = 0;
-	OpenGLRenderStats m_stats;
+	std::vector<RenderBatchOpenGL> m_renderBatchs; //!< Render batchs that are used to render to the screen.
+	RenderObject m_mainScreenQuard; //!< A render object used to display the screen FBO.
+	UInt32 m_batchIndex = 0; //!< Where we are currently looking in the RenderBatchs.
+	bool m_needsRender = false; //!< Has anything been added to the RenderBatch.
+	int flash = 0; //!< What
+	OpenGLRenderStats m_stats; //!< Render statistics.
 };
