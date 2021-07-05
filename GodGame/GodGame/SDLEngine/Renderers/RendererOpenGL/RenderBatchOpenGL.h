@@ -31,7 +31,7 @@
  * 
 */
 
-struct VertexQuard
+struct VertexQuad
 {
 	Vertex points[4]; //!< The vertexs that make up the four points of a quad.
 };
@@ -259,7 +259,7 @@ private:
 	const glm::vec4 c3{ 0.0f,0.0f,1.0f,1.0f };
 	const glm::vec4 c4{ 1.0f,1.0f,1.0f,1.0f };
 
-	VertexQuard vq; //!< Temporary storeage of the vertex information. \see VertexQuard
+	VertexQuad vq; //!< Temporary storeage of the vertex information. \see VertexQuard
 	//Texture * p_textureBuffer = nullptr;
 	UInt32 m_textureCache; //!< Cache of the last texture looked at.
 #if defined(ROTATE_AROUND_TOP_LEFT)
