@@ -112,6 +112,12 @@ bool RendererOpenGL::OnInit(SDL_Window * win, const UInt32 &flags, EngineRendere
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	//TODO ImGUI io.
+	ImGuiIO& io = ImGui::GetIO();
+
+	
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; //Enable docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; //Enable multi-view ports / platform windows only?
+
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(win, SDL_GL_GetCurrentContext());

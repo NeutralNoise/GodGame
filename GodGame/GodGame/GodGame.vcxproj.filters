@@ -242,5 +242,8 @@
     <ClInclude Include="SDLEngine\Renderers\RendererOpenGL\DefinesOpenGL.h">
       <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="ImGUI\imgui_internal.h">
+      <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
