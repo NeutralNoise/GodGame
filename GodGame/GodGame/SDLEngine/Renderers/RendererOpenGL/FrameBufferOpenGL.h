@@ -32,6 +32,9 @@ public:
 
 	bool Create(const FrameBufferSpec& spec) override;
 
+	bool  Resize() override;
+
+
 	/**
 	 * \brief Get the coolour attachment object
 	 * 

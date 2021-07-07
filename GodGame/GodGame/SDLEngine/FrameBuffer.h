@@ -44,6 +44,8 @@ public:
 
 	virtual bool Create(const FrameBufferSpec& spec) = 0;
 
+	virtual bool Resize() = 0;
+
 	/**
 	 * \brief Gets the colour attachment object.
 	 * 
@@ -74,10 +76,13 @@ public:
 	*/
 
 	virtual void Delete() = 0;
+
+	void SetFrameBufferSpec(const FrameBufferSpec& spec) { m_spec = spec; m_specChanged = true; }
+
 protected:
 	UInt32 m_fboID; //!< The id of the frame buffer.
 	FrameBufferSpec m_spec; //!< The specification of the frame buffer.
-	bool specChanged; //!< Has the FrameBufferSpec been changed.
+	bool m_specChanged; //!< Has the FrameBufferSpec been changed.
 };
 
 #endif //FRAMEBUFFER_H_INCLUDED

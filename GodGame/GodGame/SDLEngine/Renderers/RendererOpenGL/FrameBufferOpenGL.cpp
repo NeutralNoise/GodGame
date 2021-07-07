@@ -42,6 +42,15 @@ bool FrameBufferOpenGL::Create(const FrameBufferSpec & spec)
 	return true;
 }
 
+bool FrameBufferOpenGL::Resize()
+{
+	if (m_specChanged) {
+		m_specChanged = false;
+		return Create(m_spec);
+	}
+	return false;
+}
+
 void * FrameBufferOpenGL::GetAttachment()
 {
 	return (void*)m_colourAttachment;
@@ -59,5 +68,7 @@ void FrameBufferOpenGL::Unbind()
 
 void FrameBufferOpenGL::Delete()
 {
-	GLCall(glDeleteFramebuffers(1, &m_colourAttachment));
+	GLCall(glDeleteFramebuffers(1, &(FrameBuffer::m_fboID)));
+	GLCall(glDeleteTextures(1, &m_colourAttachment));
+	m_colourAttachment = 0;
 }
