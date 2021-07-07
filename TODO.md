@@ -223,6 +223,9 @@
 - [ ] Set up engine to use a callback when running game logic.
   - [ ] The user can do what ever they whatever they want here.
 
+## Editor
+See [Editor TODO](EditorTODO.md)
+
 ## Game
 * ???
 * Something
