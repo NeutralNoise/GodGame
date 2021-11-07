@@ -217,6 +217,7 @@ struct RenderBatchOpenGL
 			m_currentTextureSlot = m_textureMaxSlot;
 			*(p_textureBuffer + m_textureMaxSlot) = (UInt32)ro.texture->GetTexure();
 		}
+		return true;
 	}
 	//std::vector<Vertex>* data = nullptr;
 	//std::vector<UInt32>* indices = nullptr;
