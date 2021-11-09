@@ -132,6 +132,15 @@
     <ClCompile Include="SDLEngine\Renderers\RendererOpenGL\ErrorOpenGL.h">
       <Filter>Header Files\SDLEngine\Renderers\RendererOpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="SDLEngine\CameraManager.cpp">
+      <Filter>Source Files\SDLEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\EngineCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEngine\EngineAssert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDLEngine\GameEngine.h">
@@ -244,6 +253,15 @@
     </ClInclude>
     <ClInclude Include="ImGUI\imgui_internal.h">
       <Filter>Header Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\CameraManager.h">
+      <Filter>Header Files\SDLEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\CommonDefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEngine\EngineAssert.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

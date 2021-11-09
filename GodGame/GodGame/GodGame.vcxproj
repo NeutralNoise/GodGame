@@ -96,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(Solutiondir)../Deps/Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(Solutiondir)../Deps/Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -166,6 +168,9 @@
     <ClCompile Include="ImGUI\imgui_impl_sdl.cpp" />
     <ClCompile Include="ImGUI\imgui_tables.cpp" />
     <ClCompile Include="ImGUI\imgui_widgets.cpp" />
+    <ClCompile Include="SDLEngine\CameraManager.cpp" />
+    <ClCompile Include="SDLEngine\EngineAssert.cpp" />
+    <ClCompile Include="SDLEngine\EngineCamera.cpp" />
     <ClCompile Include="SDLEngine\ErrorEngine.cpp" />
     <ClCompile Include="SDLEngine\FontEngine.cpp" />
     <ClCompile Include="SDLEngine\FrameBuffer.cpp" />
@@ -198,6 +203,9 @@
     <ClInclude Include="ImGUI\imstb_rectpack.h" />
     <ClInclude Include="ImGUI\imstb_textedit.h" />
     <ClInclude Include="ImGUI\imstb_truetype.h" />
+    <ClInclude Include="SDLEngine\CameraManager.h" />
+    <ClInclude Include="SDLEngine\CommonDefines.h" />
+    <ClInclude Include="SDLEngine\EngineAssert.h" />
     <ClInclude Include="SDLEngine\EngineCamera.h" />
     <ClInclude Include="SDLEngine\EngineConfig.h" />
     <ClInclude Include="SDLEngine\EngineEvents.h" />
