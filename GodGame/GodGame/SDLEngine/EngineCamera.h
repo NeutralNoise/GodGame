@@ -8,8 +8,9 @@
  * 
  */
 
-struct EngineCamera
+class EngineCamera
 {	
+public:
 	/**
 	 * \brief Construct a new EngineCamera object
 	 * 
@@ -32,15 +33,7 @@ struct EngineCamera
 	 * \param scale the zoom of the camera. \warning not currently used.
 	 */
 
-	EngineCamera(const float &x, const float &y, const float &width, const float &height, float scale = 1.0f) {
-		pos = Rect(x,y,width, height);
-		halfWidth = width / 2;
-		halfHeight = height / 2;
-		centerPos.x = pos.x + halfWidth;
-		centerPos.y = pos.y+ halfHeight;
-		this->scale = scale;
-		projection = glm::ortho(0.0f, width, height, 0.0f);
-	}
+	EngineCamera(const float &x, const float &y, const float &width, const float &height, float scale = 1.0f, const char & proj = 0);
 
 	/**
 	 * \brief Destroy the EngineCamera object
@@ -131,7 +124,7 @@ struct EngineCamera
 	Rect pos;	//!< The position of the camera in world space.
 	Rect centerPos; //!< The center of the camera in world space.
 	float scale; //!< Used for zoom. \warning not currently used.
-
 	float halfWidth = 0;
 	float halfHeight = 0;
+	char m_projectionType;
 };
