@@ -20,6 +20,7 @@
 #include "ImGUI/imgui.h"
 #include "ImGUI/imgui_impl_sdl.h"
 #include "ImGUI/imgui_impl_opengl3.h"
+#include "SDLEngine/EngineAssert.h"
 
 
 //Uncomment this to spawn a shit load of tiles.
@@ -30,7 +31,7 @@
 
 int main(int argc, char ** argv)
 {
-    std::cout << "Hello World!\n"; 
+    std::cout << "Hello World!\n";
 	bool isRunning = false;
 	GameEngine ge;
 	//RendererSDL testRender;
@@ -345,6 +346,7 @@ int main(int argc, char ** argv)
 					static bool showViewPort = true;
 					if (showViewPort) {
 						ImGui::Begin("View Port", &showViewPort);
+						//ImVec2 viewSize = ImGui::GetWindowSize();
 						ImVec2 viewSize = ImGui::GetWindowSize();
 						ImGui::Image(testRender.m_renObjFBO.GetAttachment(), viewSize, ImVec2(0, 1), ImVec2(1, 0));
 						ImGui::End();
@@ -353,6 +355,12 @@ int main(int argc, char ** argv)
 					static bool window_open = true;
 					if (ImGui::BeginMenuBar())
 					{
+						static bool newProject = false;
+						if (ImGui::BeginMenu("File")) {
+							ImGui::MenuItem("New Project", NULL, &newProject);
+							ImGui::EndMenu();
+						}
+
 						if (ImGui::BeginMenu("Options"))
 						{
 							// Disabling fullscreen would allow the window to be moved to the front of other windows,
@@ -375,10 +383,14 @@ int main(int argc, char ** argv)
 							ImGui::EndMenu();
 						}
 						ImGui::EndMenuBar();
+
+						if (newProject) {
+							//TODO Show new project window.
+						}
+
 					}
 					static bool showBytes = false;
 					if (window_open) {
-						ImGui::Begin("Renderer stats", &window_open);                          // Create a window called "Hello, world!" and append into it.
 						/*
 						ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 						//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
@@ -392,6 +404,7 @@ int main(int argc, char ** argv)
 						ImGui::SameLine();
 						ImGui::Text("counter = %d", counterGUI);
 						*/
+						ImGui::Begin("Renderer stats", &window_open);                          // Create a window called "Hello, world!" and append into it.
 						ImGui::Text("%s", EngineR.GetVersionString().c_str());
 						ImGui::Text("Draw calls: %i", DrawCalls->uidata);
 						ImGui::Text("Drawn vertexs: %i", DrawVertexs->uidata);
@@ -406,7 +419,6 @@ int main(int argc, char ** argv)
 							ImGui::Text("Render batch used mem: %.3fKB", (float)(BatchMemUsed->uidata) / 1000.0f);
 							ImGui::Text("Render batch max mem: %.3fKB", (float)(BatchMemMax->uidata) / 1000.0f);
 						}
-
 						ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 						ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", frameTimeCount / frameNumber, frameRateCount);
 						ImGui::Text("Application %.3f ms/frame (%.1f FPS)", thisTime, SECOND_MICRO_SECONDS / thisTime);
